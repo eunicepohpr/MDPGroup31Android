@@ -85,8 +85,8 @@ public class BluetoothActivity extends AppCompatActivity {
 
         //get intent
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            if (bundle.containsKey("device")){
+        if (bundle != null) {
+            if (bundle.containsKey("device")) {
                 device = bundle.getString("device");
             } else {
                 device = "";
@@ -96,19 +96,18 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         //nav bar
-        dl = (DrawerLayout)findViewById(R.id.bluetooth_main);
+        dl = (DrawerLayout) findViewById(R.id.bluetooth_main);
         dl.addDrawerListener(t);
-        t = new ActionBarDrawerToggle(this, dl,R.string.app_name, R.string.app_name);
+        t = new ActionBarDrawerToggle(this, dl, R.string.app_name, R.string.app_name);
         t.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        nv = (NavigationView)findViewById(R.id.nv);
+        nv = (NavigationView) findViewById(R.id.nv);
         nv.setItemIconTintList(null);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch(id)
-                {
+                switch (id) {
                     case R.id.home:
                         Intent i = new Intent(BluetoothActivity.this, MainActivity.class);
                         i.putExtra("name", name);
@@ -160,8 +159,8 @@ public class BluetoothActivity extends AppCompatActivity {
         //bind text to tvNew
         tvNew.setText(ss2);
 
-        btnScanPaired = (Button)findViewById(R.id.scanPairedButton);
-        devicelist = (ListView)findViewById(R.id.devicesListView);
+        btnScanPaired = (Button) findViewById(R.id.scanPairedButton);
+        devicelist = (ListView) findViewById(R.id.devicesListView);
         pairedDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.device_name);
         devicelist.setAdapter(pairedDevicesArrayAdapter);
         devicelist.setOnItemClickListener(myListClickListener);
@@ -178,32 +177,27 @@ public class BluetoothActivity extends AppCompatActivity {
 
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(btAdapter == null)
-        {
+        if (btAdapter == null) {
             //no bluetooth adapter
             Toast.makeText(getApplicationContext(), "Bluetooth Device Not Available", Toast.LENGTH_LONG).show();
             finish();
-        }
-        else
-        {
+        } else {
             if (!btAdapter.isEnabled()) {
                 //bluetooth not enabled
                 Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(turnBTon,1);
+                startActivityForResult(turnBTon, 1);
             } else {
                 //use android's .getBondedDevices() to retrieve a list of paired devices attached to the phone
                 Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
                 ArrayList list = new ArrayList();
 
-                if (pairedDevices.size()>0) {
+                if (pairedDevices.size() > 0) {
                     //found at least one paired devices
-                    for(BluetoothDevice bt : pairedDevices)
-                    {
+                    for (BluetoothDevice bt : pairedDevices) {
                         //add all paired devices to list
                         list.add(bt.getName() + "\n MAC Address: " + bt.getAddress()); //Get the device's name and the address
                     }
-                }
-                else {
+                } else {
                     //no paired devices found on device
                     list.add("No Paired Bluetooth Devices Found");
                 }
@@ -217,24 +211,21 @@ public class BluetoothActivity extends AppCompatActivity {
 
         btnScanPaired.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 pairedDevicesList(); //method that will be called
             }
         });
 
         btnScanNew.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 newDevicesList(); // method that will be called
             }
         });
 
         btnEnableDiscoverable.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 enableDiscovery(); //method that will be called
             }
         });
@@ -250,9 +241,12 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         // Unregister broadcast listeners
-        this.unregisterReceiver(bReceiver);
+        try {
+            this.unregisterReceiver(bReceiver);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
     }
-
 
 
     //method for enabling discovery of the bluetooth device to other devices
@@ -268,15 +262,13 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     //method called when user manually finds paired devices
-    private void pairedDevicesList()
-    {
+    private void pairedDevicesList() {
         //notify user of his button click
         Toast.makeText(this, "Refreshing all paired devices", Toast.LENGTH_SHORT).show();
         //check if user enabled required permissions
         checkBTPermissions();
         btAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(btAdapter == null)
-        {
+        if (btAdapter == null) {
             //no bluetooth adapter
             Toast.makeText(getApplicationContext(), "Bluetooth Device Not Available", Toast.LENGTH_LONG).show();
         } else {
@@ -302,10 +294,8 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     }
 
-    private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener()
-    {
-        public void onItemClick (AdapterView av, View v, int arg2, long arg3)
-        {
+    private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView av, View v, int arg2, long arg3) {
             // Get the device MAC address, the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
             address = info.substring(info.length() - 17);
@@ -330,11 +320,11 @@ public class BluetoothActivity extends AppCompatActivity {
     };
 
     //scan available nearby bluetooth devices
-    private void newDevicesList(){
+    private void newDevicesList() {
         //notify user of button click
         Toast.makeText(this, "Scanning has begun", Toast.LENGTH_SHORT).show();
         //if device is already discovering, cancel it
-        if(btAdapter.isDiscovering()) {
+        if (btAdapter.isDiscovering()) {
             btAdapter.cancelDiscovery();
         }
 
@@ -356,7 +346,7 @@ public class BluetoothActivity extends AppCompatActivity {
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 //when a bluetooth device is found
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String newDevice = device.getName()+ "\n MAC Address: "+device.getAddress();
+                String newDevice = device.getName() + "\n MAC Address: " + device.getAddress();
                 newDevicesArrayAdapter.add(newDevice); //add device to array adapter
             } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
                 //when bluetooth has completed scanning
@@ -374,7 +364,7 @@ public class BluetoothActivity extends AppCompatActivity {
      * required only if user's device's SDK is after LOLLIPOP's version
      */
     private void checkBTPermissions() {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
             permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
             if (permissionCheck != 0) {
@@ -383,7 +373,6 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         }
     }
-
 
 
     @Override
@@ -401,7 +390,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     // Initialize the BluetoothService to perform bluetooth connections
-    private void setupChat(){
+    private void setupChat() {
         btService = new BluetoothService(getApplicationContext(), mHandler);
         mOutStringBuffer = new StringBuffer("");
     }
@@ -443,10 +432,10 @@ public class BluetoothActivity extends AppCompatActivity {
                     // save the connected device's name
                     name = msg.getData().getString(Constants.DEVICE_NAME);
                     if (null != getApplicationContext()) {
-                        if (name == null){
+                        if (name == null) {
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Connected to "+ name, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Connected to " + name, Toast.LENGTH_SHORT).show();
                             //send to mainactivity
                             sendToMain(name); //name of device currently connected
                         }
@@ -455,8 +444,8 @@ public class BluetoothActivity extends AppCompatActivity {
                     break;
                 case Constants.MESSAGE_TOAST:
                     if (null != getApplicationContext()) {
-                        String theMsg = msg.getData().getString(Constants.TOAST) ;
-                        if (theMsg.equalsIgnoreCase("device connection was lost")){
+                        String theMsg = msg.getData().getString(Constants.TOAST);
+                        if (theMsg.equalsIgnoreCase("device connection was lost")) {
                             Toast.makeText(getApplicationContext(), theMsg, Toast.LENGTH_SHORT).show();
                             name = ""; //set name to empty string since connection was lost
                             sendToMain(""); //send empty string to mainactivity to notify no device currently connected
@@ -499,7 +488,7 @@ public class BluetoothActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String theText = intent.getStringExtra("tts");
-            if (theText != null){
+            if (theText != null) {
                 if (btService.getState() != btService.STATE_CONNECTED) {
                     Toast.makeText(getApplicationContext(), "Connection Lost. Please try again.", Toast.LENGTH_SHORT).show();
                     return;
@@ -521,7 +510,7 @@ public class BluetoothActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String control = intent.getStringExtra("control");
-            if (control != null){
+            if (control != null) {
                 if (btService.getState() != btService.STATE_CONNECTED) {
                     Toast.makeText(getApplicationContext(), "Connection Lost. Please try again.", Toast.LENGTH_SHORT).show();
                     return;
@@ -541,7 +530,7 @@ public class BluetoothActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String control = intent.getStringExtra("disconnect");
-            if (control != null){
+            if (control != null) {
                 if (btService.getState() != btService.STATE_CONNECTED) {
                     Toast.makeText(getApplicationContext(), "Connection Lost. Please try again.", Toast.LENGTH_SHORT).show();
                     return;
@@ -554,7 +543,7 @@ public class BluetoothActivity extends AppCompatActivity {
     };
 
     //register receivers needed
-    private void registerReceivers(){
+    private void registerReceivers() {
         LocalBroadcastManager.getInstance(this).registerReceiver(mTextReceiver, new IntentFilter("getTextToSend"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCtrlReceiver, new IntentFilter("getCtrlToSend"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mDcReceiver, new IntentFilter("initiateDc"));
@@ -564,7 +553,7 @@ public class BluetoothActivity extends AppCompatActivity {
     }
 
     //destroy all receivers
-    private void destroyReceivers(){
+    private void destroyReceivers() {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mTextReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mCtrlReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mDcReceiver);

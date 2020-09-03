@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">GROUP-31 MDP PROJECT</string>
+    <string name="app_name">MDP Group 31</string>
+    <string name="send">Send</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+    <string name="explore">Explore</string>
+    <string name="fpwaypoint">FP Waypoint</string>
+    <string name="robotstart">Robot Start</string>
 </resources>

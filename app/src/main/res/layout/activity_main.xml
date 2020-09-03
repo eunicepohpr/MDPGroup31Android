@@ -9,7 +9,7 @@
     sothree:umanoShadowHeight="4dp">
 
     <android.support.v4.widget.DrawerLayout
-        android:id="@+id/activity_main"
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -53,7 +53,7 @@
                         android:layout_height="77dp"
                         android:layout_margin="10dp"
                         android:layout_marginStart="3dp"
-                        android:text=""
+                        android:text="test"
                         android:textColor="@android:color/black" />
 
                 </LinearLayout>
