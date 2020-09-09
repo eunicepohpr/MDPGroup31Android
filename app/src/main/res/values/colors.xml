@@ -6,4 +6,8 @@
 
     <color name="buttonColor">#1794F9</color>
     <color name="disableButtonColor">#BDBEBF</color>
+
+    <color name="BTNotConnected">#6C6D6D</color>
+    <color name="BTConnectedG">#048027</color>
+    <color name="BTConnectedB">#0367a1</color>
 </resources>

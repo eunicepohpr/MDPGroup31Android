@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".New.MainActivity2">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/btTB"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/BTNotConnected"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp">
+
+        <TextView
+            android:id="@+id/btTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/BTNotConnected"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:visibility="visible" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:fontFamily="sans-serif-light"
+        app:tabGravity="fill"
+        app:tabInlineLabel="true"
+        app:tabMaxWidth="0dp"
+        app:tabTextAppearance="@style/TabLayoutTextStyle">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tab_map"
+            android:text="@string/TabMap" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/tabCom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/tab_com"
+            android:text="@string/TabCom" />
+
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

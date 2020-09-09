@@ -280,7 +280,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }
 
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-
+        pairedDevicesArrayAdapter.clear();
         if (pairedDevices.size() > 0) {
             //found at least one paired devices
             for (BluetoothDevice bt : pairedDevices) {
@@ -289,7 +289,7 @@ public class BluetoothActivity extends AppCompatActivity {
             }
         } else {
             //no paired devices found
-            pairedDevicesArrayAdapter.clear(); //clear arrayadapter since no paired devices found
+//            pairedDevicesArrayAdapter.clear(); //clear arrayadapter since no paired devices found
             pairedDevicesArrayAdapter.add("No Paired Bluetooth Devices Found"); //set first item to this message to let user know the result
         }
     }

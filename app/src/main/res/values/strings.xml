@@ -6,4 +6,15 @@
     <string name="explore">Explore</string>
     <string name="fpwaypoint">FP Waypoint</string>
     <string name="robotstart">Robot Start</string>
+
+    <!--        New UI       -->
+    <!--  Bluetooth toolbar  -->
+    <string name="BTNotConnected">Bluetooth: Not Connected</string>
+    <string name="BTConnected">Bluetooth: Connected to %1$s</string>
+    <!-- Tab Layout -->
+    <string name="TabMap">Map</string>
+    <string name="TabCom">Communication</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
