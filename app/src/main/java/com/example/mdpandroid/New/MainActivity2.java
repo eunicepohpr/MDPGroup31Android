@@ -56,22 +56,19 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-//        showToast("MainActivity2 onResume");
-    }
-
-
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Bundle bundle = intent.getExtras();
         device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
-        updateBluetoothStatus(device);
+        updateBluetoothTBStatus(device);
+    }
+
+    @Override
+    public void onBackPressed() { // disable destroying activity
     }
 
     // update the bluetooth toolbar
-    public void updateBluetoothStatus(String device) {
+    public void updateBluetoothTBStatus(String device) {
         if (!(device.equals("") || device == null)) {
             btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTConnectedG)); // 0367a1
             btTextView.setText(getString(R.string.BTConnected, device));
