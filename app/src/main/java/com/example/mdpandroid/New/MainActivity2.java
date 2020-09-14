@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mdpandroid.MainActivity;
+import com.example.mdpandroid.MazeView;
 import com.example.mdpandroid.R;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -23,12 +24,17 @@ public class MainActivity2 extends AppCompatActivity {
     private Toolbar btToolBar;
     private String device = "";
 
+    public MazeView2 mazeView;
+
     private int[] tabIcons = {R.drawable.tab_map, R.drawable.tab_com};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        // mazeview
+        mazeView = findViewById(R.id.mazeView2);
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);

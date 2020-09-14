@@ -14,7 +14,7 @@
     <!-- Tab Layout -->
     <string name="TabMap">Map</string>
     <string name="TabCom">Communication</string>
-
+    <!-- Bluetooth -->
     <string name="Bluetooth">Bluetooth</string>
     <string name="PairDevices">Paired Devices</string>
     <string name="AvailableDevices">Available Devices</string>
@@ -22,6 +22,21 @@
     <string name="BTDiscoverOn">Device is currently discoverable</string>
     <string name="BTScan">Scan for devices</string>
     <string name="BTRefresh">Refresh paired devices</string>
+
+    <string name="MapRobotStatus">Robot Status:\u0020</string>
+    <string name="MapExpStatus">Exploration:\u0020</string>
+
+    <string name="SwitchTilt">Tilt</string>
+    <string name="SwitchAU">Auto-update</string>
+    <string name="SwitchPlotRP">Plot Robot Position</string>
+    <!-- Map Buttons -->
+    <string name="BtnEx">Explore</string>
+    <string name="BtnStart">Fastest Path</string>
+    <string name="BtnReset">Reset</string>
+    <string name="BtnCali">Calibrate</string>
+    <string name="BtnUpM">Update Map</string>
+    <string name="BtnWP">Send WayPoint</string>
+    <string name="BtnRP">Send Position</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
