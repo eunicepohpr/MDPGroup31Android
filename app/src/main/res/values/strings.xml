@@ -22,24 +22,42 @@
     <string name="BTDiscoverOn">Device is currently discoverable</string>
     <string name="BTScan">Scan for devices</string>
     <string name="BTRefresh">Refresh paired devices</string>
+    <string name="BTNoPair">No paired devices</string>
+    <string name="BTNoAvail">No devices available</string>
+    <string name="BTStop">Stop Scanning</string>
 
-    <string name="MapRobotStatus">Robot Status:\u0020</string>
-    <string name="MapExpStatus">Exploration:\u0020</string>
+    <string name="MapRobotStatus">\u0020Robot Status:\u0020</string>
+    <string name="MapExpStatus">\u0020Exploration:\u0020</string>
+    <string name="MapFPWPStatus">FP Waypoint:\u0020</string>
+    <string name="MapRSStatus">Robot Start:\u0020</string>
+    <string name="MapRobotOrien">Robot Orientation:\u0020</string>
 
     <string name="SwitchTilt">Tilt</string>
-    <string name="SwitchAU">Auto-update</string>
+    <string name="SwitchAU">Auto update</string>
     <string name="SwitchPlotRP">Plot Robot Position</string>
+
     <!-- Map Buttons -->
-    <string name="BtnEx">Explore</string>
+    <string name="BtnEx">Exploration</string>
     <string name="BtnStart">Fastest Path</string>
-    <string name="BtnReset">Reset</string>
+    <string name="BtnReset">Refresh</string>
     <string name="BtnCali">Calibrate</string>
     <string name="BtnUpM">Update Map</string>
     <string name="BtnWP">Send WayPoint</string>
-    <string name="BtnRP">Send Position</string>
+    <string name="BtnRP">Send Robot Position</string>
 
+    <string name="BtnUp">\nUp\n</string>
+    <string name="BtnDown">\nDown\n</string>
+    <string name="BtnLeft">\nLeft\n</string>
+    <string name="BtnRight">\nRight\n</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ComTransTxt">\u0020Transmit Text</string>
+    <string name="ComTransTxtHelp">Enter Text Here</string>
+    <string name="ComRecTxt">\u0020Receive Text</string>
+    <string name="ComRecTxtHelp">None</string>
+    <string name="ComPersTxt">\u0020Persistent Text</string>
+    <string name="ComPersHelp">I\'m non-volatile data</string>
+    <string name="ComSend">Send</string>
+    <string name="ComClear">Clear</string>
+    <string name="ComSave">Save</string>
 
 </resources>

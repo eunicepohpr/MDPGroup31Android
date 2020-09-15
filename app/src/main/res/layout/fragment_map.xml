@@ -41,7 +41,7 @@
                 android:padding="2dp">
 
                 <RelativeLayout
-                    android:id="@+id/rl1"
+                    android:id="@+id/topRL1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp">
@@ -50,57 +50,125 @@
                         android:id="@+id/tvRS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/robot_small"
                         android:text="@string/MapRobotStatus"
                         android:textAppearance="@style/MapStatus" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/tvRS"
+                        android:layout_toEndOf="@id/tvRS"
                         android:text="idle"
                         android:textSize="15sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/topRL2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rl1"
+                    android:layout_below="@+id/topRL1"
                     android:layout_margin="5dp">
 
                     <TextView
                         android:id="@+id/tvES"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/time_small"
                         android:text="@string/MapExpStatus"
                         android:textAppearance="@style/MapStatus" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/tvES"
+                        android:layout_toEndOf="@id/tvES"
                         android:text="00:00"
                         android:textSize="15sp" />
 
                 </RelativeLayout>
 
-                <Switch
-                    android:id="@+id/switchPlotRP"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/topRL3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@id/switchAutoUp"
-                    android:layout_alignParentRight="true"
-                    android:layout_margin="1dp"
-                    android:text="@string/SwitchPlotRP" />
+                    android:layout_below="@+id/topRL2"
+                    android:layout_margin="5dp">
 
-                <Switch
-                    android:id="@+id/switchAutoUp"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/tvFPWP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/MapFPWPStatus"
+                        android:textAppearance="@style/MapStatus" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvFPWP"
+                        android:text="(0,0)"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/topRL4"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="1dp"
-                    android:text="@string/SwitchAU" />
+                    android:layout_below="@+id/topRL3"
+                    android:layout_margin="5dp">
 
+                    <TextView
+                        android:id="@+id/tvRStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/MapRSStatus"
+                        android:textAppearance="@style/MapStatus" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvRStart"
+                        android:text="(0,0)"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/topRL5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/topRL4"
+                    android:layout_margin="5dp">
+
+                    <Switch
+                        android:id="@+id/switchPlotRP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="1dp"
+                        android:text="@string/SwitchPlotRP" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/topRL6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/topRL5"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/tvRO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/MapRobotOrien" />
+
+                    <Spinner
+                        android:id="@+id/spinnerROrien"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvRO" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -114,87 +182,18 @@
             android:orientation="horizontal"
             android:weightSum="32">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="20"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:weightSum="18">
+                android:layout_weight="19"
+                android:padding="10dp">
 
                 <RelativeLayout
+                    android:id="@+id/btmLeftRL1"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5.8"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/tvFPWPTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/fpwaypoint"
-                        android:textAppearance="@style/TextSubSubHeading" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvFPWPTitle"
-                        android:layout_marginLeft="10dp"
-                        android:text="(0,0)"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/BtnWP" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="5.8"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/tvRSTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        android:text="@string/robotstart"
-                        android:textAppearance="@style/TextSubSubHeading" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvRSTitle"
-                        android:layout_marginLeft="10dp"
-                        android:text="(0,0)"
-                        android:textSize="15sp" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentRight="true"
-                        android:text="@string/BtnRP" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_margin="1dp"
-                    android:background="@android:color/darker_gray" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="6.4">
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="2dp">
 
                     <Button
                         android:id="@+id/btnExplore"
@@ -207,23 +206,32 @@
                         android:id="@+id/btnFP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_margin="1dp"
+                        android:layout_toEndOf="@id/btnExplore"
                         android:text="Fastest Path" />
 
                     <Button
                         android:id="@+id/btnReset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:layout_margin="1dp"
+                        android:layout_toEndOf="@id/btnFP"
                         android:text="Reset" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btmLeftRL2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btmLeftRL1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="2dp">
 
                     <Button
                         android:id="@+id/btnCali"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_margin="1dp"
                         android:text="Calibrate" />
 
@@ -231,40 +239,375 @@
                         android:id="@+id/btnUpdateMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_margin="1dp"
+                        android:layout_toEndOf="@id/btnCali"
                         android:text="@string/BtnUpM" />
+
+                    <Switch
+                        android:id="@+id/switchAutoUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="1dp"
+                        android:layout_toEndOf="@id/btnUpdateMap"
+                        android:text="@string/SwitchAU" />
 
                 </RelativeLayout>
 
-            </LinearLayout>
+                <RelativeLayout
+                    android:id="@+id/btmLeftRL3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btmLeftRL2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_margin="2dp">
+
+                    <Button
+                        android:id="@+id/btnSendWP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/BtnWP" />
+
+                    <Button
+                        android:id="@+id/btnSendRP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/btnSendWP"
+                        android:text="@string/BtnRP" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <!--Controls-->
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="12"
+                android:layout_weight="13"
                 android:padding="5dp">
 
                 <Switch
                     android:id="@+id/switchTilt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="@string/SwitchTilt" />
 
-                <ImageView
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/switchTilt"
-                    android:layout_margin="1dp"
-                    android:src="@drawable/dpad" />
+                    android:layout_margin="1dp">
+
+                    <Button
+                        android:id="@+id/btnUp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:alpha="0"
+                        android:text="@string/BtnUp" />
+
+                    <Button
+                        android:id="@+id/btnDown"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:alpha="0"
+                        android:text="@string/BtnDown" />
+
+                    <Button
+                        android:id="@+id/btnLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0"
+                        android:text="@string/BtnLeft" />
+
+                    <Button
+                        android:id="@+id/btnRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:alpha="0"
+                        android:text="@string/BtnRight" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/dpad" />
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:weightSum="100">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:layout_weight="64"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:weightSum="68">-->
+
+    <!--            &lt;!&ndash;map&ndash;&gt;-->
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_weight="42"-->
+    <!--                android:orientation="vertical"-->
+    <!--                android:padding="20dp">-->
+
+    <!--                <com.example.mdpandroid.New.MazeView2-->
+    <!--                    android:id="@+id/mazeView2"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent" />-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_marginTop="60dp"-->
+    <!--                android:layout_weight="26"-->
+    <!--                android:padding="2dp">-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:id="@+id/rl1"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_margin="5dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvRS"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="@string/MapRobotStatus"-->
+    <!--                        android:textAppearance="@style/MapStatus" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_toRightOf="@id/tvRS"-->
+    <!--                        android:text="idle"-->
+    <!--                        android:textSize="15sp" />-->
+    <!--                </RelativeLayout>-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_below="@+id/rl1"-->
+    <!--                    android:layout_margin="5dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvES"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:text="@string/MapExpStatus"-->
+    <!--                        android:textAppearance="@style/MapStatus" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_toRightOf="@id/tvES"-->
+    <!--                        android:text="00:00"-->
+    <!--                        android:textSize="15sp" />-->
+
+    <!--                </RelativeLayout>-->
+
+    <!--                <Switch-->
+    <!--                    android:id="@+id/switchPlotRP"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_above="@id/switchAutoUp"-->
+    <!--                    android:layout_alignParentRight="true"-->
+    <!--                    android:layout_margin="1dp"-->
+    <!--                    android:text="@string/SwitchPlotRP" />-->
+
+    <!--                <Switch-->
+    <!--                    android:id="@+id/switchAutoUp"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_alignParentRight="true"-->
+    <!--                    android:layout_alignParentBottom="true"-->
+    <!--                    android:layout_margin="1dp"-->
+    <!--                    android:text="@string/SwitchAU" />-->
+
+
+    <!--            </RelativeLayout>-->
+
+    <!--        </LinearLayout>-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="0dp"-->
+    <!--            android:layout_weight="36"-->
+    <!--            android:background="@color/Mapbtmbg"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            android:weightSum="32">-->
+
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_weight="20"-->
+    <!--                android:orientation="vertical"-->
+    <!--                android:padding="10dp"-->
+    <!--                android:weightSum="18">-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="0dp"-->
+    <!--                    android:layout_weight="5.8"-->
+    <!--                    android:padding="5dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvFPWPTitle"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginBottom="5dp"-->
+    <!--                        android:text="@string/fpwaypoint"-->
+    <!--                        android:textAppearance="@style/TextSubSubHeading" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@id/tvFPWPTitle"-->
+    <!--                        android:layout_marginLeft="10dp"-->
+    <!--                        android:text="(0,0)"-->
+    <!--                        android:textSize="15sp" />-->
+
+    <!--                    <Button-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_alignParentTop="true"-->
+    <!--                        android:layout_alignParentRight="true"-->
+    <!--                        android:text="@string/BtnWP" />-->
+
+    <!--                </RelativeLayout>-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="0dp"-->
+    <!--                    android:layout_weight="5.8"-->
+    <!--                    android:padding="5dp">-->
+
+    <!--                    <TextView-->
+    <!--                        android:id="@+id/tvRSTitle"-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_marginBottom="5dp"-->
+    <!--                        android:text="@string/robotstart"-->
+    <!--                        android:textAppearance="@style/TextSubSubHeading" />-->
+
+    <!--                    <TextView-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_below="@id/tvRSTitle"-->
+    <!--                        android:layout_marginLeft="10dp"-->
+    <!--                        android:text="(0,0)"-->
+    <!--                        android:textSize="15sp" />-->
+
+    <!--                    <Button-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_alignParentTop="true"-->
+    <!--                        android:layout_alignParentRight="true"-->
+    <!--                        android:text="@string/BtnRP" />-->
+
+    <!--                </RelativeLayout>-->
+
+    <!--                <View-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="1dp"-->
+    <!--                    android:layout_margin="1dp"-->
+    <!--                    android:background="@android:color/darker_gray" />-->
+
+    <!--                <RelativeLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="0dp"-->
+    <!--                    android:layout_marginTop="2dp"-->
+    <!--                    android:layout_weight="6.4">-->
+
+    <!--                    <Button-->
+    <!--                        android:id="@+id/btnExplore"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_margin="1dp"-->
+    <!--                        android:text="Explore" />-->
+
+    <!--                    <Button-->
+    <!--                        android:id="@+id/btnFP"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_centerHorizontal="true"-->
+    <!--                        android:layout_margin="1dp"-->
+    <!--                        android:text="Fastest Path" />-->
+
+    <!--                    <Button-->
+    <!--                        android:id="@+id/btnReset"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_alignParentRight="true"-->
+    <!--                        android:layout_margin="1dp"-->
+    <!--                        android:text="Reset" />-->
+
+    <!--                    <Button-->
+    <!--                        android:id="@+id/btnCali"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_alignParentBottom="true"-->
+    <!--                        android:layout_margin="1dp"-->
+    <!--                        android:text="Calibrate" />-->
+
+    <!--                    <Button-->
+    <!--                        android:id="@+id/btnUpdateMap"-->
+    <!--                        android:layout_width="wrap_content"-->
+    <!--                        android:layout_height="wrap_content"-->
+    <!--                        android:layout_alignParentBottom="true"-->
+    <!--                        android:layout_centerHorizontal="true"-->
+    <!--                        android:layout_margin="1dp"-->
+    <!--                        android:text="@string/BtnUpM" />-->
+
+    <!--                </RelativeLayout>-->
+
+    <!--            </LinearLayout>-->
+
+    <!--            &lt;!&ndash;Controls&ndash;&gt;-->
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="match_parent"-->
+    <!--                android:layout_weight="12"-->
+    <!--                android:padding="5dp">-->
+
+    <!--                <Switch-->
+    <!--                    android:id="@+id/switchTilt"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_alignParentRight="true"-->
+    <!--                    android:text="@string/SwitchTilt" />-->
+
+    <!--                <ImageView-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="match_parent"-->
+    <!--                    android:layout_below="@+id/switchTilt"-->
+    <!--                    android:layout_margin="1dp"-->
+    <!--                    android:src="@drawable/dpad" />-->
+
+    <!--            </RelativeLayout>-->
+
+    <!--        </LinearLayout>-->
+
+    <!--    </LinearLayout>-->
 
 </FrameLayout>

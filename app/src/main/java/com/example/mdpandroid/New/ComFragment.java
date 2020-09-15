@@ -1,64 +1,206 @@
 package com.example.mdpandroid.New;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mdpandroid.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ComFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ComFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView tvReceiveText;
+    private EditText etTransText, etPersistentText;
+    private Button btnTransSend, btnTransClear, btnPersistSend, btnPersistSave, btnRecReset;
+    private ScrollView sv;
+    private int noOfItems = 1;
+    private boolean svDyanmic = false;
 
     public ComFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ComFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ComFragment newInstance(String param1, String param2) {
         ComFragment fragment = new ComFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_com, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        sv = getView().findViewById(R.id.sv);
+        tvReceiveText = getView().findViewById(R.id.tvComRecTxt);
+        etPersistentText = getView().findViewById(R.id.etComPS);
+        etTransText = getView().findViewById(R.id.etComTrans);
+        btnTransClear = getView().findViewById(R.id.btnTransClear);
+        btnTransSend = getView().findViewById(R.id.btnTransSend);
+        btnPersistSave = getView().findViewById(R.id.btnPSSave);
+        btnPersistSend = getView().findViewById(R.id.btnPSSend);
+        btnRecReset = getView().findViewById(R.id.btnComRecReset);
+
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        if (sharedPref.contains("value1")) {
+            etPersistentText.setText(sharedPref.getString("value1", ""));
+        } else {
+            etPersistentText.setText("Default Message 1");
+        }
+
+        //result receiver
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
+//                new IntentFilter("getConnectedDevice"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mTextReceiver,
+                new IntentFilter("getTextFromDevice"));
+
+        etPersistentText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    hideSoftKeyboard(v);
+            }
+        });
+
+        etTransText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    hideSoftKeyboard(v);
+            }
+        });
+
+        btnTransSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSoftKeyboard(view);
+                String text = etTransText.getText().toString();
+                if (text.isEmpty()) {
+                    showToast("Text box is empty!");
+                } else {
+                    sendToBtAct(text);
+                    showToast("Message sent!");
+                }
+            }
+        });
+
+        btnTransClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etTransText.getText().clear();
+            }
+        });
+
+        btnPersistSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSoftKeyboard(view);
+                String text = etPersistentText.getText().toString();
+                if (text.isEmpty()) {
+                    showToast("Text box is empty!");
+                } else {
+                    sendToBtAct(text);
+                    showToast("Custom message sent!");
+                }
+            }
+        });
+
+        btnPersistSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideSoftKeyboard(view);
+                // check if any of the edit texts are empty
+                if (etPersistentText.getText().toString().trim().equalsIgnoreCase(""))
+                    showToast("Custom messages cannot be empty");
+                else { // use .comit() to save onto app's SharedPreferences
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("value1", etPersistentText.getText().toString());
+                    editor.commit();
+                    showToast("Custom message saved");
+                }
+            }
+        });
+
+        btnRecReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvReceiveText.setText(R.string.ComRecTxtHelp);
+                // reset scrollview layout settings
+                noOfItems = 1;
+                svDyanmic = false;
+                sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
+        });
+    }
+
+    private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String theText = intent.getStringExtra("text"); // Get extra data included in the Intent
+            if (theText.length() > 0) {
+                String text = tvReceiveText.getText().toString();
+                if (text.equals(getResources().getString(R.string.ComRecTxtHelp))) {
+                    tvReceiveText.setText(theText);
+                    // reset scrollview layout settings
+                    noOfItems = 1;
+                    svDyanmic = false;
+                    sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT));
+                } else {
+                    tvReceiveText.setText(text + "\n" + theText);
+                    noOfItems += 1;
+                    if (noOfItems >= 10 && !svDyanmic) {
+                        svDyanmic = true;
+                        sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 250));
+                    }
+                }
+            }
+        }
+    };
+
+    // to send bluetoothactivity for bluetooth chat
+    private void sendToBtAct(String msg) {
+        Intent intent = new Intent("getTextToSend");
+        intent.putExtra("tts", msg);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    }
+
+    public void hideSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(
+                Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

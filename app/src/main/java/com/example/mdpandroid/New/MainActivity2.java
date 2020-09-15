@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ public class MainActivity2 extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TabAdapter tabAdapter;
+
     private TextView btTextView;
     private Toolbar btToolBar;
     private String device = "";
@@ -58,8 +62,6 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
-//        showToast("MainActivity2 onCreate");
-
     }
 
     protected void onNewIntent(Intent intent) {
@@ -75,13 +77,15 @@ public class MainActivity2 extends AppCompatActivity {
 
     // update the bluetooth toolbar
     public void updateBluetoothTBStatus(String device) {
-        if (!(device.equals("") || device == null)) {
-            btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTConnectedG)); // 0367a1
-            btTextView.setText(getString(R.string.BTConnected, device));
-        } else {
-            btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTNotConnected));
-            btTextView.setText(getString(R.string.BTNotConnected));
+        if (device != null) {
+            if (!(device.equals(""))) {
+                btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTConnectedG)); // 0367a1
+                btTextView.setText(getString(R.string.BTConnected, device));
+                return;
+            }
         }
+        btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTNotConnected));
+        btTextView.setText(getString(R.string.BTNotConnected));
     }
 
     public void showToast(String message) {
