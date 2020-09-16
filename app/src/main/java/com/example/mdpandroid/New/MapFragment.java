@@ -59,11 +59,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
     public MapFragment() {
     }
 
-    public static MapFragment newInstance() {
-        MapFragment fragment = new MapFragment();
-        return fragment;
-    }
-
     public static MapFragment getInstance() {
         return instance;
     }
@@ -90,8 +85,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         // tilting
         switchTilt = getView().findViewById(R.id.switchTilt);
         sensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
-        sensorManager.registerListener((SensorEventListener) this,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), 200000);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), 200000);
         switchTilt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
@@ -110,9 +104,11 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     autoUpdate = true;
                     mazeView.invalidate();
                     btnUpdateMap.setEnabled(false);
+                    btnUpdateMap.setVisibility(View.INVISIBLE);
                 } else {
                     autoUpdate = false;
                     btnUpdateMap.setEnabled(true);
+                    btnUpdateMap.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -160,11 +156,11 @@ public class MapFragment extends Fragment implements SensorEventListener {
         });
 
         //for stopwatch
-        chr = (Chronometer) getView().findViewById(R.id.chrTimer);
+        chr = getView().findViewById(R.id.chrTimer);
 //        chr.setVisibility(View.INVISIBLE); // hide visibility until stopwatch needed
 
         // restart maze, buttons, textview status and chronometer
-        btnRefresh = getView().findViewById(R.id.btnCali);
+        btnRefresh = getView().findViewById(R.id.btnReset);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,7 +286,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
         // robot direction
         spinnerROrien = getView().findViewById(R.id.spinnerROrien);
-        String[] items = new String[]{"", "0", "90", "180", "270"};
+        String[] items = new String[]{"0", "90", "180", "270"};
         directionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
         spinnerROrien.setAdapter(directionAdapter);
         // drop down menu to set robot's facing direction
@@ -406,7 +402,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             String theName = intent.getStringExtra("message"); // Get extra data included in the Intent
-            if (theName == "") { // no device connected, disable bluetooth-related actions
+            if (theName.equals("")) { // no device connected, disable bluetooth-related actions
                 //joystickRight.setEnabled(false);
                 //--dcBtn.setEnabled(false);
                 btnUp.setEnabled(false);  // check
@@ -464,10 +460,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
                     // Identifying mdf string send for real-time update of maze during exploration
                     String[] stringItems = theText.split(":");
-                    try {
-                    } catch (Exception e) {
-                        Log.d("MDF String", "AL format wrong");
-                    }
+//                    try {
+//                    } catch (Exception e) {
+//                        Log.d("MDF String", "AL format wrong");
+//                    }
 
                     String[] exploredString = hexToBinary(stringItems[0]).split(""); // Getting the explored grids from MDF string
                     String bin = "";

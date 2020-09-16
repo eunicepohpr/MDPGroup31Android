@@ -28,18 +28,25 @@
 
     <string name="MapRobotStatus">\u0020Robot Status:\u0020</string>
     <string name="MapExpStatus">\u0020Exploration:\u0020</string>
-    <string name="MapFPWPStatus">FP Waypoint:\u0020</string>
-    <string name="MapRSStatus">Robot Start:\u0020</string>
-    <string name="MapRobotOrien">Robot Orientation:\u0020</string>
+    <string name="MapFPWPStatus">FP Waypoint\u0020</string>
+    <string name="MapRSStatus">Robot Position\u0020</string>
+    <string name="MapRobotOrien">Orientation:\u0020</string>
+
+    <string-array name="RobotOrientationArray">
+        <item>0</item>
+        <item>90</item>
+        <item>180</item>
+        <item>270</item>
+    </string-array>
 
     <string name="SwitchTilt">Tilt</string>
-    <string name="SwitchAU">Auto update</string>
-    <string name="SwitchPlotRP">Plot Robot Position</string>
+    <string name="SwitchAU">Map Auto</string>
+    <string name="SwitchPlotRP">Set Position</string>
 
     <!-- Map Buttons -->
-    <string name="BtnEx">Exploration</string>
-    <string name="BtnStart">Fastest Path</string>
-    <string name="BtnReset">Refresh</string>
+    <string name="BtnEx">Explore</string>
+    <string name="BtnFP">Fastest Path</string>
+    <string name="BtnReset">Reset</string>
     <string name="BtnCali">Calibrate</string>
     <string name="BtnUpM">Update Map</string>
     <string name="BtnWP">Send WayPoint</string>
