@@ -55,6 +55,7 @@
                         android:textAppearance="@style/MapStatus" />
 
                     <TextView
+                        android:id="@+id/tvRobotStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/tvRS"
@@ -77,7 +78,8 @@
                         android:text="@string/MapExpStatus"
                         android:textAppearance="@style/MapStatus" />
 
-                    <TextView
+                    <Chronometer
+                        android:id="@+id/chrTimer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/tvES"
@@ -94,16 +96,17 @@
                     android:layout_margin="5dp">
 
                     <TextView
-                        android:id="@+id/tvFPWP"
+                        android:id="@+id/tvFPWPTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/MapFPWPStatus"
                         android:textAppearance="@style/MapStatus" />
 
                     <TextView
+                        android:id="@+id/tvFPWP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/tvFPWP"
+                        android:layout_toEndOf="@id/tvFPWPTitle"
                         android:text="(0,0)"
                         android:textSize="15sp" />
 
@@ -117,16 +120,17 @@
                     android:layout_margin="5dp">
 
                     <TextView
-                        android:id="@+id/tvRStart"
+                        android:id="@+id/tvRStartTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/MapRSStatus"
                         android:textAppearance="@style/MapStatus" />
 
                     <TextView
+                        android:id="@+id/tvRStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/tvRStart"
+                        android:layout_toEndOf="@id/tvRStartTitle"
                         android:text="(0,0)"
                         android:textSize="15sp" />
 
@@ -164,6 +168,7 @@
 
                     <Spinner
                         android:id="@+id/spinnerROrien"
+                        android:layout_toRightOf="@id/tvRO"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/tvRO" />

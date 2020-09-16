@@ -43,7 +43,7 @@
     <string name="BtnCali">Calibrate</string>
     <string name="BtnUpM">Update Map</string>
     <string name="BtnWP">Send WayPoint</string>
-    <string name="BtnRP">Send Robot Position</string>
+    <string name="BtnRP">Send Position</string>
 
     <string name="BtnUp">\nUp\n</string>
     <string name="BtnDown">\nDown\n</string>

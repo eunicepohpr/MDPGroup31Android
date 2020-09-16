@@ -1,9 +1,13 @@
 package com.example.mdpandroid.New;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -62,6 +66,12 @@ public class MainActivity2 extends AppCompatActivity {
             }
         });
 
+        // result receiver
+        LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
+                new IntentFilter("getConnectedDevice"));
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mTextReceiver,
+//                new IntentFilter("getTextFromDevice"));
+
     }
 
     protected void onNewIntent(Intent intent) {
@@ -87,6 +97,21 @@ public class MainActivity2 extends AppCompatActivity {
         btToolBar.setBackgroundColor(ContextCompat.getColor(this, R.color.BTNotConnected));
         btTextView.setText(getString(R.string.BTNotConnected));
     }
+
+    // update status whenever connection changes
+    private BroadcastReceiver mNameReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String theName = intent.getStringExtra("message"); // Get extra data included in the Intent
+            if (theName == "") { // no device connected, disable bluetooth-related actions
+                device = "";
+                updateBluetoothTBStatus(device);
+            } else { // device connected, enable all bluetooth-related actions
+                device = theName;
+                updateBluetoothTBStatus(device);
+            }
+        }
+    };
 
     public void showToast(String message) {
         Toast.makeText(MainActivity2.this, message, Toast.LENGTH_LONG).show();
