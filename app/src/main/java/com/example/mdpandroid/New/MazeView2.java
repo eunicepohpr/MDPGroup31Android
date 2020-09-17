@@ -1,5 +1,6 @@
 package com.example.mdpandroid.New;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -9,6 +10,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.example.mdpandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +33,7 @@ public class MazeView2 extends View {
 
     private Paint blackPaint, greenPaint, yellowPaint, bluePaint, lightBluePaint, whitePaint,
             redPaint, greyPaint, cyanPaint;
-    private Paint goalPaint, startPaint, mapPaint, robotPaint;
+    private Paint goalPaint, startPaint, mapPaint, robotPaint, waypointPaint;
     private final String DEFAULTAL = "AR,AN,"; // Sending to Arudino
     private final String DEFAULTAR = "AR,AN,";
     //  private final String DEFAULTFASTEST = "GO";
@@ -47,6 +51,7 @@ public class MazeView2 extends View {
     // store obstacles (x,y)
     ArrayList<String> obsArray = new ArrayList<String>();
 
+    @SuppressLint("ResourceAsColor")
     public MazeView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -64,6 +69,7 @@ public class MazeView2 extends View {
         startPaint = new Paint();
         mapPaint = new Paint();
         robotPaint = new Paint();
+        waypointPaint = new Paint();
 
         // setting color for all the color variables
         bluePaint.setColor(Color.BLUE);
@@ -77,10 +83,11 @@ public class MazeView2 extends View {
         greyPaint.setColor(Color.GRAY);
         blackPaint.setStrokeWidth(WALL_THICKNESS);
 
-        goalPaint.setColor(Color.rgb(0, 205, 150));
-        startPaint.setColor(Color.rgb(0, 157, 205));
+        goalPaint.setColor(Color.rgb(142, 226, 195));
+        startPaint.setColor(Color.rgb(142, 175, 226));
         mapPaint.setColor(Color.LTGRAY);
         robotPaint.setColor(Color.DKGRAY);
+        waypointPaint.setColor(Color.rgb(94, 94, 94));
 
         createMaze();
     }
@@ -98,7 +105,7 @@ public class MazeView2 extends View {
         }
         cellSize = cellHeight;
 
-        this.setLayoutParams(new LinearLayout.LayoutParams(cellWidth * NUM_COLUMNS, cellHeight * NUM_ROWS));
+        this.setLayoutParams(new RelativeLayout.LayoutParams(cellWidth * NUM_COLUMNS, cellHeight * NUM_ROWS));
         invalidate();
     }
 
@@ -165,7 +172,7 @@ public class MazeView2 extends View {
         // display the waypoint when user taps
         if (waypoint[0] >= 0) {
             canvas.drawRect(waypoint[0] * cellWidth, (NUM_ROWS - 1 - waypoint[1]) * cellHeight,
-                    (waypoint[0] + 1) * cellWidth, (NUM_ROWS - waypoint[1]) * cellHeight, blackPaint);
+                    (waypoint[0] + 1) * cellWidth, (NUM_ROWS - waypoint[1]) * cellHeight, waypointPaint);
 
         }
 

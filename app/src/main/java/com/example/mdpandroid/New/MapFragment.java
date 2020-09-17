@@ -43,7 +43,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     private Button btnUp, btnDown, btnLeft, btnRight;
     private Switch switchAU, switchTilt, switchPRP;
     private Spinner spinnerROrien;
-    private Chronometer chr;
+    private Chronometer chr, chrFPTimer;
     private TextView tvRStatus, tvFPWP, tvRStartP;
 
     // tilting
@@ -73,7 +73,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                              Bundle savedInstanceState) {
         instance = this;
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        return inflater.inflate(R.layout.fragment_map_2, container, false);
     }
 
     @Override
@@ -157,6 +157,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
         //for stopwatch
         chr = getView().findViewById(R.id.chrTimer);
+        chrFPTimer = getView().findViewById(R.id.chrFPTimer);
 //        chr.setVisibility(View.INVISIBLE); // hide visibility until stopwatch needed
 
         // restart maze, buttons, textview status and chronometer
@@ -174,6 +175,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 tvRStatus.setText("Waiting for new instructions");
                 fastest = false;
                 chr.stop();
+                chrFPTimer.stop();
             }
         });
 
@@ -213,11 +215,11 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 btnExplore.setEnabled(true); // enable exploration button
                 btnFP.setEnabled(false); // disable fastest button
                 tvRStatus.setText("Finding Fastest path in progress..."); // update status
-                chr.setVisibility(View.VISIBLE); // show stopwatch
-                chr.setBase(SystemClock.elapsedRealtime()); // set stopwatch to 0:00
-                chr.stop(); // stop if it was already running
-                chr.setFormat("Time: %s"); // format stopwatch's text
-                chr.start(); // start stopwatch
+                chrFPTimer.setVisibility(View.VISIBLE); // show stopwatch
+                chrFPTimer.setBase(SystemClock.elapsedRealtime()); // set stopwatch to 0:00
+                chrFPTimer.stop(); // stop if it was already running
+                chrFPTimer.setFormat("%s"); // format stopwatch's text
+                chrFPTimer.start(); // start stopwatch
             }
         });
 
@@ -503,8 +505,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
                             inc++;
                         }
                     }
-                    // update the obstacles and explored grids
-                    mazeView.updateMaze(exploredGrid, obstacleGrid);
+
+                    mazeView.updateMaze(exploredGrid, obstacleGrid); // update the obstacles and explored grids
                     // Getting the direction the robot is facing
                     if (stringItems.length >= 5) {
                         int direction = 0;
@@ -543,7 +545,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 } else if (theText.equals("Explored")) { // exploration completed
                     chr.stop(); // stop stopwatch
                     tvRStatus.setText("Exploration has been successfully completed"); // update status
-                    String imageStr = ""; // create string to store infomation on images found
+                    String imageStr = ""; // create string to store information on images found
                     if (mazeView.numberID != null) { // if images were found, loop through X, Y, ID and add to string
                         for (int i = 0; i < mazeView.numberID.size(); i++) {
                             imageStr = imageStr + "(" + (mazeView.numberIDX.get(i) - 1) + ", " +

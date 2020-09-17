@@ -92,7 +92,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         if (btAdapter == null) { // device doesnt support bluetooth
             showToast("Device does not support Bluetooth");
-            finish();
+//            finish();
         } else {
             if (!btAdapter.isEnabled()) // bluetooth not enabled
                 startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), 1);

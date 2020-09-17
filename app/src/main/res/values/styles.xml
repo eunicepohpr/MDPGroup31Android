@@ -14,9 +14,15 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/themeBlue</item>
         <item name="actionBarSize">20dp</item>
+        <item name="colorButtonNormal">@color/btnBg2</item>
+<!--        <item name="android:buttonStyle">@style/ButtonColor</item>-->
     </style>
+
+<!--    <style name="ButtonColor" parent="@style/Widget.AppCompat.Button">-->
+<!--        <item name="android:textColor">@color/black</item>-->
+<!--    </style>-->
 
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">16sp</item>
@@ -43,5 +49,6 @@
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 
 </resources>

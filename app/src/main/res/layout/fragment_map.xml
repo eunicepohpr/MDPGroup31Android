@@ -20,79 +20,23 @@
             android:orientation="vertical"
             android:weightSum="64">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="6"
-                android:orientation="horizontal"
-                android:weightSum="6">
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3">
-
-                    <TextView
-                        android:id="@+id/tvRS"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableStart="@drawable/robot_small"
-                        android:text="@string/MapRobotStatus"
-                        android:textAppearance="@style/MapStatus" />
-
-                    <TextView
-                        android:id="@+id/tvRobotStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_toEndOf="@id/tvRS"
-                        android:textSize="15sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3">
-
-                    <TextView
-                        android:id="@+id/tvES"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:drawableStart="@drawable/time_small"
-                        android:text="@string/MapExpStatus"
-                        android:textAppearance="@style/MapStatus" />
-
-                    <Chronometer
-                        android:id="@+id/chrTimer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_toEndOf="@id/tvES"
-                        android:textSize="15sp" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-            <!--            <RelativeLayout-->
+            <!--            <LinearLayout-->
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="0dp"-->
-            <!--                android:layout_weight="8">-->
+            <!--                android:layout_weight="6"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                android:weightSum="6">-->
 
-            <!--                &lt;!&ndash;Robot Status&ndash;&gt;-->
             <!--                <RelativeLayout-->
-            <!--                    android:id="@+id/topRL1"-->
-            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_width="0dp"-->
             <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_centerVertical="true"-->
-            <!--                    android:layout_margin="5dp">-->
+            <!--                    android:layout_weight="3">-->
 
             <!--                    <TextView-->
             <!--                        android:id="@+id/tvRS"-->
             <!--                        android:layout_width="wrap_content"-->
             <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_centerInParent="true"-->
             <!--                        android:drawableStart="@drawable/robot_small"-->
             <!--                        android:text="@string/MapRobotStatus"-->
             <!--                        android:textAppearance="@style/MapStatus" />-->
@@ -101,25 +45,23 @@
             <!--                        android:id="@+id/tvRobotStatus"-->
             <!--                        android:layout_width="wrap_content"-->
             <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_centerInParent="true"-->
             <!--                        android:layout_toEndOf="@id/tvRS"-->
-            <!--                        android:text="idle"-->
-            <!--                        android:textSize="15sp" />-->
+            <!--                        android:textSize="15sp"-->
+            <!--                        android:text="Waiting for new instructions"/>-->
 
             <!--                </RelativeLayout>-->
 
-            <!--                &lt;!&ndash;Exploration Time Status&ndash;&gt;-->
             <!--                <RelativeLayout-->
-            <!--                    android:id="@+id/topRL2"-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:layout_alignParentEnd="true"-->
-            <!--                    android:layout_centerVertical="true"-->
-            <!--                    android:layout_margin="5dp">-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:layout_weight="3">-->
 
             <!--                    <TextView-->
             <!--                        android:id="@+id/tvES"-->
             <!--                        android:layout_width="wrap_content"-->
             <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_centerInParent="true"-->
             <!--                        android:drawableStart="@drawable/time_small"-->
             <!--                        android:text="@string/MapExpStatus"-->
             <!--                        android:textAppearance="@style/MapStatus" />-->
@@ -128,13 +70,100 @@
             <!--                        android:id="@+id/chrTimer"-->
             <!--                        android:layout_width="wrap_content"-->
             <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_centerInParent="true"-->
             <!--                        android:layout_toEndOf="@id/tvES"-->
-            <!--                        android:text="00:00"-->
             <!--                        android:textSize="15sp" />-->
 
             <!--                </RelativeLayout>-->
 
-            <!--            </RelativeLayout>-->
+            <!--            </LinearLayout>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6">
+
+                <!--Robot Status-->
+                <RelativeLayout
+                    android:id="@+id/topRL1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/tvRS"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/robot_small"
+                        android:text="@string/MapRobotStatus"
+                        android:textAppearance="@style/MapStatus" />
+
+                    <TextView
+                        android:id="@+id/tvRobotStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvRS"
+                        android:text="idle"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+                <!--Exploration Time Status-->
+                <RelativeLayout
+                    android:id="@+id/topRL2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/tvES"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/time_small"
+                        android:text="@string/MapExpStatus"
+                        android:textAppearance="@style/MapStatus" />
+
+                    <Chronometer
+                        android:id="@+id/chrTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvES"
+                        android:text="00:00"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+                <!--Fatest Path Status-->
+                <RelativeLayout
+                    android:id="@+id/topRL3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/tvFP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/fp_small"
+                        android:text="@string/MapFPTimeStatus"
+                        android:textAppearance="@style/MapStatus" />
+
+                    <Chronometer
+                        android:id="@+id/chrFPTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/tvFP"
+                        android:text="00:00"
+                        android:textSize="15sp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -162,44 +191,47 @@
 
                     </RelativeLayout>
 
+                    <!--Auto Update Map - ITS SCREWED UP HERE-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="5dp"
+                        android:visibility="gone">
+
+                        <Switch
+                            android:id="@+id/switchPlotRP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_margin="1dp"
+                            android:text="@string/MapChangeRS"
+                            android:visibility="gone"/>
+
+                        <Button
+                            android:id="@+id/btnUpdateMap"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_margin="1dp"
+                            android:text="@string/BtnUpM"
+                            android:layout_above="@id/switchAutoUp"
+                            android:layout_alignParentBottom="true"
+                            android:visibility="invisible" />
+
+                        <Switch
+                            android:id="@+id/switchAutoUp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/btnUpdateMap"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_margin="1dp"
+                            android:text="@string/SwitchAU" />
+
+                    </RelativeLayout>
+
                 </LinearLayout>
-
-                <!--Auto Update Map-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp">
-
-                    <Switch
-                        android:id="@+id/switchPlotRP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_margin="1dp"
-                        android:text="@string/MapChangeRS" />
-
-                    <Button
-                        android:id="@+id/btnUpdateMap"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_margin="1dp"
-                        android:text="@string/BtnUpM"
-                        android:visibility="invisible" />
-
-                    <Switch
-                        android:id="@+id/switchAutoUp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/btnUpdateMap"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_margin="1dp"
-                        android:text="@string/SwitchAU" />
-
-                </RelativeLayout>
 
             </RelativeLayout>
 
