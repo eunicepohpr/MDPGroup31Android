@@ -368,6 +368,14 @@ public class MapFragment extends Fragment implements SensorEventListener {
     }
 
     // Send BluetoothActivity2 for moving robot
+    /*
+    - AR,AN,F
+    - AR,AN,R
+    - AR,AN,L
+    - PC,AN,
+    - PC,AN,WP:
+    - PC,AN,FP
+     */
     public void sendCtrlToBtAct(String msg) {
         Intent intent = new Intent("getCtrlToSend");
         // You can also include some extra data.

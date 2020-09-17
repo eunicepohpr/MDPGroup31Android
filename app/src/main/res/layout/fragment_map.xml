@@ -24,21 +24,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="6"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="6">
 
-                <!--Robot Status-->
                 <RelativeLayout
-                    android:id="@+id/topRL1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginEnd="10dp">
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3">
 
                     <TextView
                         android:id="@+id/tvRS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:drawableStart="@drawable/robot_small"
                         android:text="@string/MapRobotStatus"
                         android:textAppearance="@style/MapStatus" />
@@ -47,23 +45,22 @@
                         android:id="@+id/tvRobotStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:layout_toEndOf="@id/tvRS"
                         android:textSize="15sp" />
 
                 </RelativeLayout>
 
-                <!--Exploration Time Status-->
                 <RelativeLayout
-                    android:id="@+id/topRL2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginStart="10dp">
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3">
 
                     <TextView
                         android:id="@+id/tvES"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:drawableStart="@drawable/time_small"
                         android:text="@string/MapExpStatus"
                         android:textAppearance="@style/MapStatus" />
@@ -72,6 +69,7 @@
                         android:id="@+id/chrTimer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:layout_toEndOf="@id/tvES"
                         android:textSize="15sp" />
 
@@ -173,11 +171,20 @@
                     android:layout_alignParentBottom="true"
                     android:layout_margin="5dp">
 
+                    <Switch
+                        android:id="@+id/switchPlotRP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_margin="1dp"
+                        android:text="@string/MapChangeRS" />
+
                     <Button
                         android:id="@+id/btnUpdateMap"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_margin="1dp"
                         android:text="@string/BtnUpM"
                         android:visibility="invisible" />
@@ -188,6 +195,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/btnUpdateMap"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_margin="1dp"
                         android:text="@string/SwitchAU" />
 
@@ -359,6 +367,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:drawableLeft="@drawable/sendpoint_small"
                             android:text="@string/BtnWP" />
 
                     </RelativeLayout>
@@ -388,13 +397,6 @@
                         android:text="@string/MapRSStatus"
                         android:textAppearance="@style/TextSubSubHeading" />
 
-                    <Switch
-                        android:id="@+id/switchPlotRP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="1dp"
-                        android:layout_toEndOf="@id/tvRStartTitle" />
-
                     <RelativeLayout
                         android:id="@+id/RSRL1"
                         android:layout_width="match_parent"
@@ -422,6 +424,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:drawableLeft="@drawable/sendpoint_small"
                             android:text="@string/BtnRP" />
 
                     </RelativeLayout>
@@ -451,6 +454,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_toStartOf="@id/btnFP"
+                        android:drawableTop="@drawable/time_small"
                         android:text="@string/BtnEx" />
 
                     <Button
@@ -459,6 +463,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="1dp"
+                        android:drawableTop="@drawable/fp_small"
                         android:text="@string/BtnFP" />
 
                     <Button
@@ -467,6 +472,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_toEndOf="@id/btnFP"
+                        android:drawableTop="@drawable/reset_small"
                         android:text="@string/BtnReset" />
 
                 </RelativeLayout>
