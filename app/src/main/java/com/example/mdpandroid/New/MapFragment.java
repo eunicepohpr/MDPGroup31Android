@@ -122,28 +122,28 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Move up");
+                setRobotTextView(mazeView.getRobotCenter());
                 mazeView.moveUp();
             }
         });
         btnDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Move down");
+                setRobotTextView(mazeView.getRobotCenter());
                 mazeView.moveDown();
             }
         });
         btnLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Move left");
+                setRobotTextView(mazeView.getRobotCenter());
                 mazeView.moveLeft();
             }
         });
         btnRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Move right");
+                setRobotTextView(mazeView.getRobotCenter());
                 mazeView.moveRight();
             }
         });
@@ -373,10 +373,11 @@ public class MapFragment extends Fragment implements SensorEventListener {
     /*
     - AR,AN,F
     - AR,AN,R
-    - AR,AN,L
-    - PC,AN,
-    - PC,AN,WP:
-    - PC,AN,FP
+    - Turn LeftAR,AN,L
+    - Start Exploration: AR,AN,E
+    - Send robot coOrdinates: PC,AN,
+    - Send Waypoint: PC,AN,WP:
+    - Send fastest path: PC,AN,FP
      */
     public void sendCtrlToBtAct(String msg) {
         Intent intent = new Intent("getCtrlToSend");
