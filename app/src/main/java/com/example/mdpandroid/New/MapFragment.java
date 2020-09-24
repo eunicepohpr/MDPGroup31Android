@@ -319,9 +319,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
         });
 
         // result receiver
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mNameReceiver,
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mNameReceiver,
                 new IntentFilter("getConnectedDevice"));
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mTextReceiver,
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mTextReceiver,
                 new IntentFilter("getTextFromDevice"));
 
 //        joystickRight.setOnMoveListener(new JoystickView.OnMoveListener() {
@@ -600,7 +600,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     @Override
     public void onPause() {
         super.onPause();
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
+//        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
     }
 
     @Override

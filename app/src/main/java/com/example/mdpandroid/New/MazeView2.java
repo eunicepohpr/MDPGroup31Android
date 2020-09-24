@@ -121,6 +121,23 @@ public class MazeView2 extends View {
                 canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
                         (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, mapPaint);
 
+//        for (int x = 1; x <= NUM_COLUMNS; x++) {
+//            if (x > 9)
+//                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5),
+//                        cells[x][20].startY + (cellSize / 3), blackPaint);
+//            else
+//                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 3),
+//                        cells[x][20].startY + (cellSize / 3), blackPaint);
+//        }
+//        for (int y = 0; y < NUM_ROWS; y++) {
+//            if ((20 - y) > 9)
+//                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2),
+//                        cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+//            else
+//                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f),
+//                        cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+//        }
+
         int inc = 0;
         int inc2 = 0;
         // Obstacles and explored
@@ -159,33 +176,36 @@ public class MazeView2 extends View {
             }
         }
 
-        // startZone
-        for (int i = 0; i <= 2; i++)
-            for (int j = 0; j <= 2; j++)
-                canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
-                        (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, startPaint);
-        // goalZone
-        for (int i = 12; i <= 14; i++)
-            for (int j = 17; j <= 19; j++)
-                canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
-                        (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, goalPaint);
-        // display the waypoint when user taps
-        if (waypoint[0] >= 0) {
-            canvas.drawRect(waypoint[0] * cellWidth, (NUM_ROWS - 1 - waypoint[1]) * cellHeight,
-                    (waypoint[0] + 1) * cellWidth, (NUM_ROWS - waypoint[1]) * cellHeight, waypointPaint);
-
-        }
-
-        // Grid drawing
+        // Grid drawing lines
         for (int c = 0; c < NUM_COLUMNS + 1; c++) {
             canvas.drawLine(c * cellWidth, 0, c * cellWidth, NUM_ROWS * cellHeight, whitePaint);
         }
-
         for (int r = 0; r < NUM_ROWS + 1; r++) {
             canvas.drawLine(0, r * cellHeight, NUM_COLUMNS * cellWidth, r * cellHeight, whitePaint);
         }
 
-        // displaying robot position when user taps
+        drawStartZone(canvas);
+        drawGoalZone(canvas);
+        displayWaypoint(canvas);
+        displayRobot(canvas);
+
+    }
+
+    private void drawStartZone(Canvas canvas) { // startZone
+        for (int i = 0; i <= 2; i++)
+            for (int j = 0; j <= 2; j++)
+                canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
+                        (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, startPaint);
+    }
+
+    private void drawGoalZone(Canvas canvas) { // goalZone
+        for (int i = 12; i <= 14; i++)
+            for (int j = 17; j <= 19; j++)
+                canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
+                        (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, goalPaint);
+    }
+
+    private void displayRobot(Canvas canvas) { // displaying robot position when user taps
         if (robotCenter[0] >= 0) {
             canvas.drawCircle(robotCenter[0] * cellWidth + cellWidth / 2,
                     (NUM_ROWS - robotCenter[1]) * cellHeight - cellHeight / 2, 1.3f * cellWidth, robotPaint);
@@ -193,6 +213,13 @@ public class MazeView2 extends View {
         if (robotFront[0] >= 0) {
             canvas.drawCircle(robotFront[0] * cellWidth + cellWidth / 2,
                     (NUM_ROWS - robotFront[1]) * cellHeight - cellHeight / 2, 0.3f * cellWidth, whitePaint);
+        }
+    }
+
+    private void displayWaypoint(Canvas canvas) { // display the waypoint when user taps
+        if (waypoint[0] >= 0) {
+            canvas.drawRect(waypoint[0] * cellWidth, (NUM_ROWS - 1 - waypoint[1]) * cellHeight,
+                    (waypoint[0] + 1) * cellWidth, (NUM_ROWS - waypoint[1]) * cellHeight, waypointPaint);
         }
     }
 
@@ -208,7 +235,7 @@ public class MazeView2 extends View {
 
     // generate cell objects
     public void createMaze() {
-        cells = new MazeView2.Cell[NUM_COLUMNS][NUM_ROWS];
+        cells = new MazeView2.Cell[NUM_COLUMNS + 1][NUM_ROWS + 1];
         for (int x = 0; x < NUM_COLUMNS; x++)
             for (int y = 0; y < NUM_ROWS; y++)
                 cells[x][y] = new MazeView2.Cell(x, y);
