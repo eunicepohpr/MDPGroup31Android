@@ -1,4 +1,4 @@
-package com.example.mdpandroid;
+package com.example.mdpandroid.Old;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,6 +34,10 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.mdpandroid.BluetoothActivity;
+import com.example.mdpandroid.JoystickView;
+import com.example.mdpandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;

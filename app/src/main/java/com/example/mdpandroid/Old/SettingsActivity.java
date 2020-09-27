@@ -1,4 +1,4 @@
-package com.example.mdpandroid;
+package com.example.mdpandroid.Old;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.mdpandroid.BluetoothActivity;
+import com.example.mdpandroid.R;
 
 /**
  * class for Settings UI
@@ -197,7 +200,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //set default message
-                String value = "Default Message 2";
+                String value = "Default-Message 2";
                 //retrieve app's SharedPreferences
                 SharedPreferences sharedPref = getSharedPreferences("pref", Context.MODE_PRIVATE);
                 //if app's SharedPreferences has "value2" as key
