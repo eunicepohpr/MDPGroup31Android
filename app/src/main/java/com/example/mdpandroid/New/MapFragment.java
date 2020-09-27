@@ -29,6 +29,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mdpandroid.JoystickView;
 import com.example.mdpandroid.R;
 
 import java.util.ArrayList;
@@ -45,6 +46,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
     private Spinner spinnerROrien;
     private Chronometer chr, chrFPTimer;
     private TextView tvRStatus, tvFPWP, tvRStartP;
+
+    private JoystickView joystickRight;
 
     // tilting
     public boolean tiltEnabled = false, fastest = false;
@@ -471,10 +474,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
                     // Identifying mdf string send for real-time update of maze during exploration
                     String[] stringItems = theText.split(":");
-//                    try {
-//                    } catch (Exception e) {
-//                        Log.d("MDF String", "AL format wrong");
-//                    }
 
                     String[] exploredString = hexToBinary(stringItems[0]).split(""); // Getting the explored grids from MDF string
                     String bin = "";
@@ -487,11 +486,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         mdfObstacleString = stringItems[1];
                     }
 
-                    String text = "";
                     // Getting the obstacle grids from MDF string
                     String[] obstacleString = hexToBinary(stringItems[1]).split("");
                     int[] obstacleGrid = new int[obstacleString.length - 1];
-                    Log.d("TAG", text);
                     for (int i = 0; i < obstacleGrid.length; i++)
                         obstacleGrid[i] = Integer.parseInt(obstacleString[i + 1]);
 
@@ -508,6 +505,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     }
 
                     mazeView.updateMaze(exploredGrid, obstacleGrid); // update the obstacles and explored grids
+
                     // Getting the direction the robot is facing
                     if (stringItems.length >= 5) {
                         int direction = 0;
@@ -539,10 +537,13 @@ public class MapFragment extends Fragment implements SensorEventListener {
                             for (int i = 0; i < tempObsArray.size(); i++)
                                 if (tempObsArray.get(i).equals(tempPos))
                                     checkObs = true;
-                            if (checkObs)
+                            if (checkObs) {
                                 mazeView.updateNumberID(numberX, numberY, stringItems[7]);
+                                mazeView.updateImageID(numberX, numberY, Integer.parseInt(stringItems[7]));
+                            }
                         }
                     }
+
                 } else if (theText.equals("Explored")) { // exploration completed
                     chr.stop(); // stop stopwatch
                     tvRStatus.setText("Exploration has been successfully completed"); // update status
@@ -553,6 +554,12 @@ public class MapFragment extends Fragment implements SensorEventListener {
                                     (mazeView.numberIDY.get(i) - 1) + ", " + mazeView.numberID.get(i) + ")\n";
                         }
                     }
+//                    if (mazeView.imageID != null) { // if images were found, loop through X, Y, ID and add to string
+//                        for (int i = 0; i < mazeView.imageID.size(); i++) {
+//                            imageStr = imageStr + "(" + (mazeView.numberIDX.get(i) - 1) + ", " +
+//                                    (mazeView.numberIDY.get(i) - 1) + ", " + mazeView.imageID.get(i) + ")\n";
+//                        }
+//                    }
 
                     // message that contains MDF and image information
                     String message = "MDF String: \n" + mdfExploredString + ":" + mdfObstacleString +
@@ -581,6 +588,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
     // method to convert hex to binary
     private String hexToBinary(String hex) {
+//        Log.d("hexToBinary-hex", hex);
         int pointer = 0;
         String binary = "";
         String partial;
@@ -594,6 +602,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
             binary = binary.concat(bin); // then add in the converted hextobin
             pointer += 1;
         }
+//        Log.d("hexToBinary-binary", binary);
+        while (binary.length() < 300)
+            binary = "0" + binary;
         return binary;
     }
 
