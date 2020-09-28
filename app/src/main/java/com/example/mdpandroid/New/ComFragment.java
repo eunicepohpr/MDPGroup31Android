@@ -68,15 +68,10 @@ public class ComFragment extends Fragment {
         btnRecReset = getView().findViewById(R.id.btnComRecReset);
 
         SharedPreferences sharedPref = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        if (sharedPref.contains("value1")) {
-            etPersistentText.setText(sharedPref.getString("value1", ""));
-        } else {
-            etPersistentText.setText("Default Message 1");
-        }
+        etPersistentText.setText(sharedPref.contains("value1") ?
+                sharedPref.getString("value1", "") : "Default Message 1");
 
-        //result receiver
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
-//                new IntentFilter("getConnectedDevice"));
+        // listen for text from bluetooth BLAHBLAH
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mTextReceiver,
                 new IntentFilter("getTextFromDevice"));
 
@@ -151,8 +146,7 @@ public class ComFragment extends Fragment {
         btnRecReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvReceiveText.setText(R.string.ComRecTxtHelp);
-                // reset scrollview layout settings
+                tvReceiveText.setText(R.string.ComRecTxtHelp); // reset scrollview layout settings
                 noOfItems = 1;
                 svDyanmic = false;
                 sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -161,6 +155,7 @@ public class ComFragment extends Fragment {
         });
     }
 
+    // receive bluetooth text event
     private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -172,7 +167,6 @@ public class ComFragment extends Fragment {
                 Log.d("ComFrag mTReceive", theText);
                 if (text.equals(getResources().getString(R.string.ComRecTxtHelp))) {
                     tvReceiveText.setText(theText);
-                    // reset scrollview layout settings
                     noOfItems = 1;
                     svDyanmic = false;
                     sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -182,14 +176,14 @@ public class ComFragment extends Fragment {
                     noOfItems += 1;
                     if (noOfItems >= 10 && !svDyanmic) {
                         svDyanmic = true;
-                        sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 250));
+                        sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
                     }
                 }
             }
         }
     };
 
-    // to send bluetoothactivity for bluetooth chat
+    // to send text to bluetoothactivity for bluetooth
     private void sendToBtAct(String msg) {
         Intent intent = new Intent("getTextToSend");
         intent.putExtra("tts", msg);
@@ -204,5 +198,10 @@ public class ComFragment extends Fragment {
 
     public void showToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
     }
 }

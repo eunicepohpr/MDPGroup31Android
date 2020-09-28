@@ -133,8 +133,8 @@ public class MazeView2 extends View {
 
         drawGrids(canvas);
         drawExploredObstacles(canvas);
-//        displayNumberIdentified(canvas);
-        displayImageIdentified(canvas);
+        displayNumberIdentified(canvas);
+//        displayImageIdentified(canvas);
         drawStartZone(canvas);
         drawGoalZone(canvas);
         displayWaypoint(canvas);
@@ -258,12 +258,9 @@ public class MazeView2 extends View {
                 Resources res = getResources();
                 Bitmap bitmap = BitmapFactory.decodeResource(res, images[i]);
                 Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, cellWidth, cellHeight, false);
-                int x = (imageIDX.get(i) - 1) * cellWidth + 6;
-//                if (imageIDX.get(i) < 10 && imageIDX.get(i) > 0)
-//                    x = (imageIDX.get(i) - 1) * cellWidth + 6;
-//                else if (imageIDX.get(i) > 9 && imageIDX.get(i) < 16)
-//                    x = (imageIDX.get(i) - 1) * cellWidth + 6;
-                int y = (NUM_ROWS - imageIDY.get(i) + 1) * cellHeight - 7;
+                int x = (imageIDX.get(i) - 1) * cellWidth;
+                int y =  (NUM_ROWS - imageIDY.get(i)) * cellHeight;//(NUM_ROWS - imageIDY.get(i)) * cellHeight;
+//                imageIDX.get(i) * cellWidth,
                 canvas.drawBitmap(resizeBitmap, x, y, whitePaint);
             }
         }

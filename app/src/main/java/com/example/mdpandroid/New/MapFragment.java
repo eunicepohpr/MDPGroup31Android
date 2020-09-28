@@ -161,7 +161,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
         //for stopwatch
         chr = getView().findViewById(R.id.chrTimer);
         chrFPTimer = getView().findViewById(R.id.chrFPTimer);
-//        chr.setVisibility(View.INVISIBLE); // hide visibility until stopwatch needed
 
         // restart maze, buttons, textview status and chronometer
         btnRefresh = getView().findViewById(R.id.btnReset);
@@ -196,11 +195,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 final int tempX = mazeView.getWaypoint()[0] + 1;
                 final int tempY = mazeView.getWaypoint()[1] + 1;
 
-                sendCtrlToBtAct("AR,AN,E"); // send exploration message to arduino
+                sendCtrlToBtAct("PC,AN,E"); // send exploration message to arduino
                 btnExplore.setEnabled(false); // disable exploration button
                 btnFP.setEnabled(true); // enable fastest button
                 tvRStatus.setText("Exploration of maze is in progress..."); // update status
-                chr.setVisibility(View.VISIBLE); // show stopwatch
                 chr.setBase(SystemClock.elapsedRealtime()); // set stopwatch to 0:00
                 chr.stop(); // stop in case there is currently stopwatch running
                 chr.setFormat("%s"); // format stopwatch's text
@@ -218,7 +216,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 btnExplore.setEnabled(true); // enable exploration button
                 btnFP.setEnabled(false); // disable fastest button
                 tvRStatus.setText("Finding Fastest path in progress..."); // update status
-                chrFPTimer.setVisibility(View.VISIBLE); // show stopwatch
                 chrFPTimer.setBase(SystemClock.elapsedRealtime()); // set stopwatch to 0:00
                 chrFPTimer.stop(); // stop if it was already running
                 chrFPTimer.setFormat("%s"); // format stopwatch's text
@@ -259,8 +256,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnSendRP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendCtrlToBtAct("PC,AN," + (mazeView.getRobotCenter()[0] + 1) + "," +
-                        (mazeView.getRobotCenter()[1]) + "," + mazeView.angle);
+                sendCtrlToBtAct("PC,AN," + (mazeView.getRobotCenter()[0] + 1) + ":" +
+                        (mazeView.getRobotCenter()[1]) + ":" + degreeToDirection(mazeView.angle));
             }
         });
 
@@ -268,7 +265,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         // show current waypoint X & Y coordinates, (0,0) if not set
         tvFPWP = getView().findViewById(R.id.tvFPWP);
         setWaypointTextView(mazeView.getWaypoint());
-//        if (mazeView.getWaypoint()[0] < 0) {
+//        if (mazeView.getWaypoint()[0] < 0!) {
 //            tvFPWP.setText("(0,0)");
 //        } else {
 //            tvFPWP.setText("(" + (mazeView.getWaypoint()[0] + 1) + "," +
@@ -284,7 +281,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
             @Override
             public void onCheckedChanged(CompoundButton plotRobotPositionBtn, boolean isChecked) {
                 enablePlotRobotPosition = isChecked;
-//                enablePlotRobotPosition = !enablePlotRobotPosition;
             }
         });
 
@@ -322,10 +318,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         });
 
         // result receiver
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mNameReceiver,
-                new IntentFilter("getConnectedDevice"));
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mTextReceiver,
-                new IntentFilter("getTextFromDevice"));
+        registerReceivers();
 
 //        joystickRight.setOnMoveListener(new JoystickView.OnMoveListener() {
 //            @SuppressLint("DefaultLocale")
@@ -364,7 +357,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
     }
 
-    // text view created for robot start coordinates setting
+    // Text view for robot start coordinates setting
     public void setRobotTextView(int[] robotpoint) {
         if (robotpoint[0] < 0)
             tvRStartP.setText("(0,0)");
@@ -372,16 +365,15 @@ public class MapFragment extends Fragment implements SensorEventListener {
             tvRStartP.setText("(" + (robotpoint[0] + 1) + "," + (robotpoint[1] + 1) + ")");
     }
 
-    // Send BluetoothActivity2 for moving robot
     /*
-    - AR,AN,F
-    - AR,AN,R
-    - Turn LeftAR,AN,L
-    - Start Exploration: AR,AN,E
-    - Send robot coOrdinates: PC,AN,
-    - Send Waypoint: PC,AN,WP:
-    - Send fastest path: PC,AN,FP
+    - AR,AN,F/R/L
+    - Start Exploration: PC,AN,E
+    - Send robot coOrdinates: PC,AN,1:2:N/S/E/W
+    - Send Waypoint: PC,AN,WP:1:2
+    - Start fastest path: PC,AN,FP
+    - Calibrate Robot: AR,AN,C
      */
+    // Send to BluetoothActivity2 to send to RPI
     public void sendCtrlToBtAct(String msg) {
         Intent intent = new Intent("getCtrlToSend");
         // You can also include some extra data.
@@ -395,23 +387,33 @@ public class MapFragment extends Fragment implements SensorEventListener {
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
-    // to send bluetoothactivity for bluetooth chat
-    private void sendToBtAct(String msg) {
-        Intent intent = new Intent("getTextToSend");
-        // You can also include some extra data.
-        intent.putExtra("tts", msg);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    public String degreeToDirection(int degree) {
+        String direction = "N";
+        if (degree == 0)
+            direction = "N";
+        else if (degree == 90)
+            direction = "E";
+        else if (degree == 180)
+            direction = "S";
+        else if (degree == 270)
+            direction = "W";
+        return direction;
     }
 
-    // to send bluetoothactivity for moving robot
-    public void initiateDc(String msg) {
-        Intent intent = new Intent("initiateDc");
-        // You can also include some extra data.
-        intent.putExtra("disconnect", msg);
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+    public int directionToDegree(String direction) {
+        int degree = 0;
+        if (direction.equals("N"))
+            degree = 0;
+        else if (direction.equals("E"))
+            degree = 90;
+        else if (direction.equals("S"))
+            degree = 180;
+        else if (direction.equals("W"))
+            degree = 270;
+        return degree;
     }
 
-    // update status whenever connection changes
+    // Connection change event
     private BroadcastReceiver mNameReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -438,14 +440,14 @@ public class MapFragment extends Fragment implements SensorEventListener {
         }
     };
 
-    // update chatbox when receive from bluetooth
+    // Exploration and Fastest Path event
     private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String theText = intent.getStringExtra("text"); // Get extra data included in the Intent
             if (theText.length() > 0) {
                 if (theText.length() < 15 && fastest && (theText.contains("R") ||
-                        theText.contains("L") || theText.contains("F"))) { // checking for fastestpath string
+                        theText.contains("L") || theText.contains("F") || theText.contains("G"))) { // checking for fastestpath string
                     int forwardDistance;
                     String[] fastestCommands = theText.split(""); // split string to get direction & tiles to move
                     // move robot in order of command received
@@ -458,6 +460,11 @@ public class MapFragment extends Fragment implements SensorEventListener {
                             mazeView.turnRight();
                         else if (fastestCommands[i].equals("L"))
                             mazeView.turnLeft();
+                        else if (fastestCommands[i].equals("G")) { // reached goal zone
+                            tvRStatus.setText("Fastest Path Completed"); // update status
+                            fastest = false;
+                            chrFPTimer.stop();
+                        }
                         else { // Exception catching in case the string format is wrong
                             try {
                                 forwardDistance = Integer.parseInt(fastestCommands[i]);
@@ -509,14 +516,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     // Getting the direction the robot is facing
                     if (stringItems.length >= 5) {
                         int direction = 0;
-                        if (stringItems[4].equals("N"))
-                            direction = 0;
-                        else if (stringItems[4].equals("E"))
-                            direction = 90;
-                        else if (stringItems[4].equals("S"))
-                            direction = 180;
-                        else if (stringItems[4].equals("W"))
-                            direction = 270;
+                        direction = directionToDegree(stringItems[4]);
 
                         // Updating coordinates of robot according to string receive from algorithm
                         mazeView.updateRobotCoords(Integer.parseInt(stringItems[2]),
@@ -554,12 +554,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
                                     (mazeView.numberIDY.get(i) - 1) + ", " + mazeView.numberID.get(i) + ")\n";
                         }
                     }
-//                    if (mazeView.imageID != null) { // if images were found, loop through X, Y, ID and add to string
-//                        for (int i = 0; i < mazeView.imageID.size(); i++) {
-//                            imageStr = imageStr + "(" + (mazeView.numberIDX.get(i) - 1) + ", " +
-//                                    (mazeView.numberIDY.get(i) - 1) + ", " + mazeView.imageID.get(i) + ")\n";
-//                        }
-//                    }
 
                     // message that contains MDF and image information
                     String message = "MDF String: \n" + mdfExploredString + ":" + mdfObstacleString +
@@ -570,12 +564,12 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     i.putExtra("message", message);
                     LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
 
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            sendCtrlToBtAct("AR,AN,C"); // send to arduino to calibrate
-                        }
-                    }, 2000); // 2 seconds later
+//                    new Handler().postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            sendCtrlToBtAct("AR,AN,C"); // send to arduino to calibrate
+//                        }
+//                    }, 2000); // 2 seconds later
                 }
 
             }
@@ -586,12 +580,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
         return enablePlotRobotPosition;
     }
 
-    // method to convert hex to binary
+    // method to convert hex to 300 bits binary
     private String hexToBinary(String hex) {
-//        Log.d("hexToBinary-hex", hex);
         int pointer = 0;
-        String binary = "";
-        String partial;
+        String binary = "", partial;
         // 1 Hex digits each time to prevent overflow and recognize leading 0000
         while (hex.length() - pointer > 0) {
             partial = hex.substring(pointer, pointer + 1);
@@ -602,24 +594,24 @@ public class MapFragment extends Fragment implements SensorEventListener {
             binary = binary.concat(bin); // then add in the converted hextobin
             pointer += 1;
         }
-//        Log.d("hexToBinary-binary", binary);
         while (binary.length() < 300)
             binary = "0" + binary;
         return binary;
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-//        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
+
+    // Listen for events from Bluetooth Activity
+    public void registerReceivers() {
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mNameReceiver,
+                new IntentFilter("getConnectedDevice"));
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mTextReceiver,
+                new IntentFilter("getTextFromDevice"));
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        // Unregister since the activity is about to be closed.
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mNameReceiver);
-        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
+    // Stop listening events from BluetoothActivity
+    public void unregisterReceivers() {
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mTextReceiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mNameReceiver);
     }
 
     public void showToast(String message) {
@@ -650,4 +642,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceivers(); // Unregister since the activity is about to be closed.
+    }
 }

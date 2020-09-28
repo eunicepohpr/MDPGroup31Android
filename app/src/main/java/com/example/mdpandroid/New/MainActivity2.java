@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,17 +64,15 @@ public class MainActivity2 extends AppCompatActivity {
         // result receiver
         LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
                 new IntentFilter("getConnectedDevice"));
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mTextReceiver,
-//                new IntentFilter("getTextFromDevice"));
 
     }
 
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Bundle bundle = intent.getExtras();
-        device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
-        updateBluetoothTBStatus(device);
-    }
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        Bundle bundle = intent.getExtras();
+//        device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
+//        updateBluetoothTBStatus(device);
+//    }
 
     @Override
     public void onBackPressed() { // disable destroying activity
@@ -109,5 +108,27 @@ public class MainActivity2 extends AppCompatActivity {
 
     public void showToast(String message) {
         Toast.makeText(MainActivity2.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+//        Log.d("OII", "MainActivity2 onResume");
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
+//                new IntentFilter("getConnectedDevice"));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("OII", "MainActivity2 onPause");
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        Log.d("OII", "MainActivity2 onDestroy");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mNameReceiver);
     }
 }
