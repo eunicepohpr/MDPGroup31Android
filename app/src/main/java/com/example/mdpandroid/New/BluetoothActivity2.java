@@ -55,6 +55,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
     public static BluetoothService btService = null;
     public static StringBuffer mOutStringBuffer;
 
+    private boolean registered = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -348,15 +350,21 @@ public class BluetoothActivity2 extends AppCompatActivity {
 
     // register receivers needed
     private void registerLocalReceivers() {
+        if (registered)
+            return;
         LocalBroadcastManager.getInstance(this).registerReceiver(mTextReceiver, new IntentFilter("getTextToSend"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCtrlReceiver, new IntentFilter("getCtrlToSend"));
+        registered = true;
 //        LocalBroadcastManager.getInstance(this).registerReceiver(mDcReceiver, new IntentFilter("initiateDc"));
     }
 
     // destroy all receivers
     private void destroyReceivers() {
+        if (!registered)
+            return;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mTextReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mCtrlReceiver);
+        registered = false;
 //        LocalBroadcastManager.getInstance(this).unregisterReceiver(mDcReceiver);
 //        unregisterReceiver(bReceiver);
     }

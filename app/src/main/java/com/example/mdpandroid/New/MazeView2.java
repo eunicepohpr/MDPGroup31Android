@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -193,11 +194,33 @@ public class MazeView2 extends View {
         if (robotCenter[0] >= 0) {
             canvas.drawCircle(robotCenter[0] * cellWidth + cellWidth / 2,
                     (NUM_ROWS - robotCenter[1]) * cellHeight - cellHeight / 2, 1.3f * cellWidth, robotPaint);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.robot_head);
+            Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, cellWidth * 3, cellHeight * 3, false);
+            Matrix m = new Matrix();
+            m.setRotate(angle, resizeBitmap.getWidth(), resizeBitmap.getHeight());
+            switch (angle) {
+                case 0:
+                    m.postTranslate((robotCenter[0] - 1) * cellWidth, (NUM_ROWS - robotCenter[1] - 2) * cellHeight);
+                    break;
+                case 90:
+                    m.postTranslate((robotCenter[0] - 4) * cellWidth, (NUM_ROWS - robotCenter[1] - 2) * cellHeight);
+                    break;
+                case 180:
+                    m.postTranslate((robotCenter[0] - 4) * cellWidth, (NUM_ROWS - robotCenter[1] - 5) * cellHeight);
+                    break;
+                case 270:
+                    m.postTranslate((robotCenter[0] -1) * cellWidth, (NUM_ROWS - robotCenter[1] - 5) * cellHeight);
+                    break;
+                default:
+                    m.postTranslate((robotCenter[0] - 1) * cellWidth, (NUM_ROWS - robotCenter[1] - 2) * cellHeight);
+                    break;
+            }
+            canvas.drawBitmap(resizeBitmap, m, whitePaint);
         }
-        if (robotFront[0] >= 0) {
-            canvas.drawCircle(robotFront[0] * cellWidth + cellWidth / 2,
-                    (NUM_ROWS - robotFront[1]) * cellHeight - cellHeight / 2, 0.3f * cellWidth, whitePaint);
-        }
+//        if (robotFront[0] >= 0) {
+//            canvas.drawCircle(robotFront[0] * cellWidth + cellWidth / 2,
+//                    (NUM_ROWS - robotFront[1]) * cellHeight - cellHeight / 2, 0.3f * cellWidth, whitePaint);
+//        }
     }
 
     // display the waypoint when user taps
@@ -250,8 +273,7 @@ public class MazeView2 extends View {
     private void displayImageIdentified(Canvas canvas) {
         if (imageID != null && imageIDY != null && imageIDX != null) {
             for (int i = 0; i < imageIDX.size(); i++) {
-                Resources res = getResources();
-                Bitmap bitmap = BitmapFactory.decodeResource(res, images[imageID.get(i) - 1]);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), images[imageID.get(i) - 1]);
                 Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, cellWidth, cellHeight, false);
                 int x = (imageIDX.get(i)) * cellWidth + 1;
                 int y = (NUM_ROWS - imageIDY.get(i) - 1) * cellHeight;

@@ -35,7 +35,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mdpandroid.BluetoothActivity;
 import com.example.mdpandroid.JoystickView;
 import com.example.mdpandroid.R;
 

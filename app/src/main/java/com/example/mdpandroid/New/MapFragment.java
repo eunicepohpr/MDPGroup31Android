@@ -382,7 +382,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     /*
     - AR,AN,F/R/L
     - Start Exploration: PC,AN,E
-    - Send robot coOrdinates: PC,AN,1:2:N/S/E/W
+    - Send robot coordinates: PC,AN,1:2:N/S/E/W
     - Send Waypoint: PC,AN,WP:1:2
     - Start fastest path: PC,AN,FP:1:2
     - Calibrate Robot: AR,AN,C
