@@ -174,7 +174,7 @@ public class ComFragment extends Fragment {
                 } else {
                     tvReceiveText.setText(text + "\n" + theText);
                     noOfItems += 1;
-                    if (noOfItems >= 10 && !svDyanmic) {
+                    if (noOfItems >= 5 && !svDyanmic) {
                         svDyanmic = true;
                         sv.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300));
                     }

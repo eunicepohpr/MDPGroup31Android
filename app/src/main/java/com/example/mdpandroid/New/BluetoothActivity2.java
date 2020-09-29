@@ -411,6 +411,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
                     showToast("Connection Lost. Please try again." + btService.getState());
                     device = "";
                     updateBluetoothTBStatus(device);
+                    sendToMain("");
+                    destroyReceivers();
                     return;
                 }
                 btService.write(theText.getBytes()); // send out message
@@ -430,6 +432,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
                 if (btService.getState() != BluetoothService.STATE_CONNECTED) {
                     showToast("Connection Lost.. Please try again." + btService.getState());
                     device = "";
+                    sendToMain("");
+                    destroyReceivers();
                     updateBluetoothTBStatus(device);
                     return;
                 }

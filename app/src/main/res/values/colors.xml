@@ -18,4 +18,21 @@
     <color name="themeLBlue">#7acefa</color>
     <color name="btnBg2">#fcfbf0</color>
     <color name="black">#000000</color>
+
+<!--    Image recognition colors -->
+<!--    <color name="up_arrow_1">#ffffff</color>-->
+<!--    <color name="down_arrow_2">#01b0f1</color>-->
+<!--    <color name="right_arrow_3">#ffff01</color>-->
+<!--    <color name="left_arrow_4">#fe0002</color>-->
+<!--    <color name="go_5">#01b051</color>-->
+<!--    <color name="six_6">#01b0f1</color>-->
+<!--    <color name="seven_7">#01b051</color>-->
+<!--    <color name="eight_8">#fe0002</color>-->
+<!--    <color name="nine_9">#ffffff</color>-->
+<!--    <color name="zero_10">#ffff01</color>-->
+<!--    <color name="alphabet_v_11">#fe0002</color>-->
+<!--    <color name="alphabet_w_12">#01b051</color>-->
+<!--    <color name="alphabet_x_13">#ffffff</color>-->
+<!--    <color name="alphabet_y_14">#01b0f1</color>-->
+<!--    <color name="alphabet_z_15">#ffff01</color>-->
 </resources>

@@ -44,6 +44,7 @@
     <string name="SwitchTilt">Tilt</string>
     <string name="SwitchAU">Map Auto</string>
     <string name="SwitchPlotRP">Set Position</string>
+    <string name="SwitchImage">Show Image</string>
 
     <!-- Map Buttons -->
     <string name="BtnEx">\u0020\u0020\u0020\u0020Explore\u0020\u0020\u0020\u0020</string>

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MazeView2 extends View {
 
-    private static final int NUM_COLUMNS = 15;  // Range of X-axis
+    private static final int NUM_COLUMNS = 15;  // Range of X-axis (if start from 1)
     private static final int NUM_ROWS = 20;     // Range of Y-axis
     private static final float WALL_THICKNESS = 4;
     private MazeView2.Cell[][] cells;
@@ -40,9 +40,12 @@ public class MazeView2 extends View {
             R.drawable.go_5, R.drawable.six_6, R.drawable.seven_7, R.drawable.eight_8, R.drawable.nine_9,
             R.drawable.zero_10, R.drawable.alphabet_v_11, R.drawable.alphabet_w_12, R.drawable.alphabet_x_13,
             R.drawable.alphabet_y_14, R.drawable.alphabet_z_15};
+//    int[] imagesColor = new int[]{R.color.up_arrow_1, R.color.down_arrow_2, R.color.right_arrow_3, R.color.left_arrow_4,
+//            R.color.go_5, R.color.six_6, R.color.seven_7, R.color.eight_8, R.color.nine_9,
+//            R.color.zero_10, R.color.alphabet_v_11, R.color.alphabet_w_12, R.color.alphabet_x_13,
+//            R.color.alphabet_y_14, R.color.alphabet_z_15};
 
-    private Paint blackPaint, greenPaint, yellowPaint, bluePaint, lightBluePaint, whitePaint,
-            redPaint, greyPaint, cyanPaint;
+    private Paint blackPaint, whitePaint;
     private Paint goalPaint, startPaint, mapPaint, robotPaint, waypointPaint, exploredPaint, fastestPaint;
     private final String DEFAULTAL = "AR,AN,"; // Sending to Arudino
     private final String DEFAULTAR = "AR,AN,";
@@ -58,20 +61,14 @@ public class MazeView2 extends View {
     public int[] robotCenter = {1, 1}; // x,y
     int angle = 0;
 
+    public boolean showImageRecognise = false;
+
     // store obstacles (x,y)
     ArrayList<String> obsArray = new ArrayList<String>();
 
     @SuppressLint("ResourceAsColor")
     public MazeView2(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-
-//        yellowPaint = new Paint();
-//        redPaint = new Paint();
-//        bluePaint = new Paint();
-//        lightBluePaint = new Paint();
-//        cyanPaint = new Paint();
-//        greyPaint = new Paint();
-//        greenPaint = new Paint();
 
         blackPaint = new Paint();
         whitePaint = new Paint();
@@ -84,18 +81,9 @@ public class MazeView2 extends View {
         exploredPaint = new Paint();
         fastestPaint = new Paint();
 
-        // setting color for all the color variables
-//        bluePaint.setColor(Color.BLUE);
-//        lightBluePaint.setColor(Color.LTGRAY);
-//        yellowPaint.setColor(Color.YELLOW); // camera
-//        redPaint.setColor(Color.RED);
-//        greenPaint.setColor(Color.GREEN);
-//        cyanPaint.setColor(Color.CYAN);
-//        greyPaint.setColor(Color.GRAY);
-
         blackPaint.setColor(Color.BLACK); // obstacle and walls
-        whitePaint.setColor(Color.WHITE); // robot body
         blackPaint.setStrokeWidth(WALL_THICKNESS);
+        whitePaint.setColor(Color.WHITE); // robot body
 
         goalPaint.setColor(Color.rgb(142, 226, 195));
         startPaint.setColor(Color.rgb(142, 220, 226));
@@ -114,15 +102,20 @@ public class MazeView2 extends View {
         cellWidth = getWidth() / NUM_COLUMNS;
         cellHeight = getHeight() / NUM_ROWS;
 
-        if (cellWidth > cellHeight) {
+        if (cellWidth > cellHeight)
             cellWidth = cellHeight;
-        } else {
+        else
             cellHeight = cellWidth;
-        }
         cellSize = cellHeight;
 
         this.setLayoutParams(new RelativeLayout.LayoutParams(cellWidth * NUM_COLUMNS, cellHeight * NUM_ROWS));
         invalidate();
+    }
+
+    public void changeImageRecogniseSettings(boolean showImage) {
+        showImageRecognise = showImage;
+        if (mapFragment.autoUpdate)
+            invalidate();
     }
 
     @Override
@@ -133,8 +126,10 @@ public class MazeView2 extends View {
 
         drawGrids(canvas);
         drawExploredObstacles(canvas);
-        displayNumberIdentified(canvas);
-//        displayImageIdentified(canvas);
+        if (showImageRecognise)
+            displayImageIdentified(canvas);
+        else
+            displayNumberIdentified(canvas);
         drawStartZone(canvas);
         drawGoalZone(canvas);
         displayWaypoint(canvas);
@@ -163,8 +158,8 @@ public class MazeView2 extends View {
 
     // Normal grids
     private void drawGrids(Canvas canvas) {
-        for (int i = 0; i <= 14; i++)
-            for (int j = 0; j <= 19; j++)
+        for (int i = 0; i <= NUM_COLUMNS - 1; i++)
+            for (int j = 0; j <= NUM_ROWS - 1; j++)
                 canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
                         (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, mapPaint);
     }
@@ -179,8 +174,8 @@ public class MazeView2 extends View {
 
     // goalZone
     private void drawGoalZone(Canvas canvas) {
-        for (int i = 12; i <= 14; i++)
-            for (int j = 17; j <= 19; j++)
+        for (int i = 12; i <= NUM_COLUMNS - 1; i++)
+            for (int j = 17; j <= NUM_ROWS - 1; j++)
                 canvas.drawRect(i * cellWidth, (NUM_ROWS - 1 - j) * cellHeight,
                         (i + 1) * cellWidth, (NUM_ROWS - j) * cellHeight, goalPaint);
     }
@@ -245,9 +240,9 @@ public class MazeView2 extends View {
         if (numberID != null && numberIDY != null && numberIDX != null) {
             for (int i = 0; i < numberIDX.size(); i++) {
                 if (Integer.parseInt(numberID.get(i)) < 10 && Integer.parseInt(numberID.get(i)) > 0)
-                    canvas.drawText(numberID.get(i), (numberIDX.get(i) - 1) * cellWidth + 9, (NUM_ROWS - numberIDY.get(i) + 1) * cellHeight - 7, whitePaint);
+                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 13, (NUM_ROWS - numberIDY.get(i)) * cellHeight - 9, whitePaint);
                 else if (Integer.parseInt(numberID.get(i)) > 9 && Integer.parseInt(numberID.get(i)) < 16)
-                    canvas.drawText(numberID.get(i), (numberIDX.get(i) - 1) * cellWidth + 6, (NUM_ROWS - numberIDY.get(i) + 1) * cellHeight - 7, whitePaint);
+                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 9, (NUM_ROWS - numberIDY.get(i)) * cellHeight - 9, whitePaint);
             }
         }
     }
@@ -256,11 +251,10 @@ public class MazeView2 extends View {
         if (imageID != null && imageIDY != null && imageIDX != null) {
             for (int i = 0; i < imageIDX.size(); i++) {
                 Resources res = getResources();
-                Bitmap bitmap = BitmapFactory.decodeResource(res, images[i]);
+                Bitmap bitmap = BitmapFactory.decodeResource(res, images[imageID.get(i) - 1]);
                 Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, cellWidth, cellHeight, false);
-                int x = (imageIDX.get(i) - 1) * cellWidth;
-                int y =  (NUM_ROWS - imageIDY.get(i)) * cellHeight;//(NUM_ROWS - imageIDY.get(i)) * cellHeight;
-//                imageIDX.get(i) * cellWidth,
+                int x = (imageIDX.get(i)) * cellWidth + 1;
+                int y = (NUM_ROWS - imageIDY.get(i) - 1) * cellHeight;
                 canvas.drawBitmap(resizeBitmap, x, y, whitePaint);
             }
         }
@@ -450,7 +444,7 @@ public class MazeView2 extends View {
         robotCenter[0] = col;   // X coord
         robotCenter[1] = row;   // Y coord
         angle = direction;
-        //limiting the plot grid for robot
+        // limiting the plot grid for robot
         if (robotCenter[0] == 0)
             robotCenter[0] = 1;
         else if (robotCenter[0] == NUM_COLUMNS - 1)
@@ -536,7 +530,7 @@ public class MazeView2 extends View {
             invalidate();
     }
 
-    //Enable users to select specific grids by touching for waypoint and robot coordinates
+    // Enable users to select specific grids by touching for waypoint and robot coordinates
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() != MotionEvent.ACTION_DOWN)
             return true;
@@ -572,7 +566,7 @@ public class MazeView2 extends View {
             else
                 updateRobotCoords(x, y, angle);
 
-            mapFragment.setRobotTextView(robotCenter);
+            mapFragment.setRobotPosition(robotCenter, angle);
             invalidate();
         }
         return true;
@@ -585,6 +579,10 @@ public class MazeView2 extends View {
 
     public int[] getRobotCenter() {
         return robotCenter;
+    }
+
+    public int getRobotAngle() {
+        return angle;
     }
 
     public int[] getRobotFront() {
