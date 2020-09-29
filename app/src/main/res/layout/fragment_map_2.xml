@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="42"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:padding="@dimen/padding_map">
 
                 <com.example.mdpandroid.New.MazeView2
                     android:id="@+id/mazeView2"
@@ -41,6 +41,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_margin="1dp"
                     android:text="@string/MapChangeRS"
+                    android:textSize="@dimen/text_size"
                     android:visibility="visible" />
 
             </RelativeLayout>
@@ -58,14 +59,14 @@
                     android:id="@+id/topRL1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="@dimen/margin_map">
 
                     <TextView
                         android:id="@+id/tvRS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableTop="@drawable/robot_small"
+                        android:drawableTop="@drawable/robot"
                         android:text="@string/MapRobotStatus"
                         android:textAppearance="@style/MapStatus" />
 
@@ -78,7 +79,7 @@
                         android:layout_marginStart="10dp"
                         android:text="idle"
                         android:textAlignment="center"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
 
@@ -88,14 +89,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/topRL1"
-                    android:layout_margin="5dp">
+                    android:layout_margin="@dimen/margin_map">
 
                     <TextView
                         android:id="@+id/tvES"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableTop="@drawable/time_small"
+                        android:drawableTop="@drawable/time"
                         android:text="@string/MapExpStatus"
                         android:textAppearance="@style/MapStatus" />
 
@@ -108,7 +109,7 @@
                         android:layout_marginStart="10dp"
                         android:text="00:00"
                         android:textAlignment="center"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
 
@@ -118,14 +119,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/topRL2"
-                    android:layout_margin="5dp">
+                    android:layout_margin="@dimen/margin_map">
 
                     <TextView
                         android:id="@+id/tvFPS"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:drawableTop="@drawable/fp_small"
+                        android:drawableTop="@drawable/fp"
                         android:text="@string/MapFPTimeStatus"
                         android:textAppearance="@style/MapStatus" />
 
@@ -138,7 +139,7 @@
                         android:layout_marginStart="10dp"
                         android:text="00:00"
                         android:textAlignment="center"
-                        android:textSize="15sp" />
+                        android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
 
@@ -164,7 +165,8 @@
                         android:layout_below="@id/btnUpdateMap"
                         android:layout_alignParentEnd="true"
                         android:layout_margin="1dp"
-                        android:text="@string/SwitchAU" />
+                        android:text="@string/SwitchAU"
+                        android:textSize="@dimen/text_size" />
 
                     <Switch
                         android:id="@+id/switchShowImage"
@@ -172,8 +174,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/switchAutoUp"
                         android:layout_alignParentEnd="true"
-                        android:layout_margin="1dp"
-                        android:text="@string/SwitchImage" />
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:text="@string/SwitchImage"
+                        android:textSize="@dimen/text_size" />
 
                 </RelativeLayout>
 
@@ -197,14 +202,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="19"
-                android:padding="10dp">
+                android:padding="@dimen/padding_map">
 
                 <!--FP Waypoint Layout-->
                 <RelativeLayout
                     android:id="@+id/FPWPRL"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="@dimen/margin_map">
 
                     <TextView
                         android:id="@+id/tvFPWPTitle"
@@ -224,15 +229,14 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/text_size_large" />
 
                         <Button
                             android:id="@+id/btnSendWP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/sendpoint_small"
+                            android:drawableLeft="@drawable/sendpoint"
                             android:text="@string/BtnWP" />
 
                     </RelativeLayout>
@@ -244,7 +248,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/FPWPRL"
-                    android:layout_margin="5dp"
+                    android:layout_margin="@dimen/margin_map"
                     android:background="@android:color/darker_gray" />
 
                 <!--Robot Position Layout-->
@@ -253,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/line1"
-                    android:layout_margin="5dp">
+                    android:layout_margin="@dimen/margin_map">
 
                     <TextView
                         android:id="@+id/tvRStartTitle"
@@ -274,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
-                            android:textSize="18sp" />
+                            android:textSize="@dimen/text_size_large" />
 
                         <Spinner
                             android:id="@+id/spinnerROrien"
@@ -289,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:drawableLeft="@drawable/sendpoint_small"
+                            android:drawableLeft="@drawable/sendpoint"
                             android:text="@string/BtnRP" />
 
                     </RelativeLayout>
@@ -301,46 +305,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_below="@id/RSRL"
-                    android:layout_margin="5dp"
+                    android:layout_margin="@dimen/margin_map"
                     android:background="@android:color/darker_gray" />
 
                 <!--Bottom Buttons-->
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/btmLeftRL2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_margin="2dp">
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:weightSum="3">
 
                     <Button
                         android:id="@+id/btnExplore"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_toStartOf="@id/btnFP"
-                        android:drawableTop="@drawable/time_small"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/time"
                         android:text="@string/BtnEx" />
 
                     <Button
                         android:id="@+id/btnFP"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="1dp"
-                        android:drawableTop="@drawable/fp_small"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/fp"
                         android:text="@string/BtnFP" />
 
                     <Button
                         android:id="@+id/btnReset"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
                         android:layout_toEndOf="@id/btnFP"
-                        android:drawableTop="@drawable/reset_small"
+                        android:layout_weight="1"
+                        android:drawableTop="@drawable/reset"
                         android:text="@string/BtnReset" />
 
-                </RelativeLayout>
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -369,7 +378,8 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:text="@string/SwitchTilt" />
+                        android:text="@string/SwitchTilt"
+                        android:textSize="@dimen/text_size" />
 
                 </RelativeLayout>
 

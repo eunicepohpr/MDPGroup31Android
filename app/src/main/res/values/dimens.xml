@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size">12dp</dimen>
+    <dimen name="text_size_button">10dp</dimen>
+    <dimen name="text_size_tab">12dp</dimen>
+    <dimen name="text_size_heading">20dp</dimen>
+    <dimen name="text_size_subheading">15dp</dimen>
+    <dimen name="text_size_subsubheading">12dp</dimen>
+    <dimen name="text_size_mapstatus">12dp</dimen>
+    <dimen name="text_size_large">12dp</dimen>
+
+    <dimen name="drawable_width">12dp</dimen>
+    <dimen name="drawable_height">12dp</dimen>
+
+    <dimen name="padding_map">5dp</dimen>
+    <dimen name="margin_map">2dp</dimen>
+</resources>

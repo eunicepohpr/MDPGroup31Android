@@ -31,7 +31,6 @@
     <string name="MapFPTimeStatus">\u0020Fastest Path\u0020</string>
     <string name="MapFPWPStatus">FP Waypoint\u0020</string>
     <string name="MapRSStatus">Robot Position\u0020</string>
-<!--    <string name="MapRobotOrien">Orientation:\u0020</string>-->
     <string name="MapChangeRS">Edit Robot Position</string>
 
     <string-array name="RobotOrientationArray">
@@ -47,13 +46,13 @@
     <string name="SwitchImage">Show Image</string>
 
     <!-- Map Buttons -->
-    <string name="BtnEx">\u0020\u0020\u0020\u0020Explore\u0020\u0020\u0020\u0020</string>
-    <string name="BtnFP">FastestPath</string>
-    <string name="BtnReset">\u0020\u0020\u0020\u0020\u0020\u0020Reset\u0020\u0020\u0020\u0020\u0020\u0020</string>
+    <string name="BtnEx">\u0020Exp</string>
+    <string name="BtnFP">\u0020FP</string>
+    <string name="BtnReset">\u0020Reset</string>
     <string name="BtnCali">Calibrate</string>
     <string name="BtnUpM">Update Map</string>
     <string name="BtnWP">\u0020WayPoint</string>
-    <string name="BtnRP">\u0020Position\u0020\u0020</string>
+    <string name="BtnRP">\u0020Position</string>
 
     <string name="BtnUp">\nUp\n</string>
     <string name="BtnDown">\nDown\n</string>

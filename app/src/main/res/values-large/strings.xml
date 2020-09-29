@@ -1,0 +1,5 @@
+<resources>
+    <!-- Map Buttons -->
+    <string name="BtnEx">\u0020Start Exp</string>
+    <string name="BtnFP">\u0020Start FP</string>
+</resources>

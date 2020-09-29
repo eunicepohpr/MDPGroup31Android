@@ -35,7 +35,8 @@
                 android:layout_below="@id/tvComTransTitle"
                 android:background="@android:color/white"
                 android:hint="@string/ComTransTxtHelp"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textSize="@dimen/text_size_large" />
 
             <Button
                 android:id="@+id/btnTransClear"
@@ -76,7 +77,8 @@
                 android:layout_below="@id/tvComPSTitle"
                 android:background="@android:color/white"
                 android:hint="@string/ComPersHelp"
-                android:padding="10dp" />
+                android:padding="10dp"
+                android:textSize="@dimen/text_size_large" />
 
             <Button
                 android:id="@+id/btnPSSend"
@@ -129,7 +131,8 @@
                         android:background="@android:color/white"
                         android:padding="10dp"
                         android:scrollbars="vertical"
-                        android:text="@string/ComRecTxtHelp" />
+                        android:text="@string/ComRecTxtHelp"
+                        android:textSize="@dimen/text_size_large" />
 
                 </ScrollView>
             </RelativeLayout>
