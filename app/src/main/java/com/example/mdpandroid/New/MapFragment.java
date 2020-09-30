@@ -512,15 +512,15 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     for (int i = 0; i < obstacleGrid.length; i++)
                         obstacleGrid[i] = Integer.parseInt(obstacleString[i + 1]);
 
-                    int inc = 0, inc2 = 0;
+                    int gridExplored = 0, inc2 = 0;
                     for (int y = 0; y < 20; y++) {
                         for (int x = 0; x < 15; x++) { // For explored grids, draw obstacle if any
-                            if (exploredGrid != null && exploredGrid[inc] == 1) {
-                                if (obstacleGrid != null && obstacleGrid[inc2] == 1)
+                            if (exploredGrid != null && exploredGrid[gridExplored] == 1) { // grid explored
+                                if (obstacleGrid != null && obstacleGrid[inc2] == 1) // the explored grid is an obstacle
                                     mazeView.setObsArray(x, y);
                                 inc2++;
                             }
-                            inc++;
+                            gridExplored++;
                         }
                     }
 
@@ -610,8 +610,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
             binary = binary.concat(bin); // then add in the converted hextobin
             pointer += 1;
         }
-        while (binary.length() < 300)
-            binary = "0" + binary;
+//        while (binary.length() < 300)
+//            binary = "0" + binary;
         return binary;
     }
 
