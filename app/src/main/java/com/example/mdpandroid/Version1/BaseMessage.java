@@ -1,4 +1,4 @@
-package com.example.mdpandroid.Old;
+package com.example.mdpandroid.Version1;
 
 /**
  * A class that is an object for messages

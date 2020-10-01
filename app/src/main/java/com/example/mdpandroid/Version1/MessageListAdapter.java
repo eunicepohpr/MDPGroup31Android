@@ -1,4 +1,4 @@
-package com.example.mdpandroid.Old;
+package com.example.mdpandroid.Version1;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.example.mdpandroid;
+package com.example.mdpandroid.Version1;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

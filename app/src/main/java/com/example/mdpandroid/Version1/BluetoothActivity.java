@@ -1,4 +1,4 @@
-package com.example.mdpandroid.Old;
+package com.example.mdpandroid.Version1;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -34,8 +34,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mdpandroid.BluetoothService;
-import com.example.mdpandroid.Constants;
 import com.example.mdpandroid.R;
 
 import java.util.ArrayList;

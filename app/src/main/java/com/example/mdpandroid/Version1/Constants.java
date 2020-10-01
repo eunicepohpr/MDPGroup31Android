@@ -1,4 +1,4 @@
-package com.example.mdpandroid;
+package com.example.mdpandroid.Version1;
 
 /**
  * constants used to pass message between BluetoothService.java and UI

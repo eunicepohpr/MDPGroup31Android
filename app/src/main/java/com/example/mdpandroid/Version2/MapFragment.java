@@ -1,4 +1,4 @@
-package com.example.mdpandroid.New;
+package com.example.mdpandroid.Version2;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

@@ -1,4 +1,4 @@
-package com.example.mdpandroid.Old;
+package com.example.mdpandroid.Version1;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

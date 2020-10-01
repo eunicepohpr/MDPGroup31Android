@@ -15,7 +15,7 @@
     <string name="TabMap">Map</string>
     <string name="TabCom">Communication</string>
     <!-- Bluetooth -->
-    <string name="Bluetooth">Bluetooth</string>
+    <string name="Bluetooth">\u0020Bluetooth</string>
     <string name="PairDevices">Paired Devices</string>
     <string name="AvailableDevices">Available Devices</string>
     <string name="BTDiscover">Make Device Discoverable</string>

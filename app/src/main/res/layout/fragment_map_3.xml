@@ -28,7 +28,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/padding_map">
 
-                <com.example.mdpandroid.Version2.MazeView2
+                <com.example.mdpandroid.Version3.MazeView3
                     android:id="@+id/mazeView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

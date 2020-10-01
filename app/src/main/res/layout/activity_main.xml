@@ -12,7 +12,7 @@
         android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Old.MainActivity">
+        tools:context=".Version1.MainActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <com.example.mdpandroid.Old.MazeView
+            <com.example.mdpandroid.Version1.MazeView
                 android:id="@+id/mazeView"
                 android:layout_width="285dp"
                 android:layout_height="387dp"
@@ -343,7 +343,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        tools:context=".Old.MainActivity">
+        tools:context=".Version1.MainActivity">
 
         <TextView
             android:layout_width="wrap_content"

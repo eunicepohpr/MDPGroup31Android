@@ -1,4 +1,4 @@
-package com.example.mdpandroid.New;
+package com.example.mdpandroid.Version3;
 
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,11 +8,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TabAdapter extends FragmentPagerAdapter {
+public class TabAdapter3 extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    public TabAdapter(FragmentManager fm) {
+    public TabAdapter3(FragmentManager fm) {
         super(fm);
     }
 

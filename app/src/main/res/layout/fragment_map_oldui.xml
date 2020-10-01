@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".New.MapFragment">
+    tools:context=".Version2.MapFragment">
 
     <!--Main Layout-->
     <LinearLayout
@@ -184,7 +184,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="58">
 
-                        <com.example.mdpandroid.New.MazeView2
+                        <com.example.mdpandroid.Version2.MazeView2
                             android:id="@+id/mazeView2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent" />

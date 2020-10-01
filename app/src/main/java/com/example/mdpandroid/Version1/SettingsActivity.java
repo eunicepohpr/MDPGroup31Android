@@ -1,4 +1,4 @@
-package com.example.mdpandroid.Old;
+package com.example.mdpandroid.Version1;
 
 import android.content.Context;
 import android.content.Intent;

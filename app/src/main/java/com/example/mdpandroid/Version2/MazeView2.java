@@ -1,8 +1,7 @@
-package com.example.mdpandroid.New;
+package com.example.mdpandroid.Version2;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,43 +28,34 @@ public class MazeView2 extends View {
     private int[] exploredGrid, obstacleGrid;
     private int cellWidth, cellHeight;
     private float cellSize;
-    List<Integer> numberIDX = new ArrayList<>(); // x-coordinate of identified image
-    List<Integer> numberIDY = new ArrayList<>(); // y-coordinate of identified image
-    List<String> numberID = new ArrayList<>(); // numberid of identified image
-    List<Integer> imageIDX = new ArrayList<>(); // x-coordinate of identified image
-    List<Integer> imageIDY = new ArrayList<>(); // y-coordinate of identified image
-    List<Integer> imageID = new ArrayList<>(); // imageID of identified image
+    List<Integer> numberIDX = new ArrayList<>(), imageIDX = new ArrayList<>(); // x-coordinate of identified image
+    List<Integer> numberIDY = new ArrayList<>(), imageIDY = new ArrayList<>(); // y-coordinate of identified image
+    List<String> numberID = new ArrayList<>();
+    List<Integer> imageID = new ArrayList<>(); // numberid of identified image
     List<Integer> robotX = new ArrayList<>(), robotY = new ArrayList<>();
 
     int[] images = new int[]{R.drawable.up_arrow_1, R.drawable.down_arrow_2, R.drawable.right_arrow_3, R.drawable.left_arrow_4,
             R.drawable.go_5, R.drawable.six_6, R.drawable.seven_7, R.drawable.eight_8, R.drawable.nine_9,
             R.drawable.zero_10, R.drawable.alphabet_v_11, R.drawable.alphabet_w_12, R.drawable.alphabet_x_13,
             R.drawable.alphabet_y_14, R.drawable.alphabet_z_15};
-//    int[] imagesColor = new int[]{R.color.up_arrow_1, R.color.down_arrow_2, R.color.right_arrow_3, R.color.left_arrow_4,
-//            R.color.go_5, R.color.six_6, R.color.seven_7, R.color.eight_8, R.color.nine_9,
-//            R.color.zero_10, R.color.alphabet_v_11, R.color.alphabet_w_12, R.color.alphabet_x_13,
-//            R.color.alphabet_y_14, R.color.alphabet_z_15};
 
     private Paint blackPaint, whitePaint;
     private Paint goalPaint, startPaint, mapPaint, robotPaint, waypointPaint, exploredPaint, fastestPaint;
     private final String DEFAULTAL = "AR,AN,"; // Sending to Arudino
     private final String DEFAULTAR = "AR,AN,";
-    //  private final String DEFAULTFASTEST = "GO";
 
-    MapFragment mapFragment = (MapFragment) MapFragment.getInstance();
+    MapFragment mapFragment = MapFragment.getInstance();
 
-    // waypoint
-    private int[] waypoint = {1, 1};
+    private int[] waypoint = {1, 1}; // waypoint
     // robot starting coordinates
-    private int[] robotFront = {1, 2}; // x,y
-
-    public int[] robotCenter = {1, 1}; // x,y
+    private int[] robotFront = {1, 2};
+    public int[] robotCenter = {1, 1};
     int angle = 0;
 
     public boolean showImageRecognise = false;
 
     // store obstacles (x,y)
-    ArrayList<String> obsArray = new ArrayList<String>();
+    ArrayList<String> obsArray = new ArrayList<>();
 
     @SuppressLint("ResourceAsColor")
     public MazeView2(Context context, @Nullable AttributeSet attrs) {
@@ -115,22 +105,18 @@ public class MazeView2 extends View {
 
     public void changeImageRecogniseSettings(boolean showImage) {
         showImageRecognise = showImage;
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // canvas.drawBitmap( mBitmap, 10, 10, null);
         canvas.drawColor(Color.WHITE);
 
         drawGrids(canvas);
         drawExploredObstacles(canvas);
-        if (showImageRecognise)
-            displayImageIdentified(canvas);
-        else
-            displayNumberIdentified(canvas);
+        if (showImageRecognise) displayImageIdentified(canvas);
+        else displayNumberIdentified(canvas);
         drawStartZone(canvas);
         drawGoalZone(canvas);
         displayWaypoint(canvas);
@@ -209,7 +195,7 @@ public class MazeView2 extends View {
                     m.postTranslate((robotCenter[0] - 4) * cellWidth, (NUM_ROWS - robotCenter[1] - 5) * cellHeight);
                     break;
                 case 270:
-                    m.postTranslate((robotCenter[0] -1) * cellWidth, (NUM_ROWS - robotCenter[1] - 5) * cellHeight);
+                    m.postTranslate((robotCenter[0] - 1) * cellWidth, (NUM_ROWS - robotCenter[1] - 5) * cellHeight);
                     break;
                 default:
                     m.postTranslate((robotCenter[0] - 1) * cellWidth, (NUM_ROWS - robotCenter[1] - 2) * cellHeight);
@@ -217,10 +203,6 @@ public class MazeView2 extends View {
             }
             canvas.drawBitmap(resizeBitmap, m, whitePaint);
         }
-//        if (robotFront[0] >= 0) {
-//            canvas.drawCircle(robotFront[0] * cellWidth + cellWidth / 2,
-//                    (NUM_ROWS - robotFront[1]) * cellHeight - cellHeight / 2, 0.3f * cellWidth, whitePaint);
-//        }
     }
 
     // display the waypoint when user taps
@@ -233,17 +215,16 @@ public class MazeView2 extends View {
 
     // Obstacles and explored
     private void drawExploredObstacles(Canvas canvas) {
-        int inc = 0;
-        int inc2 = 0;
+        int inc = 0, inc2 = 0;
         for (int y = 0; y < NUM_ROWS; y++)
             for (int x = 0; x < NUM_COLUMNS; x++) {
                 // when explored then draw obstacle if any
                 if (exploredGrid != null && exploredGrid[inc] == 1) {
-                    canvas.drawRect(x * cellWidth, (NUM_ROWS - 1 - y) * cellHeight,
-                            (x + 1) * cellWidth, (NUM_ROWS - y) * cellHeight, exploredPaint);
+                    int left = x * cellWidth, top = (NUM_ROWS - 1 - y) * cellHeight,
+                            right = (x + 1) * cellWidth, bottom = (NUM_ROWS - y) * cellHeight;
+                    canvas.drawRect(left, top, right, bottom, exploredPaint);
                     if (obstacleGrid != null && obstacleGrid[inc2] == 1)
-                        canvas.drawRect(x * cellWidth, (NUM_ROWS - 1 - y) * cellHeight,
-                                (x + 1) * cellWidth, (NUM_ROWS - y) * cellHeight, blackPaint);
+                        canvas.drawRect(left, top, right, bottom, blackPaint);
                     inc2++;
                 }
                 inc++;
@@ -262,10 +243,11 @@ public class MazeView2 extends View {
     private void displayNumberIdentified(Canvas canvas) {
         if (numberID != null && numberIDY != null && numberIDX != null) {
             for (int i = 0; i < numberIDX.size(); i++) {
+                int y = (NUM_ROWS - numberIDY.get(i)) * cellHeight - 9;
                 if (Integer.parseInt(numberID.get(i)) < 10 && Integer.parseInt(numberID.get(i)) > 0)
-                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 13, (NUM_ROWS - numberIDY.get(i)) * cellHeight - 9, whitePaint);
+                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 13, y, whitePaint);
                 else if (Integer.parseInt(numberID.get(i)) > 9 && Integer.parseInt(numberID.get(i)) < 16)
-                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 9, (NUM_ROWS - numberIDY.get(i)) * cellHeight - 9, whitePaint);
+                    canvas.drawText(numberID.get(i), (numberIDX.get(i)) * cellWidth + 9, y, whitePaint);
             }
         }
     }
@@ -275,15 +257,13 @@ public class MazeView2 extends View {
             for (int i = 0; i < imageIDX.size(); i++) {
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), images[imageID.get(i) - 1]);
                 Bitmap resizeBitmap = Bitmap.createScaledBitmap(bitmap, cellWidth, cellHeight, false);
-                int x = (imageIDX.get(i)) * cellWidth + 1;
-                int y = (NUM_ROWS - imageIDY.get(i) - 1) * cellHeight;
+                int x = (imageIDX.get(i)) * cellWidth + 1, y = (NUM_ROWS - imageIDY.get(i) - 1) * cellHeight;
                 canvas.drawBitmap(resizeBitmap, x, y, whitePaint);
             }
         }
     }
 
     private class Cell {
-        boolean topWall = true, leftWall = true, bottomWall = true, rightWall = true;
         int col, row;
 
         public Cell(int col, int row) {
@@ -466,6 +446,7 @@ public class MazeView2 extends View {
         robotCenter[0] = col;   // X coord
         robotCenter[1] = row;   // Y coord
         angle = direction;
+
         // limiting the plot grid for robot
         if (robotCenter[0] == 0)
             robotCenter[0] = 1;
@@ -494,8 +475,7 @@ public class MazeView2 extends View {
                 robotFront[1] = robotCenter[1];
                 break;
         }
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
 
@@ -503,8 +483,7 @@ public class MazeView2 extends View {
     public void updateMaze(int[] exploredGrid, int[] obstacleGrid) {
         this.exploredGrid = exploredGrid;
         this.obstacleGrid = obstacleGrid;
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     // method to update explored images on the maze
@@ -526,8 +505,7 @@ public class MazeView2 extends View {
         this.numberIDX.add(x);
         this.numberIDY.add(y);
         this.numberID.add(ID);
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     // method to update explored images on the maze
@@ -548,8 +526,7 @@ public class MazeView2 extends View {
         this.imageIDX.add(x);
         this.imageIDY.add(y);
         this.imageID.add(ID);
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     // Enable users to select specific grids by touching for waypoint and robot coordinates
@@ -562,13 +539,15 @@ public class MazeView2 extends View {
             int x = (int) (event.getX() / cellWidth);
             int y = NUM_ROWS - 1 - (int) (event.getY() / cellHeight);
 
-            if (x == waypoint[0] && y == waypoint[1]) {
-                waypoint[0] = -1;
-                waypoint[1] = -1;
-            } else {
-                waypoint[0] = x; // when user touch and assign new waypoint value
-                waypoint[1] = y;
-            }
+            waypoint[0] = (x == waypoint[0] && y == waypoint[1]) ? -1 : x;
+            waypoint[1] = (x == waypoint[0] && y == waypoint[1]) ? -1 : y;
+//            if (x == waypoint[0] && y == waypoint[1]) {
+//                waypoint[0] = -1;
+//                waypoint[1] = -1;
+//            } else {
+//                waypoint[0] = x; // when user touch and assign new waypoint value
+//                waypoint[1] = y;
+//            }
             invalidate(); // call onDraw method again
             // handlers user when user touch the maze when mazeFragment not initialised
 
@@ -607,21 +586,15 @@ public class MazeView2 extends View {
         return angle;
     }
 
-    public int[] getRobotFront() {
-        return robotFront;
-    }
-
     //The methods below are all for clearing array lists that stores additional maze elements and revert the maze back to its original state
     public void clearExploredGrid() {
         exploredGrid = null;
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     public void clearObstacleGrid() {
         obstacleGrid = null;
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     public void clearNumID() {
@@ -633,8 +606,7 @@ public class MazeView2 extends View {
         imageIDY = null;
         robotX.clear();
         robotY.clear();
-        if (mapFragment.autoUpdate)
-            invalidate();
+        if (mapFragment.autoUpdate) invalidate();
     }
 
     public ArrayList<String> getObsArray() {
@@ -642,7 +614,6 @@ public class MazeView2 extends View {
     }
 
     public void setObsArray(int x, int y) {
-
         this.obsArray.add("" + x + "," + y);
     }
 
