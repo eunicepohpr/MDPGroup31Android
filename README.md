@@ -22,19 +22,19 @@ Special thanks to the authors below for designing the beautiful icons used in th
 ## Application Versions
 This repository currently contains 3 versions of the application. To switch between the different versions, `edit the AndroidManifest file` :poop:
 
- 1) Original unedited code
+ 1) **Original unedited code**
     - For testing if orignal implementation is working
     - Problems:
         - Activity lifecycle not managed properly
         - ~~Its not our coat :')~~
 
- 2) New Implementation using Original Bluetooth Service :thumbsup:
+ 2) **New Implementation using Original Bluetooth Service** :thumbsup:
     - Change of UI and Activity launch modes
     - Problems:
         - Repeatedly forcing disconnection will lead to broken Bluetooth (I really dk how to fix this :cry:) &#8594; `just restart the application`
         - Disconnecting device from application might break subsequent bluetooth connection (Will try to prevent the accident click) &#8594; `don't press the device in the list when it is connected, disconnect from the other end` :sweat_smile:
 
- 3) New Implementation using Different Bluetooth Service (reconnection broken)
+ 3) **New Implementation using Different Bluetooth Service (reconnection broken)**
     - Same UI as version 2 but, using a different bluetooth service implementation
     - Problems:
         - Supposingly a better implementation of passing around text received from bluetooth, however `reconnection is broken` :sob:
@@ -42,7 +42,7 @@ This repository currently contains 3 versions of the application. To switch betw
 ~~4) Future? Version3 implementation of passing around text with Original Bluetooth Service :cold_sweat:~~
 
 ## Android Data Dictionary
-Format: \<To>,\<From>,data1:data2:data3
+`Format: \<To>,\<From>,data1:data2:data3`
 ### Inputs
 | Input Data                                                                       | Explanation                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 |----------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -53,6 +53,7 @@ Format: \<To>,\<From>,data1:data2:data3
 Example:
 - FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:0000000000003F000000004000800100000043C08081000220084020F880100000000000080:5:7:N:3:11:1
 - FFFFFFFFFFFFFFFFFFFBFFF3FFE7FFC07F807F00FE003C0078000000000000000007000E001F:000000000400000001D00000000010000800000
+- FFC07F80FF01FE03FFFFFFF3FFE7FFCFFF9C7F38FE71FCE3F87FF0FFE1FFC3FF87FF0E0E1C1F:00000100001C80000000001C0000080000060001C00000080000
 
 ### Outputs
 | Output Data       | Explanation                                                                                                      |

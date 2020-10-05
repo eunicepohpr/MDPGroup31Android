@@ -105,7 +105,8 @@ public class MazeView2 extends View {
 
     public void changeImageRecogniseSettings(boolean showImage) {
         showImageRecognise = showImage;
-        if (mapFragment.autoUpdate) invalidate();
+        if (mapFragment.autoUpdate)
+            invalidate();
     }
 
     @Override
@@ -115,12 +116,21 @@ public class MazeView2 extends View {
 
         drawGrids(canvas);
         drawExploredObstacles(canvas);
-        if (showImageRecognise) displayImageIdentified(canvas);
-        else displayNumberIdentified(canvas);
+        if (showImageRecognise)
+            displayImageIdentified(canvas);
+        else
+            displayNumberIdentified(canvas);
         drawStartZone(canvas);
         drawGoalZone(canvas);
         displayWaypoint(canvas);
         displayFastestPath(canvas);
+//        boolean entered = false;
+//        if (!updateImageRecognise) {
+//            displayFastestPath(canvas);
+//            entered = true;
+//        }
+//        if (entered)
+//            updateImageRecognise = !updateImageRecognise;
         drawGridLines(canvas);
         displayRobot(canvas);
 
@@ -232,7 +242,8 @@ public class MazeView2 extends View {
     }
 
     private void displayFastestPath(Canvas canvas) {
-        if (mapFragment.fastest)
+//        if (mapFragment.fastest)
+        if (robotX != null && robotY != null)
             if (robotX != null && robotY != null)
                 for (int i = 0; i < robotX.size(); i++)
                     canvas.drawRect(robotX.get(i) * cellWidth, (NUM_ROWS - 1 - robotY.get(i)) * cellHeight,

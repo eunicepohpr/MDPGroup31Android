@@ -31,12 +31,14 @@ import android.widget.Toast;
 import com.example.mdpandroid.JoystickView;
 import com.example.mdpandroid.R;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import static android.content.Context.SENSOR_SERVICE;
 
 public class MapFragment extends Fragment implements SensorEventListener {
+    private String TAG = "MapFragment";
     private static MapFragment instance;
 
     private Button btnExplore, btnFP, btnRefresh, btnCali, btnUpdateMap, btnSendWP, btnSendRP;
@@ -504,12 +506,17 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         mdfExploredString = stringItems[0];
                         mdfObstacleString = stringItems[1];
                     }
+//                    Log.d(TAG, "Explored: " + bin);
 
                     // Getting the obstacle grids from MDF string
+                    String bin2 = "";
                     String[] obstacleString = hexToBinary(stringItems[1]).split("");
                     int[] obstacleGrid = new int[obstacleString.length - 1];
-                    for (int i = 0; i < obstacleGrid.length; i++)
+                    for (int i = 0; i < obstacleGrid.length; i++) {
                         obstacleGrid[i] = Integer.parseInt(obstacleString[i + 1]);
+                        bin2 += obstacleGrid[i];
+                    }
+//                    Log.d(TAG, "Obstacle: " + bin2);
 
                     int gridExplored = 0, inc2 = 0;
                     for (int y = 0; y < 20; y++) {
@@ -562,12 +569,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     chr.stop(); // stop stopwatch
                     tvRStatus.setText("Exploration has been successfully completed"); // update status
                     String imageStr = ""; // create string to store information on images found
-                    if (mazeView.numberID != null) { // if images were found, loop through X, Y, ID and add to string
-                        for (int i = 0; i < mazeView.numberID.size(); i++) {
+                    if (mazeView.numberID != null) // if images were found, loop through X, Y, ID and add to string
+                        for (int i = 0; i < mazeView.numberID.size(); i++)
                             imageStr = imageStr + "(" + (mazeView.numberIDX.get(i) - 1) + ", " +
                                     (mazeView.numberIDY.get(i) - 1) + ", " + mazeView.numberID.get(i) + ") ";
-                        }
-                    }
 
                     // message that contains MDF and image information
                     String message = "MDF String: " + mdfExploredString + ":" + mdfObstacleString +
@@ -577,7 +582,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     Intent i = new Intent("getTextFromDevice");
                     i.putExtra("text", "displayExplored");
                     i.putExtra("message", message);
-                    LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                    LocalBroadcastManager.getInstance(getContext()).sendBroadcast(i);
 
 //                    new Handler().postDelayed(new Runnable() {
 //                        @Override
@@ -602,18 +607,22 @@ public class MapFragment extends Fragment implements SensorEventListener {
         // 1 Hex digits each time to prevent overflow and recognize leading 0000
         while (hex.length() - pointer > 0) {
             partial = hex.substring(pointer, pointer + 1);
-            String bin;
-            bin = Integer.toBinaryString(Integer.parseInt(partial, 16));
+            String bin = Integer.toBinaryString(Integer.parseInt(partial, 16));
             for (int i = 0; i < 4 - bin.length(); i++)
                 binary = binary.concat("0");  // padding 0 in front
             binary = binary.concat(bin); // then add in the converted hextobin
             pointer += 1;
         }
-//        while (binary.length() < 300)
-//            binary = "0" + binary;
+//        Log.d(TAG, binary);
         return binary;
     }
 
+    private String hexToBinary2(String hex) {
+        String binary = new BigInteger(hex, 16).toString(2);
+        while (binary.length() < hex.length() * 4)
+            binary = "0" + binary;
+        return binary;
+    }
 
     // Listen for events from Bluetooth Activity
     public void registerReceivers() {
