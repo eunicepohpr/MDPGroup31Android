@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     private Spinner spinnerROrien;
     private Chronometer chr, chrFPTimer;
     private TextView tvRStatus, tvFPWP, tvRStartP;
+    private ImageView ivDpad;
 
     private JoystickView joystickRight;
 
@@ -123,6 +125,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnLeft = getView().findViewById(R.id.btnLeft);
         btnRight = getView().findViewById(R.id.btnRight);
         btnCali = getView().findViewById(R.id.btnCali);
+        ivDpad = getView().findViewById(R.id.iv_dpad);
 
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,6 +358,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnLeft.setEnabled(false);
         btnRight.setEnabled(false);
         btnCali.setEnabled(false);
+        ivDpad.setImageResource(R.drawable.dpad_disabled);
         //joystickRight.setEnabled(false);
         tvRStatus.setText("Offline");
 
@@ -441,6 +445,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 btnLeft.setEnabled(false);   // check
                 btnRight.setEnabled(false);  // check
                 btnCali.setEnabled(false);  // check
+                ivDpad.setImageResource(R.drawable.dpad_disabled);
                 tvRStatus.setText("Offline");
             } else { // device connected, enable all bluetooth-related actions
                 // joystickRight.setEnabled(true);
@@ -450,6 +455,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 btnLeft.setEnabled(true);
                 btnRight.setEnabled(true);
                 btnCali.setEnabled(true);
+                ivDpad.setImageResource(R.drawable.dpad);
                 tvRStatus.setText("Waiting for instructions");
             }
         }
