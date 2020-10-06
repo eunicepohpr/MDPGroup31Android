@@ -27,15 +27,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mdpandroid.Version2.BluetoothService2;
-import com.example.mdpandroid.Version2.Constants2;
 import com.example.mdpandroid.R;
 
 import java.util.ArrayList;
 import java.util.Set;
 
 public class BluetoothActivity2 extends AppCompatActivity {
+    private String TAG = "BluetoothActivity2";
     private String device = "";
+    private boolean connected = false;
 
     private TextView btTextView;
     private Toolbar btToolBar;
@@ -161,9 +161,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
             startActivity(discoverableIntent);
-        } else {
+        } else
             showToast("Device is already discoverable");
-        }
     }
 
     // scan available nearby bluetooth devices
@@ -236,25 +235,21 @@ public class BluetoothActivity2 extends AppCompatActivity {
         }
     };
 
-    // -------------Bluetooth methods
-
     public void connectBluetoothDevice(String address) {
         final BluetoothDevice deviceMac = btAdapter.getRemoteDevice(address);
-        btService = new BluetoothService2(getApplicationContext(), mHandler);
-
-        // create ProgressDialog to let user know that application is trying to connect to device
-        progress = ProgressDialog.show(BluetoothActivity2.this, "Connecting...", "Please wait");
+        btService = new BluetoothService2(mHandler);
+        btService.connect(deviceMac, false); // connect to the device that was clicked
+        if (!connected)
+            // create ProgressDialog to let user know that application is trying to connect to device
+            progress = ProgressDialog.show(BluetoothActivity2.this, "Connecting...", "Please wait");
+        else // android cannot connect again after disconnected somehow
+            progress = ProgressDialog.show(BluetoothActivity2.this, "Disconnecting...", "Please wait");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                btService.connect(deviceMac, false); // connect to the device that was clicked
                 progress.dismiss(); // close ProgressDialog
-//                registerLocalReceivers(); // register receivers to allow current activity to continue receiving & executing messages
-//                    Intent i = new Intent(BluetoothActivity2.this, MainActivity2.class);
-//                    i.putExtra("device", device);
-//                    startActivity(i);
             }
-        }, 500); //delay of 1s
+        }, 3000); //delay of 1s
     }
 
     /**
@@ -269,21 +264,22 @@ public class BluetoothActivity2 extends AppCompatActivity {
                         case BluetoothService2.STATE_CONNECTED: // bluetooth service has connected to a device
                             Log.d("Handler Log: ", "STATE_CONNECTED");
                             registerLocalReceivers();
+                            connected = true;
                             sendToMain(device); // send name of device to MainActivity
                             break;
                         case BluetoothService2.STATE_CONNECTING: // bluetooth service is connecting to a device
                             Log.d("Handler Log: ", "STATE_CONNECTING");
-                            sendToMain(""); //send empty string to MainActivity to notify that no devices connected currently
                             device = ""; // set name to empty string since no devices is currently connected
+                            sendToMain(device); // send empty string to MainActivity to notify that no devices connected currently
                             break;
                         case BluetoothService2.STATE_LISTEN: // bluetooth service is listening for devices
                             Log.d("Handler Log: ", "STATE_LISTEN");
-                            sendToMain(""); //send empty string to MainActivity to notify that no devices connected currently
                             device = ""; // set name to empty string since no devices is currently connected
+                            sendToMain(device); // send empty string to MainActivity to notify that no devices connected currently
                         case BluetoothService2.STATE_NONE:
                             Log.d("Handler Log: ", "STATE_NONE");
-                            sendToMain(""); // send empty string to MainActivity to notify that no devices connected currently
                             device = ""; // set name to empty string since no devices is currently connected
+                            sendToMain(device); // send empty string to MainActivity to notify that no devices connected currently
                             break;
                     }
                     break;
@@ -300,9 +296,9 @@ public class BluetoothActivity2 extends AppCompatActivity {
                     Log.d("Handler Log: ", "MESSAGE_DEVICE_NAME - " + device);
                     if (null != getApplicationContext()) {
                         if (device != null) {
-                            showToast("Connected to! " + device);
+                            showToast("Connected to: " + device);
                             updateBluetoothTBStatus(device);
-                            // send to mainactivity
+                            progress.dismiss();
                             sendToMain(device); // name of device currently connected
                         }
                     }
@@ -349,23 +345,18 @@ public class BluetoothActivity2 extends AppCompatActivity {
 
     // register receivers needed
     private void registerLocalReceivers() {
-        if (registered)
-            return;
+        if (registered) return;
         LocalBroadcastManager.getInstance(this).registerReceiver(mTextReceiver, new IntentFilter("getTextToSend"));
         LocalBroadcastManager.getInstance(this).registerReceiver(mCtrlReceiver, new IntentFilter("getCtrlToSend"));
         registered = true;
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mDcReceiver, new IntentFilter("initiateDc"));
     }
 
     // destroy all receivers
     private void destroyReceivers() {
-        if (!registered)
-            return;
+        if (!registered) return;
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mTextReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mCtrlReceiver);
         registered = false;
-//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mDcReceiver);
-//        unregisterReceiver(bReceiver);
     }
 
     // broadcast receiver for bluetooth
@@ -402,6 +393,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
                 Log.d("BluetoothActivity2", "bReceiver: ACTION_ACL_DISCONNECT_REQUESTED");
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
                 Log.d("BluetoothActivity2", "bReceiver: ACTION_ACL_DISCONNECTED");
+                connected = false;
                 destroyReceivers();
             }
         }
@@ -452,28 +444,6 @@ public class BluetoothActivity2 extends AppCompatActivity {
         }
     };
 
-    // listen for disconnection from MapFragment
-//    private BroadcastReceiver mDcReceiver = new BroadcastReceiver() {
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            // Get extra data included in the Intent
-//            String control = intent.getStringExtra("disconnect");
-//            Log.d("Bluetooth mDcReceiver: ", control);
-//            if (control != null) {
-//                if (btService.getState() != BluetoothService2.STATE_CONNECTED) {
-//                    showToast("Connection Lost! Please try again." + btService.getState());
-//                    destroyReceivers();
-//                    device = "";
-//                    updateBluetoothTBStatus(device);
-//                    return;
-//                }
-//                destroyReceivers();
-//                btService.stop();
-//                btService.start();
-//            }
-//        }
-//    };
-
     public void showToast(String message) {
         Toast.makeText(BluetoothActivity2.this, message, Toast.LENGTH_LONG).show();
     }
@@ -511,7 +481,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
             startActivityForResult(enableIntent, 200);
             // Otherwise, setup the chat session
         } else if (btService == null) {
-            btService = new BluetoothService2(getApplicationContext(), mHandler);
+            btService = new BluetoothService2(mHandler);
             mOutStringBuffer = new StringBuffer();
         }
     }
