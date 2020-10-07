@@ -52,7 +52,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
     private JoystickView joystickRight;
 
-    // tilting
     public boolean tiltEnabled = false, fastest = false, exploration = false;
     private SensorManager sensorManager;
 
@@ -99,7 +98,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
             }
         });
 
-        // maze view
+        // maze view, auto update
         mazeView = getView().findViewById(R.id.mazeView2);
         switchAU = getView().findViewById(R.id.switchAutoUp);
         switchAU.setChecked(true);
@@ -124,7 +123,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnDown = getView().findViewById(R.id.btnDown);
         btnLeft = getView().findViewById(R.id.btnLeft);
         btnRight = getView().findViewById(R.id.btnRight);
-        btnCali = getView().findViewById(R.id.btnCali);
         ivDpad = getView().findViewById(R.id.iv_dpad);
 
         btnUp.setOnClickListener(new View.OnClickListener() {
@@ -155,19 +153,21 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
             }
         });
+
+        btnCali = getView().findViewById(R.id.btnCali);
         btnCali.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                sendCtrlToBtAct("AR,AN,C");
+                sendToBTActivity("AR,AN,C");
             }
         });
 
-        //for stopwatch
+        // for stopwatch
         chr = getView().findViewById(R.id.chrTimer);
         chrFPTimer = getView().findViewById(R.id.chrFPTimer);
 
-        // restart maze, buttons, textview status and chronometer
+        // restart maze, buttons, textview status and chronometer (android side only)
         btnRefresh = getView().findViewById(R.id.btnReset);
         btnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +199,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 mazeView.clearObstacleGrid();
                 mazeView.clearObsArray();
 
-                sendCtrlToBtAct("PC,AN,E"); // send exploration message to arduino
+                sendToBTActivity("PC,AN,E"); // send start exploration to arduino
                 btnExplore.setEnabled(false); // disable exploration button
                 btnFP.setEnabled(true); // enable fastest button
                 tvRStatus.setText("Exploration of maze is in progress..."); // update status
@@ -213,6 +213,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
         // start fastest path
         btnFP = getView().findViewById(R.id.btnFP);
+        btnFP.setEnabled(false); // disable start fastest path
         btnFP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,7 +221,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     // way point is inside start area, notify user
                     showToast("Invalid Way-Point Coordinate. Please check again later.");
                 } else {
-                    sendCtrlToBtAct("PC,AN,FP:" + (mazeView.getWaypoint()[0]) + ":" +
+                    sendToBTActivity("PC,AN,FP:" + (mazeView.getWaypoint()[0]) + ":" +
                             (mazeView.getWaypoint()[1])); // send fastest path message to algorithm
                     fastest = true;
                     btnExplore.setEnabled(true); // enable exploration button
@@ -259,11 +260,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnSendWP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mazeView.getWaypoint()[0] + 1 < 4 && mazeView.getWaypoint()[1] + 1 < 4) {
-                    // way point is inside start area, notify user
+                if (mazeView.getWaypoint()[0] + 1 < 4 && mazeView.getWaypoint()[1] + 1 < 4) { // way point is inside start area, notify user
                     showToast("Invalid Way-Point Coordinate. Please check again later.");
                 } else {
-                    sendCtrlToBtAct("PC,AN,WP:" + (mazeView.getWaypoint()[0]) + ":" +
+                    sendToBTActivity("PC,AN,WP:" + (mazeView.getWaypoint()[0]) + ":" +
                             (mazeView.getWaypoint()[1])); // send message to algorithm
                     showToast("Waypoint has been Sent"); // notify user that waypoint is sent
                 }
@@ -276,18 +276,18 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnSendRP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendCtrlToBtAct("PC,AN," + (mazeView.getRobotCenter()[0]) + ":" +
+                sendToBTActivity("PC,AN," + (mazeView.getRobotCenter()[0]) + ":" +
                         (mazeView.getRobotCenter()[1]) + ":" + degreeToDirection(mazeView.angle));
             }
         });
 
 
-        // show current waypoint X & Y coordinates, (0,0) if not set
+        // show current waypoint X & Y coordinates, (1,1) if not set
         tvFPWP = getView().findViewById(R.id.tvFPWP);
         setWaypointTextView(mazeView.getWaypoint());
 
 
-        tvRStartP = getView().findViewById(R.id.tvRStart);
+        tvRStartP = getView().findViewById(R.id.tvRStart); // robot position textview
 
         // robot direction
         spinnerROrien = getView().findViewById(R.id.spinnerROrien);
@@ -323,7 +323,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
         setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
 
-        // manually set robot's position on maze
+        // switch to set robot's position on maze
         switchPRP = getView().findViewById(R.id.switchPlotRP);
         switchPRP.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -393,7 +393,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     - Calibrate Robot: AR,AN,C
      */
     // Send to BluetoothActivity2 to send to RPI
-    public void sendCtrlToBtAct(String msg) {
+    public void sendToBTActivity(String msg) {
         Intent intent = new Intent("getCtrlToSend");
         // You can also include some extra data.
         if (msg.equals("AR,AN,F"))
@@ -439,7 +439,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
             String theName = intent.getStringExtra("message"); // Get extra data included in the Intent
             if (theName.equals("")) { // no device connected, disable bluetooth-related actions
                 //joystickRight.setEnabled(false);
-                //--dcBtn.setEnabled(false);
                 btnUp.setEnabled(false);  // check
                 btnDown.setEnabled(false);  // check
                 btnLeft.setEnabled(false);   // check
@@ -449,7 +448,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 tvRStatus.setText("Offline");
             } else { // device connected, enable all bluetooth-related actions
                 // joystickRight.setEnabled(true);
-                //--dcBtn.setEnabled(true);
                 btnUp.setEnabled(true);
                 btnDown.setEnabled(true);
                 btnLeft.setEnabled(true);
@@ -593,7 +591,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 //                    new Handler().postDelayed(new Runnable() {
 //                        @Override
 //                        public void run() {
-//                            sendCtrlToBtAct("AR,AN,C"); // send to arduino to calibrate
+//                            sendToBTActivity("AR,AN,C"); // send to arduino to calibrate
 //                        }
 //                    }, 2000); // 2 seconds later
                 }

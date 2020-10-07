@@ -244,6 +244,17 @@ public class BluetoothActivity2 extends AppCompatActivity {
             progress = ProgressDialog.show(BluetoothActivity2.this, "Connecting...", "Please wait");
         else // android cannot connect again after disconnected somehow
             progress = ProgressDialog.show(BluetoothActivity2.this, "Disconnecting...", "Please wait");
+
+//        if (btService.getState() == btService.STATE_CONNECTED) {
+//            progress = ProgressDialog.show(BluetoothActivity2.this, "Disconnecting...", "Please wait");
+//            btService.stop();
+//            btService.start();
+//        } else {
+//            progress = ProgressDialog.show(BluetoothActivity2.this, "Connecting...", "Please wait");
+//            btService = new BluetoothService2(mHandler);
+//            btService.connect(deviceMac, false); // connect to the device that was clicked
+//        }
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

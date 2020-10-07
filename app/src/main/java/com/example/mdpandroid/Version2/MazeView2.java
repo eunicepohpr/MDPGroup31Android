@@ -299,22 +299,22 @@ public class MazeView2 extends View {
                 if (robotCenter[0] == 1) break;
                 updateRobotCoords(robotCenter[0] - 1, robotCenter[1], 270);
                 message = "F";  //forward = 0
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "R";  //right = 2
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "L";   //left =1
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
         }
     }
@@ -327,22 +327,22 @@ public class MazeView2 extends View {
                 if (robotCenter[0] == 13) break;
                 updateRobotCoords(robotCenter[0] + 1, robotCenter[1], 90);
                 message = "F";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "L";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 270:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
         }
     }
 
@@ -354,22 +354,22 @@ public class MazeView2 extends View {
                 if (robotCenter[1] == 18) break;
                 updateRobotCoords(robotCenter[0], robotCenter[1] + 1, 0);
                 message = "F";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "L";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
         }
     }
 
@@ -381,22 +381,22 @@ public class MazeView2 extends View {
                 if (robotCenter[1] == 1) break;
                 updateRobotCoords(robotCenter[0], robotCenter[1] - 1, 180);
                 message = "F";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 270:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "L";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "R";
-                mapFragment.sendCtrlToBtAct(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAL + message);
         }
     }
 
