@@ -124,32 +124,8 @@ public class MazeView2 extends View {
         drawGoalZone(canvas);
         displayWaypoint(canvas);
         displayFastestPath(canvas);
-//        boolean entered = false;
-//        if (!updateImageRecognise) {
-//            displayFastestPath(canvas);
-//            entered = true;
-//        }
-//        if (entered)
-//            updateImageRecognise = !updateImageRecognise;
         drawGridLines(canvas);
         displayRobot(canvas);
-
-//        for (int x = 1; x <= NUM_COLUMNS; x++) {
-//            if (x > 9)
-//                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 5),
-//                        cells[x][20].startY + (cellSize / 3), blackPaint);
-//            else
-//                canvas.drawText(Integer.toString(x - 1), cells[x][20].startX + (cellSize / 3),
-//                        cells[x][20].startY + (cellSize / 3), blackPaint);
-//        }
-//        for (int y = 0; y < NUM_ROWS; y++) {
-//            if ((20 - y) > 9)
-//                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2),
-//                        cells[0][y].startY + (cellSize / 1.5f), blackPaint);
-//            else
-//                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f),
-//                        cells[0][y].startY + (cellSize / 1.5f), blackPaint);
-//        }
 
     }
 

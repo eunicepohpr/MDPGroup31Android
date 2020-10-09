@@ -561,7 +561,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                             for (int i = 0; i < tempObsArray.size(); i++)
                                 if (tempObsArray.get(i).equals(tempPos))
                                     checkObs = true;
-                            if (checkObs) {
+                            if (checkObs) { // image detected is on obstacle
                                 mazeView.updateNumberID(numberX, numberY, stringItems[7]);
                                 mazeView.updateImageID(numberX, numberY, Integer.parseInt(stringItems[7]));
                             }

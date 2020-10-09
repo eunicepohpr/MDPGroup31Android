@@ -132,6 +132,7 @@
                         android:padding="10dp"
                         android:scrollbars="vertical"
                         android:text="@string/ComRecTxtHelp"
+                        android:textIsSelectable="true"
                         android:textSize="@dimen/text_size_large" />
 
                 </ScrollView>
