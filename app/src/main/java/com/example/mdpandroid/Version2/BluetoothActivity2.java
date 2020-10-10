@@ -311,6 +311,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
                             updateBluetoothTBStatus(device);
                             progress.dismiss();
                             sendToMain(device); // name of device currently connected
+                            Intent i = new Intent(BluetoothActivity2.this, MainActivity2.class);
+                            startActivity(i);
                         }
                     }
                     break;
