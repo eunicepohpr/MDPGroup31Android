@@ -73,7 +73,7 @@
                     <TextView
                         android:id="@+id/tvRobotStatus"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/mapstatus_text"
                         android:layout_below="@id/tvRS"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="10dp"
@@ -103,7 +103,7 @@
                     <Chronometer
                         android:id="@+id/chrTimer"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/mapstatus_text"
                         android:layout_below="@id/tvES"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="10dp"
@@ -133,7 +133,7 @@
                     <Chronometer
                         android:id="@+id/chrFPTimer"
                         android:layout_width="wrap_content"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/mapstatus_text"
                         android:layout_below="@id/tvFPS"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="10dp"
@@ -370,6 +370,7 @@
                         android:id="@+id/btnCali"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
                         android:text="@string/BtnCali" />
 
                     <Switch

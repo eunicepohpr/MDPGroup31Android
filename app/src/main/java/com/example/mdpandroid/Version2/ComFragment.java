@@ -155,7 +155,7 @@ public class ComFragment extends Fragment {
         });
     }
 
-    // receive bluetooth text event
+    // text received from bluetooth event
     private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -201,7 +201,8 @@ public class ComFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy(){
-        super.onDestroy();LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mTextReceiver);
     }
 }

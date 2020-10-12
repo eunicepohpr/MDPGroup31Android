@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -42,7 +43,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
     private String TAG = "MapFragment";
     private static MapFragment instance;
 
-    private Button btnExplore, btnFP, btnRefresh, btnCali, btnUpdateMap, btnSendWP, btnSendRP;
+    private Button btnExplore, btnFP, btnReset, btnCali, btnUpdateMap, btnSendWP, btnSendRP;
     private Button btnUp, btnDown, btnLeft, btnRight;
     private Switch switchAU, switchTilt, switchPRP, switchShowImage;
     private Spinner spinnerROrien;
@@ -50,9 +51,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
     private TextView tvRStatus, tvFPWP, tvRStartP;
     private ImageView ivDpad;
 
-    private JoystickView joystickRight;
-
     public boolean tiltEnabled = false, fastest = false, exploration = false;
+    private boolean tiltDelay = true;
+
     private SensorManager sensorManager;
 
     public boolean autoUpdate = true, enablePlotRobotPosition = false;
@@ -60,6 +61,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
     public MazeView2 mazeView;
     ArrayAdapter<String> directionAdapter;
+
+    int defaultDirection = 270;
 
     public MapFragment() {
     }
@@ -168,17 +171,17 @@ public class MapFragment extends Fragment implements SensorEventListener {
         chrFPTimer = getView().findViewById(R.id.chrFPTimer);
 
         // restart maze, buttons, textview status and chronometer (android side only)
-        btnRefresh = getView().findViewById(R.id.btnReset);
-        btnRefresh.setOnClickListener(new View.OnClickListener() {
+        btnReset = getView().findViewById(R.id.btnReset);
+        btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mazeView.clearExploredGrid();
                 mazeView.clearNumID();
                 mazeView.clearObstacleGrid();
-                mazeView.updateRobotCoords(1, 1, 0);
+                mazeView.updateRobotCoords(1, 1, defaultDirection);
                 setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
                 btnExplore.setEnabled(true);
-                btnFP.setEnabled(true);
+                btnFP.setEnabled(true); // false
                 mazeView.clearObsArray();
                 tvRStatus.setText("Waiting for new instructions");
                 fastest = false;
@@ -200,6 +203,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 mazeView.clearObsArray();
 
                 sendToBTActivity("PC,AN,E"); // send start exploration to arduino
+                showToast("Start Exploration sent");
                 btnExplore.setEnabled(false); // disable exploration button
                 btnFP.setEnabled(true); // enable fastest button
                 tvRStatus.setText("Exploration of maze is in progress..."); // update status
@@ -213,7 +217,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
         // start fastest path
         btnFP = getView().findViewById(R.id.btnFP);
-        btnFP.setEnabled(false); // disable start fastest path
+//        btnFP.setEnabled(false); // disable start fastest path
         btnFP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -223,6 +227,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 } else {
                     sendToBTActivity("PC,AN,FP:" + (mazeView.getWaypoint()[0]) + ":" +
                             (mazeView.getWaypoint()[1])); // send fastest path message to algorithm
+                    showToast("Start Fastest Path Sent");
                     fastest = true;
                     btnExplore.setEnabled(true); // enable exploration button
                     btnFP.setEnabled(false); // disable fastest button
@@ -280,6 +285,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         (mazeView.getRobotCenter()[1]) + ":" + degreeToDirection(mazeView.angle));
             }
         });
+        btnSendRP.setEnabled(false); // algo not using
 
 
         // show current waypoint X & Y coordinates, (1,1) if not set
@@ -287,7 +293,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         setWaypointTextView(mazeView.getWaypoint());
 
 
-        tvRStartP = getView().findViewById(R.id.tvRStart); // robot position textview
+        tvRStartP = getView().findViewById(R.id.tvRStart); // robot position text view
 
         // robot direction
         spinnerROrien = getView().findViewById(R.id.spinnerROrien);
@@ -335,23 +341,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
         // result receiver
         registerReceivers();
 
-//        joystickRight.setOnMoveListener(new JoystickView.OnMoveListener() {
-//            @SuppressLint("DefaultLocale")
-//            @Override
-//            public void onMove(int angle, int strength) {
-//                if (strength > 70 && !device.equalsIgnoreCase("")) {
-//                    if (angle >= 315 || angle <= 45)
-//                        mazeView.moveRight();
-//                    else if (angle >= 225 && angle < 315)
-//                        mazeView.moveDown();
-//                    else if (angle >= 135 && angle < 225)
-//                        mazeView.moveLeft();
-//                    else if (angle >= 45 && angle < 135)
-//                        mazeView.moveUp();
-//                }
-//            }
-//        });
-
         // disable all buttons that require bluetooth
         btnUp.setEnabled(false);
         btnDown.setEnabled(false);
@@ -359,7 +348,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
         btnRight.setEnabled(false);
         btnCali.setEnabled(false);
         ivDpad.setImageResource(R.drawable.dpad_disabled);
-        //joystickRight.setEnabled(false);
         tvRStatus.setText("Offline");
 
     }
@@ -380,7 +368,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
         else
             tvRStartP.setText("(" + (robotpoint[0]) + "," + (robotpoint[1]) + ")");
         Integer spinnerPosition = directionAdapter.getPosition(String.valueOf(direction));
-        spinnerPosition = spinnerPosition == null ? 0 : spinnerPosition;
+        spinnerPosition = spinnerPosition == null ? defaultDirection : spinnerPosition;
         spinnerROrien.setSelection(spinnerPosition);
     }
 
@@ -432,22 +420,20 @@ public class MapFragment extends Fragment implements SensorEventListener {
         return degree;
     }
 
-    // Connection change event
+    // Connection change event from bluetooth activity
     private BroadcastReceiver mNameReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String theName = intent.getStringExtra("message"); // Get extra data included in the Intent
             if (theName.equals("")) { // no device connected, disable bluetooth-related actions
-                //joystickRight.setEnabled(false);
-                btnUp.setEnabled(false);  // check
-                btnDown.setEnabled(false);  // check
-                btnLeft.setEnabled(false);   // check
-                btnRight.setEnabled(false);  // check
-                btnCali.setEnabled(false);  // check
+                btnUp.setEnabled(false);
+                btnDown.setEnabled(false);
+                btnLeft.setEnabled(false);
+                btnRight.setEnabled(false);
+                btnCali.setEnabled(false);
                 ivDpad.setImageResource(R.drawable.dpad_disabled);
                 tvRStatus.setText("Offline");
             } else { // device connected, enable all bluetooth-related actions
-                // joystickRight.setEnabled(true);
                 btnUp.setEnabled(true);
                 btnDown.setEnabled(true);
                 btnLeft.setEnabled(true);
@@ -459,18 +445,20 @@ public class MapFragment extends Fragment implements SensorEventListener {
         }
     };
 
-    // Exploration and Fastest Path event
+    // Exploration, Explored and Fastest Path events
     private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String theText = intent.getStringExtra("text"); // Get extra data included in the Intent
             if (theText.length() > 0) {
-                if (theText.length() < 15 && fastest && (theText.contains("R") ||
-                        theText.contains("L") || theText.contains("F") || theText.contains("G"))) { // checking for fastestpath string
+
+                // Case 1: Receiving movement during fastest path from Arduino
+                if (theText.length() < 15 && fastest && (theText.contains("R") || theText.contains("L") ||
+                        theText.contains("F") || theText.contains("G"))) {
                     int forwardDistance;
-                    String[] fastestCommands = theText.split(""); // split string to get direction & tiles to move
-                    // move robot in order of command received
-                    for (int i = 0; i < fastestCommands.length; i++) {
+                    String[] fastestCommands = theText.split("");
+
+                    for (int i = 0; i < fastestCommands.length; i++) { // move robot in order of command received
                         if (fastestCommands[i].equals("F")) {
                             mazeView.robotX.add(mazeView.robotCenter[0]);
                             mazeView.robotY.add(mazeView.robotCenter[1]);
@@ -492,16 +480,19 @@ public class MapFragment extends Fragment implements SensorEventListener {
                                     mazeView.moveForward();
                                 }
                             } catch (Exception e) {
-                                Log.d("FP String", "String format wrong");
+                                Log.d(TAG, "FP String: String format wrong");
                             }
                         }
                     }
-                } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
-                    // Identifying mdf string send for real-time update of maze during exploration
-                    String[] stringItems = theText.split(":");
 
-                    String[] exploredString = hexToBinary(stringItems[0]).split(""); // Getting the explored grids from MDF string
-                    String bin = "";
+                    // Case 2: Receiving P1, P2, Robot Position, Image Recognised during Exploration
+                    // Identifying mdf string send for real-time update of maze during exploration
+                } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
+                    String[] stringItems = theText.split(":");
+                    String bin = "", bin2 = "";
+
+                    // Getting the explored grids from MDF string
+                    String[] exploredString = hexToBinary(stringItems[0]).split("");
                     int[] exploredGrid = new int[exploredString.length - 5]; // -5 to make it 300
                     for (int i = 0; i < exploredGrid.length; i++) {
                         exploredGrid[i] = Integer.parseInt(exploredString[i + 3]); // because first element is ""
@@ -513,7 +504,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
 //                    Log.d(TAG, "Explored: " + bin);
 
                     // Getting the obstacle grids from MDF string
-                    String bin2 = "";
                     String[] obstacleString = hexToBinary(stringItems[1]).split("");
                     int[] obstacleGrid = new int[obstacleString.length - 1];
                     for (int i = 0; i < obstacleGrid.length; i++) {
@@ -522,13 +512,14 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     }
 //                    Log.d(TAG, "Obstacle: " + bin2);
 
-                    int gridExplored = 0, inc2 = 0;
+                    // For explored grids, draw obstacle if any
+                    int gridExplored = 0, obsIndex = 0;
                     for (int y = 0; y < 20; y++) {
-                        for (int x = 0; x < 15; x++) { // For explored grids, draw obstacle if any
+                        for (int x = 0; x < 15; x++) {
                             if (exploredGrid != null && exploredGrid[gridExplored] == 1) { // grid explored
-                                if (obstacleGrid != null && obstacleGrid[inc2] == 1) // the explored grid is an obstacle
+                                if (obstacleGrid != null && obstacleGrid[obsIndex] == 1) // the explored grid is an obstacle
                                     mazeView.setObsArray(x, y);
-                                inc2++;
+                                obsIndex++;
                             }
                             gridExplored++;
                         }
@@ -549,10 +540,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
 
                     // This segment of the string stores information of identified image and their coordinates
                     if (stringItems.length >= 6) {
-                        // changing string to int
                         int numberX = Integer.parseInt(stringItems[5]);
                         int numberY = Integer.parseInt(stringItems[6]);
-                        // Checking to see if received a valid number id
+                        // Check if valid number id received
                         boolean correctId = Pattern.matches("^[1-9][0-5]?$", stringItems[7]);
                         if (correctId) {
                             ArrayList<String> tempObsArray = mazeView.getObsArray();
@@ -568,9 +558,10 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         }
                     }
 
-                } else if (theText.contains("Explored") && exploration) { // exploration completed
+                    // Case 3: Receiving Exploration complete
+                } else if (theText.contains("Explored") && exploration) {
                     exploration = false;
-                    chr.stop(); // stop stopwatch
+                    chr.stop();
                     tvRStatus.setText("Exploration has been successfully completed"); // update status
                     String imageStr = ""; // create string to store information on images found
                     if (mazeView.numberID != null) // if images were found, loop through X, Y, ID and add to string
@@ -582,6 +573,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     String message = "MDF String: " + mdfExploredString + ":" + mdfObstacleString +
                             "\nImage String(X, Y, ID): " + imageStr;
                     Log.d("Exploration: ", message);
+
                     // send to communication fragment
                     Intent i = new Intent("getTextFromDevice");
                     i.putExtra("text", "displayExplored");
@@ -594,6 +586,19 @@ public class MapFragment extends Fragment implements SensorEventListener {
 //                            sendToBTActivity("AR,AN,C"); // send to arduino to calibrate
 //                        }
 //                    }, 2000); // 2 seconds later
+
+                    // Case 4: Change robot position (prepare for fp)
+                } else if (theText.contains("RP") && theText.contains(":")) {
+                    String[] robotPos = theText.split(":");
+                    if (robotPos.length >= 4) {
+                        try {
+                            mazeView.updateRobotCoords(Integer.parseInt(robotPos[1]),
+                                    Integer.parseInt(robotPos[2]), directionToDegree(robotPos[3]));
+                            setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
+                        } catch (Exception e) {
+                            Log.d(TAG, "Invalid robot position format" + e.toString());
+                        }
+                    }
                 }
 
             }
@@ -652,24 +657,35 @@ public class MapFragment extends Fragment implements SensorEventListener {
         float x = sensorEvent.values[0];
         float y = sensorEvent.values[1];
         if (tiltEnabled) { // move robot only if tilt has been enabled
-            if (y < -5) { // device has been tilted forward
-                mazeView.moveUp();
-                tvRStatus.setText("Moving Forward");
-            } else if (x < -5) { // device has been tilted to the right
-                mazeView.moveRight();
-                tvRStatus.setText("Turning Right");
-            } else if (x > 5) {// device has been tilted to the left
-                mazeView.moveLeft();
-                tvRStatus.setText("Turning Left");
-            } else if (y > 5)  // device tilted to the bottom
-                mazeView.moveDown();
+            if (tiltDelay) {
+                if (y < -5) { // device has been tilted forward
+                    mazeView.moveUp();
+                    tvRStatus.setText("Moving Forward");
+                } else if (x < -5) { // device has been tilted to the right
+                    mazeView.moveRight();
+                    tvRStatus.setText("Turning Right");
+                } else if (x > 5) { // device has been tilted to the left
+                    mazeView.moveLeft();
+                    tvRStatus.setText("Turning Left");
+                } else if (y > 5) // device tilted to the bottom
+                    mazeView.moveDown();
+                setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle()); // update coordinate tv
+
+                // slow down robot movement when tilting
+                tiltDelay = false;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        tiltDelay = true;
+                    }
+                }, 150);
+            }
         }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
-
 
     @Override
     public void onDestroy() {

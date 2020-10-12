@@ -49,7 +49,7 @@
     <string name="BtnEx">\u0020Exp</string>
     <string name="BtnFP">\u0020FP</string>
     <string name="BtnReset">\u0020Reset</string>
-    <string name="BtnCali">Calibrate</string>
+    <string name="BtnCali">Cali</string>
     <string name="BtnUpM">Update Map</string>
     <string name="BtnWP">\u0020WayPoint</string>
     <string name="BtnRP">\u0020Position</string>

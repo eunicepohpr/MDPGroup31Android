@@ -34,15 +34,14 @@ public class MazeView2 extends View {
     List<Integer> imageID = new ArrayList<>(); // numberid of identified image
     List<Integer> robotX = new ArrayList<>(), robotY = new ArrayList<>();
 
-    int[] images = new int[]{R.drawable.up_arrow_1, R.drawable.down_arrow_2, R.drawable.right_arrow_3, R.drawable.left_arrow_4,
-            R.drawable.go_5, R.drawable.six_6, R.drawable.seven_7, R.drawable.eight_8, R.drawable.nine_9,
-            R.drawable.zero_10, R.drawable.alphabet_v_11, R.drawable.alphabet_w_12, R.drawable.alphabet_x_13,
-            R.drawable.alphabet_y_14, R.drawable.alphabet_z_15};
+    int[] images = new int[]{R.drawable.up_arrow_1, R.drawable.down_arrow_2, R.drawable.right_arrow_3,
+            R.drawable.left_arrow_4, R.drawable.go_5, R.drawable.six_6, R.drawable.seven_7,
+            R.drawable.eight_8, R.drawable.nine_9, R.drawable.zero_10, R.drawable.alphabet_v_11,
+            R.drawable.alphabet_w_12, R.drawable.alphabet_x_13, R.drawable.alphabet_y_14, R.drawable.alphabet_z_15};
 
     private Paint blackPaint, whitePaint;
     private Paint goalPaint, startPaint, mapPaint, robotPaint, waypointPaint, exploredPaint, fastestPaint;
-    private final String DEFAULTAL = "AR,AN,"; // Sending to Arudino
-    private final String DEFAULTAR = "AR,AN,";
+    private final String DEFAULTAR = "AR,AN,"; // Sending to Arudino
 
     MapFragment mapFragment = MapFragment.getInstance();
 
@@ -50,7 +49,7 @@ public class MazeView2 extends View {
     // robot starting coordinates
     private int[] robotFront = {1, 2};
     public int[] robotCenter = {1, 1};
-    int angle = 0;
+    int angle = 270;
 
     public boolean showImageRecognise = false;
 
@@ -80,7 +79,7 @@ public class MazeView2 extends View {
         startPaint.setColor(Color.rgb(142, 220, 226));
         mapPaint.setColor(Color.LTGRAY);
         robotPaint.setColor(Color.DKGRAY);
-        waypointPaint.setColor(Color.rgb(94, 94, 94));
+        waypointPaint.setColor(Color.rgb(192, 131, 245)); // 94 94 94
         exploredPaint.setColor(Color.rgb(142, 175, 226));
         fastestPaint.setColor(Color.rgb(204, 129, 129));
 
@@ -201,19 +200,19 @@ public class MazeView2 extends View {
 
     // Obstacles and explored
     private void drawExploredObstacles(Canvas canvas) {
-        int inc = 0, inc2 = 0;
+        int gridExplored = 0, obsIndex = 0;
         for (int y = 0; y < NUM_ROWS; y++)
             for (int x = 0; x < NUM_COLUMNS; x++) {
                 // when explored then draw obstacle if any
-                if (exploredGrid != null && exploredGrid[inc] == 1) {
+                if (exploredGrid != null && exploredGrid[gridExplored] == 1) {
                     int left = x * cellWidth, top = (NUM_ROWS - 1 - y) * cellHeight,
                             right = (x + 1) * cellWidth, bottom = (NUM_ROWS - y) * cellHeight;
                     canvas.drawRect(left, top, right, bottom, exploredPaint);
-                    if (obstacleGrid != null && obstacleGrid[inc2] == 1)
+                    if (obstacleGrid != null && obstacleGrid[obsIndex] == 1)
                         canvas.drawRect(left, top, right, bottom, blackPaint);
-                    inc2++;
+                    obsIndex++;
                 }
-                inc++;
+                gridExplored++;
             }
     }
 
@@ -275,22 +274,22 @@ public class MazeView2 extends View {
                 if (robotCenter[0] == 1) break;
                 updateRobotCoords(robotCenter[0] - 1, robotCenter[1], 270);
                 message = "F";  //forward = 0
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "R";  //right = 2
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "L";   //left =1
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
         }
     }
@@ -303,22 +302,23 @@ public class MazeView2 extends View {
                 if (robotCenter[0] == 13) break;
                 updateRobotCoords(robotCenter[0] + 1, robotCenter[1], 90);
                 message = "F";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "L";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 270:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
+                break;
         }
     }
 
@@ -330,22 +330,23 @@ public class MazeView2 extends View {
                 if (robotCenter[1] == 18) break;
                 updateRobotCoords(robotCenter[0], robotCenter[1] + 1, 0);
                 message = "F";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "L";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 180:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 0);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
+                break;
         }
     }
 
@@ -357,26 +358,27 @@ public class MazeView2 extends View {
                 if (robotCenter[1] == 1) break;
                 updateRobotCoords(robotCenter[0], robotCenter[1] - 1, 180);
                 message = "F";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 270:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "L";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             case 90:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 180);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
                 message = "R";
-                mapFragment.sendToBTActivity(DEFAULTAL + message);
+                mapFragment.sendToBTActivity(DEFAULTAR + message);
+                break;
         }
     }
 
-    //robot moves forward
+    // robot moves forward
     public void moveForward() {
         switch (angle) {
             case 180:
@@ -390,10 +392,11 @@ public class MazeView2 extends View {
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1] + 1, 0);
+                break;
         }
     }
 
-    //robot turns right
+    // robot turns right
     public void turnRight() {
         switch (angle) {
             case 90:
@@ -407,10 +410,11 @@ public class MazeView2 extends View {
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 90);
+                break;
         }
     }
 
-    //robot turns left
+    // robot turns left
     public void turnLeft() {
         switch (angle) {
             case 90:
@@ -424,6 +428,7 @@ public class MazeView2 extends View {
                 break;
             default:
                 updateRobotCoords(robotCenter[0], robotCenter[1], 270);
+                break;
         }
     }
 
@@ -528,16 +533,10 @@ public class MazeView2 extends View {
 
             waypoint[0] = (x == waypoint[0] && y == waypoint[1]) ? -1 : x;
             waypoint[1] = (x == waypoint[0] && y == waypoint[1]) ? -1 : y;
-//            if (x == waypoint[0] && y == waypoint[1]) {
-//                waypoint[0] = -1;
-//                waypoint[1] = -1;
-//            } else {
-//                waypoint[0] = x; // when user touch and assign new waypoint value
-//                waypoint[1] = y;
-//            }
-            invalidate(); // call onDraw method again
-            // handlers user when user touch the maze when mazeFragment not initialised
 
+            invalidate(); // call onDraw method again
+
+            // handlers user when user touch the maze when mazeFragment not initialised
             mapFragment.setWaypointTextView(waypoint);
 
         } else if (mapFragment.getEnablePlotRobotPosition()) {
@@ -559,7 +558,6 @@ public class MazeView2 extends View {
         }
         return true;
     }
-
 
     public int[] getWaypoint() {
         return waypoint;

@@ -14,4 +14,5 @@
 
     <dimen name="padding_map">5dp</dimen>
     <dimen name="margin_map">2dp</dimen>
+    <dimen name="mapstatus_text">40dp</dimen>
 </resources>

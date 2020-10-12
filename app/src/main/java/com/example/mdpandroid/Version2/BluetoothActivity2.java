@@ -44,8 +44,7 @@ public class BluetoothActivity2 extends AppCompatActivity {
     private TextView tvNoPairDevices, tvNoAvailDevices;
     private Button btnDiscover, btnRefresh, btnScan;
 
-    private ArrayAdapter<String> newDevicesArrayAdapter;
-    private ArrayAdapter<String> pairedDevicesArrayAdapter;
+    private ArrayAdapter<String> newDevicesArrayAdapter, pairedDevicesArrayAdapter;
 
     private ProgressBar pbPair, pbAvail;
     private ProgressDialog progress;
@@ -133,16 +132,12 @@ public class BluetoothActivity2 extends AppCompatActivity {
      * required only if user's device's SDK is after LOLLIPOP's version
      */
     private void checkBTPermissions() {
-//        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
         int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
         permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
         if (permissionCheck != 0)
             this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
-//        }
     }
-
-    // ------------------------- UI Methods
 
     // Update the bluetooth toolbar
     public void updateBluetoothTBStatus(String device) {
@@ -173,7 +168,6 @@ public class BluetoothActivity2 extends AppCompatActivity {
             btnScan.setText(R.string.BTScan);
             showToast("Scanning stopped"); // notify user of button click
             pbAvail.setVisibility(View.GONE); // hide progress bar
-
         } else {
             newDevicesArrayAdapter.clear(); // clear list of available devices
             btnScan.setText(R.string.BTStop); // clear btn text
@@ -190,14 +184,14 @@ public class BluetoothActivity2 extends AppCompatActivity {
         }
     }
 
-    public void updatePairDevicesList() { // use android's .getBondedDevices() to retrieve list of paired devices attached to phone
+    public void updatePairDevicesList() {
         pairedDevicesArrayAdapter.clear();
-//        btnRefreshTx = String.valueOf(btnRefresh.getText()); // save btn text
         btnRefresh.setText(""); // clear btn text
         pbPair.setVisibility(View.VISIBLE); // show progress bar
         lvPairedDevices.setVisibility(View.GONE); // hide list view
         tvNoPairDevices.setVisibility(View.GONE); // hide no devices tv
 
+        // use android's .getBondedDevices() to retrieve list of paired devices attached to phone
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
         ArrayList<String> list = new ArrayList<>();
         final boolean hasList = pairedDevices.size() > 0;
@@ -398,10 +392,8 @@ public class BluetoothActivity2 extends AppCompatActivity {
             } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
                 Log.d("BluetoothActivity2", "bReceiver: ACTION_BOND_STATE_CHANGED");
                 BluetoothDevice mDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED) { // device paired
+                if (mDevice.getBondState() == BluetoothDevice.BOND_BONDED)  // device paired
                     updatePairDevicesList(); // refresh the list of paired device
-//                    connectBluetoothDevice(mDevice.getAddress()); // auto connect paired device
-                }
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED.equals(action)) {
                 Log.d("BluetoothActivity2", "bReceiver: ACTION_ACL_DISCONNECT_REQUESTED");
             } else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
@@ -492,7 +484,6 @@ public class BluetoothActivity2 extends AppCompatActivity {
         if (!btAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, 200);
-            // Otherwise, setup the chat session
         } else if (btService == null) {
             btService = new BluetoothService2(mHandler);
             mOutStringBuffer = new StringBuffer();
