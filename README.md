@@ -20,7 +20,7 @@ Credits to the authors for designing the icons used in this application :heart_e
 ---
 
 ## Application Versions
-This repository currently contains 3 versions of the application. To switch between the different versions, `edit the [AndroidManifest](/app/src/main/AndroidManifest.xml) file` :poop:
+This repository currently contains 3 versions of the application. To switch between the different versions, edit the [AndroidManifest](/app/src/main/AndroidManifest.xml) file :poop:
 
 ### [Version 1 (reference)](/app/src/main/java/com/example/mdpandroid/Version1)
 Original unedited code
@@ -29,7 +29,7 @@ Original unedited code
     - Activity lifecycle not managed properly
     - ~~Its not our coat :')~~
 
- ### [Version 2 (Leaderboard code :thumbsup:)](](/app/src/main/java/com/example/mdpandroid/Version2))
+ ### [Version 2 (Leaderboard code :thumbsup:)](/app/src/main/java/com/example/mdpandroid/Version2)
  New Implementation using Original Bluetooth Service
 - Change of UI and Activity launch modes
 - Problems:
