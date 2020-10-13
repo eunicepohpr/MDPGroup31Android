@@ -1,17 +1,17 @@
 # CZ3004 MDP Team 31 Android
 
-This application requires **Bluetooth**! minSDK is 23 and we *NOT* using androidx :frowning:
+This application requires **Bluetooth**! minSDK is 23 and *NOT* using androidx
 
 ## Documentation References
 - [Bluetooth Connection](https://developer.android.com/guide/topics/connectivity/bluetooth.html)
 - [Activity launch modes](https://developer.android.com/guide/components/activities/tasks-and-back-stack)
 - [Support different screen sizes](https://developer.android.com/training/multiscreen/screensizes)
-    - We barely support phone :grimacing:
+    - barely support phone (not perfect)
 
 ---
 
 ## Icons
-Special thanks to the authors below for designing the beautiful icons used in this application :heart_eyes:
+Credits to the authors for designing the icons used in this application :heart_eyes:
 - Icons made by [good-ware](https://www.flaticon.com/authors/good-ware) from [www.flaticon.com](https://www.flaticon.com/)
 - Icons made by [prettycons](https://www.flaticon.com/authors/prettycons) from [www.flaticon.com](https://www.flaticon.com/)
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
@@ -22,24 +22,26 @@ Special thanks to the authors below for designing the beautiful icons used in th
 ## Application Versions
 This repository currently contains 3 versions of the application. To switch between the different versions, `edit the AndroidManifest file` :poop:
 
- 1) **Original unedited code**
-    - For testing if orignal implementation is working
-    - Problems:
-        - Activity lifecycle not managed properly
-        - ~~Its not our coat :')~~
+### Version 1 (reference)
+**Original unedited code**
+- For testing if orignal implementation is working
+- Problems:
+    - Activity lifecycle not managed properly
+    - ~~Its not our coat :')~~
 
- 2) **New Implementation using Original Bluetooth Service** :thumbsup:
-    - Change of UI and Activity launch modes
-    - Problems:
-        - Repeatedly forcing disconnection will lead to broken Bluetooth (I really dk how to fix this :cry:) &#8594; `just restart the application`
-        - Disconnecting device from application might break subsequent bluetooth connection (Will try to prevent the accident click) &#8594; `don't press the device in the list when it is connected, disconnect from the other end` :sweat_smile:
+ ### Version 2 (Leaderboard code :thumbsup:)
+ **New Implementation using Original Bluetooth Service**
+- Change of UI and Activity launch modes
+- Problems:
+    - Repeated disconnection (by pressing device in list) will lead to broken Bluetooth (I really dk how to fix this :cry:) &#8594; `restart the application or disconnect from rpi`
 
- 3) **New Implementation using Different Bluetooth Service (reconnection broken)**
-    - Same UI as version 2 but, using a different bluetooth service implementation
-    - Problems:
-        - Supposingly a better implementation of passing around text received from bluetooth, however `reconnection is broken` :sob:
+ ### Version 3 (unused)
+ **New Implementation using Different Bluetooth Service (reconnection broken)**
+- Same UI as version 2 but, using a different bluetooth service implementation
+- Problems:
+    - Supposingly a better implementation of passing around text received from bluetooth, however `reconnection is broken`
 
-~~4) Future? Version3 implementation of passing around text with Original Bluetooth Service :cold_sweat:~~
+---
 
 ## Android Data Dictionary
 `Format: <To>,<From>,data1:data2:data3`
@@ -65,3 +67,21 @@ Example:
 | PC,AN,WP:X:Y      | Send Waypoint coordinates to PC<br>Example: PC,AN,WP:5:7                                                         |
 | PC,AN,X:Y:N/S/E/W | Send Robot coordinates and facing direction to the PC<br>Example: PC,AN,1,1,N                                    |
 | PC,AN,FP:X:Y      | Signal for PC (Algo) to start Fastest Path, sent with Waypoint incase waypoint not set<br>Example: PC,AN,FP,5:7  |
+
+---
+
+## Connection and Running Sequence
+
+### Connection sequence
+1) Rpi run multi-threading script
+2) Android connects via Bluetooth to Rpi
+3) Arduino auto connects to Rpi after Android successfully connected
+4) Run Algo code to connect PC to Rpi
+
+### Running Seqeunce
+1) Android sends `Start Exploration` to PC
+2) PC updates Android during exploration, Sends "Explored" when exploration completed
+3) Android sends `Waypoint` to PC, PC calculates the fastest path
+4) Android sends `Start Fastest Path` to PC
+5) PC sends fastest path to Arduino
+6) Arduino sends Fastest path movement to Android
