@@ -20,23 +20,23 @@ Credits to the authors for designing the icons used in this application :heart_e
 ---
 
 ## Application Versions
-This repository currently contains 3 versions of the application. To switch between the different versions, `edit the AndroidManifest file` :poop:
+This repository currently contains 3 versions of the application. To switch between the different versions, `edit the [AndroidManifest](/app/src/main/AndroidManifest.xml) file` :poop:
 
-### Version 1 (reference)
-**Original unedited code**
+### [Version 1 (reference)](/app/src/main/java/com/example/mdpandroid/Version1)
+Original unedited code
 - For testing if orignal implementation is working
 - Problems:
     - Activity lifecycle not managed properly
     - ~~Its not our coat :')~~
 
- ### Version 2 (Leaderboard code :thumbsup:)
- **New Implementation using Original Bluetooth Service**
+ ### [Version 2 (Leaderboard code :thumbsup:)](](/app/src/main/java/com/example/mdpandroid/Version2))
+ New Implementation using Original Bluetooth Service
 - Change of UI and Activity launch modes
 - Problems:
     - Repeated disconnection (by pressing device in list) will lead to broken Bluetooth (I really dk how to fix this :cry:) &#8594; `restart the application or disconnect from rpi`
 
- ### Version 3 (unused)
- **New Implementation using Different Bluetooth Service (reconnection broken)**
+ ### [Version 3 (unused)](/app/src/main/java/com/example/mdpandroid/Version3)
+ New Implementation using Different Bluetooth Service (reconnection broken)
 - Same UI as version 2 but, using a different bluetooth service implementation
 - Problems:
     - Supposingly a better implementation of passing around text received from bluetooth, however `reconnection is broken`
