@@ -485,47 +485,50 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         }
                     }
 
-                    // Case 2: Receiving P1, P2, Robot Position, Image Recognised during Exploration
-                    // Identifying mdf string send for real-time update of maze during exploration
+                // Case 2: Receiving P1, P2, Robot Position, Image Recognised during Exploration
+                // Identifying mdf string send for real-time update of maze during exploration
+                    // P1:P2:1:1:N:2:7:5
                 } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
+//                    Log.d(TAG, "Exploration: " + theText);
                     String[] stringItems = theText.split(":");
                     String bin = "", bin2 = "";
 
                     // Getting the explored grids from MDF string
-                    String[] exploredString = hexToBinary(stringItems[0]).split("");
-                    int[] exploredGrid = new int[exploredString.length - 5]; // -5 to make it 300
-                    for (int i = 0; i < exploredGrid.length; i++) {
-                        exploredGrid[i] = Integer.parseInt(exploredString[i + 3]); // because first element is ""
-                        bin += exploredGrid[i];
-                        // Storing explored and obstacle strings
-                        mdfExploredString = stringItems[0];
-                        mdfObstacleString = stringItems[1];
-                    }
+                    if (stringItems[0].split("").length > 75) {
+                        String[] exploredString = hexToBinary(stringItems[0]).split("");
+                        int[] exploredGrid = new int[exploredString.length - 5]; // -5 to make it 300
+                        for (int i = 0; i < exploredGrid.length; i++) {
+                            exploredGrid[i] = Integer.parseInt(exploredString[i + 3]); // because first element is ""
+                            bin += exploredGrid[i];
+                            // Storing explored and obstacle strings
+                            mdfExploredString = stringItems[0];
+                            mdfObstacleString = stringItems[1];
+                        }
 //                    Log.d(TAG, "Explored: " + bin);
 
-                    // Getting the obstacle grids from MDF string
-                    String[] obstacleString = hexToBinary(stringItems[1]).split("");
-                    int[] obstacleGrid = new int[obstacleString.length - 1];
-                    for (int i = 0; i < obstacleGrid.length; i++) {
-                        obstacleGrid[i] = Integer.parseInt(obstacleString[i + 1]);
-                        bin2 += obstacleGrid[i];
-                    }
+                        // Getting the obstacle grids from MDF string
+                        String[] obstacleString = hexToBinary(stringItems[1]).split("");
+                        int[] obstacleGrid = new int[obstacleString.length - 1];
+                        for (int i = 0; i < obstacleGrid.length; i++) {
+                            obstacleGrid[i] = Integer.parseInt(obstacleString[i + 1]);
+                            bin2 += obstacleGrid[i];
+                        }
 //                    Log.d(TAG, "Obstacle: " + bin2);
 
-                    // For explored grids, draw obstacle if any
-                    int gridExplored = 0, obsIndex = 0;
-                    for (int y = 0; y < 20; y++) {
-                        for (int x = 0; x < 15; x++) {
-                            if (exploredGrid != null && exploredGrid[gridExplored] == 1) { // grid explored
-                                if (obstacleGrid != null && obstacleGrid[obsIndex] == 1) // the explored grid is an obstacle
-                                    mazeView.setObsArray(x, y);
-                                obsIndex++;
+                        // For explored grids, draw obstacle if any
+                        int gridExplored = 0, obsIndex = 0;
+                        for (int y = 0; y < 20; y++) {
+                            for (int x = 0; x < 15; x++) {
+                                if (exploredGrid != null && exploredGrid[gridExplored] == 1) { // grid explored
+                                    if (obstacleGrid != null && obstacleGrid[obsIndex] == 1) // the explored grid is an obstacle
+                                        mazeView.setObsArray(x, y);
+                                    obsIndex++;
+                                }
+                                gridExplored++;
                             }
-                            gridExplored++;
                         }
+                        mazeView.updateMaze(exploredGrid, obstacleGrid); // update the obstacles and explored grids
                     }
-
-                    mazeView.updateMaze(exploredGrid, obstacleGrid); // update the obstacles and explored grids
 
                     // Getting the direction the robot is facing
                     if (stringItems.length >= 5) {
@@ -563,6 +566,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     exploration = false;
                     chr.stop();
                     tvRStatus.setText("Exploration has been successfully completed"); // update status
+                    setRobotPosition(mazeView.getRobotCenter(), 90); // robot faces E after calibration
                     String imageStr = ""; // create string to store information on images found
                     if (mazeView.numberID != null) // if images were found, loop through X, Y, ID and add to string
                         for (int i = 0; i < mazeView.numberID.size(); i++)

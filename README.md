@@ -79,9 +79,10 @@ Example:
 4) Run Algo code to connect PC to Rpi
 
 ### Running Seqeunce
-1) Android sends `Start Exploration` to PC
-2) PC updates Android during exploration, Sends "Explored" when exploration completed
-3) Android sends `Waypoint` to PC, PC calculates the fastest path
+1) Android sends `Waypoint` to PC during the 2 mins setup
+2) Android sends `Start Exploration` to PC
+3) PC updates Android during exploration, sends "Explored" when exploration completed
 4) Android sends `Start Fastest Path` to PC
-5) PC sends fastest path to Arduino
-6) Arduino sends Fastest path movement to Android
+5) PC updates Android with start direction of fastest path (either N or E)
+5) PC sends fastest path to Arduino (e.g. FFFFRFFFFLFF)
+6) Arduino sends Fastest path movement to Android (e.g FFFF, R, FFFF, L, FF)
