@@ -30,7 +30,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mdpandroid.JoystickView;
 import com.example.mdpandroid.R;
 
 import java.math.BigInteger;
@@ -452,8 +451,23 @@ public class MapFragment extends Fragment implements SensorEventListener {
             String theText = intent.getStringExtra("text"); // Get extra data included in the Intent
             if (theText.length() > 0) {
 
-                // Case 1: Receiving movement during fastest path from Arduino
-                if (theText.length() < 15 && fastest && (theText.contains("R") || theText.contains("L") ||
+                // Case 4: Change robot position (prepare for fp)
+                if (theText.contains("RP") && theText.contains(":")) {
+                    String[] robotPos = theText.split(":");
+                    if (robotPos.length >= 4) {
+                        try {
+                            mazeView.updateRobotCoords(Integer.parseInt(robotPos[1]),
+                                    Integer.parseInt(robotPos[2]), directionToDegree(robotPos[3]));
+                            setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
+                        } catch (Exception e) {
+                            Log.d(TAG, "Invalid robot position format" + e.toString());
+                        }
+                    }
+                    return;
+                }
+
+                // Case 1: Receiving movement during fastest path from PC
+                if (theText.length() <= 18 && fastest && (theText.contains("R") || theText.contains("L") ||
                         theText.contains("F") || theText.contains("G"))) {
                     int forwardDistance;
                     String[] fastestCommands = theText.split("");
@@ -485,8 +499,8 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         }
                     }
 
-                // Case 2: Receiving P1, P2, Robot Position, Image Recognised during Exploration
-                // Identifying mdf string send for real-time update of maze during exploration
+                    // Case 2: Receiving P1, P2, Robot Position, Image Recognised during Exploration
+                    // Identifying mdf string send for real-time update of maze during exploration
                     // P1:P2:1:1:N:2:7:5
                 } else if (theText.length() > 77 && theText.contains(":") && !fastest) {
 //                    Log.d(TAG, "Exploration: " + theText);
@@ -591,18 +605,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
 //                        }
 //                    }, 2000); // 2 seconds later
 
-                    // Case 4: Change robot position (prepare for fp)
-                } else if (theText.contains("RP") && theText.contains(":")) {
-                    String[] robotPos = theText.split(":");
-                    if (robotPos.length >= 4) {
-                        try {
-                            mazeView.updateRobotCoords(Integer.parseInt(robotPos[1]),
-                                    Integer.parseInt(robotPos[2]), directionToDegree(robotPos[3]));
-                            setRobotPosition(mazeView.getRobotCenter(), mazeView.getRobotAngle());
-                        } catch (Exception e) {
-                            Log.d(TAG, "Invalid robot position format" + e.toString());
-                        }
-                    }
                 }
 
             }
