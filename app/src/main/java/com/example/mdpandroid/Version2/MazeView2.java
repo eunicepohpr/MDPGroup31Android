@@ -81,6 +81,7 @@ public class MazeView2 extends View {
         robotPaint.setColor(Color.DKGRAY);
         waypointPaint.setColor(Color.rgb(192, 131, 245)); // 94 94 94
         exploredPaint.setColor(Color.rgb(142, 175, 226));
+//        exploredPaint.setColor(Color.rgb(247, 144, 10)); // for video pumpkin
         fastestPaint.setColor(Color.rgb(204, 129, 129));
 
         createMaze();
