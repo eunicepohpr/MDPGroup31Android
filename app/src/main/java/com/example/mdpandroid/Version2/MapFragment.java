@@ -33,7 +33,6 @@ import android.widget.Toast;
 import com.example.mdpandroid.R;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import static android.content.Context.SENSOR_SERVICE;
