@@ -109,24 +109,24 @@ We aim to build dynamic user interfaces such that the application has no format 
 
 The communication protocol can be summarised into 4 steps:
 1. Pairing process
-- One device, a discoverable device makes itself available, another device find a discoverable device using a service discovery process
+    - One device, a discoverable device makes itself available, another device find a discoverable device using a service discovery process
 2. Bonding process
-- The discoverable device accepts the pairing request and exchange security keys
+    - The discoverable device accepts the pairing request and exchange security keys
 3. Information Exchange
 4. Session Completed
-- The device that initiates the pairing request release channel linked to the discoverable device. Two devices remain bonded so they can reconnect automatically during a future session.
+    - The device that initiates the pairing request release channel linked to the discoverable device. Two devices remain bonded so they can reconnect automatically during a future session.
 
 Below are the Bluetooth Status used to receive the different events in the application
 
 | Status                                | Event                                                                                                                                 |
 |---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| ACTION_REQUEST_DISCOVERABLE           | Enable Device to be discoverable to other devices                                                                                     |
-| ACTION_FOUND                          | The remote device is found during discovery and the device Name and MAC address will be displayed in the list under Available Devices |
-| ACTION_DISCOVERY_FINISHED             | When Bluetooth has completed scanning for devices                                                                                     |
-| ACTION_BOND_STATE_CHANGED BOND_BONDED | The device has successfully paired with another device                                                                                |
-| ACTION_ACL_DISCONNECTED               | Bluetooth disconnected event                                                                                                          |
-| STATE_CONNECTED                       | Bluetooth is connected to another device                                                                                              |
-| ACTION_REQUEST_ENABLE                 | Prompt user to turn on Bluetooth                                                                                                      |
+| `ACTION_REQUEST_DISCOVERABLE`         | Enable Device to be discoverable to other devices                                                                                     |
+| `ACTION_FOUND`                        | The remote device is found during discovery and the device Name and MAC address will be displayed in the list under Available Devices |
+| `ACTION_DISCOVERY_FINISHED`           | When Bluetooth has completed scanning for devices                                                                                     |
+|`ACTION_BOND_STATE_CHANGED BOND_BONDED`| The device has successfully paired with another device                                                                                |
+| `ACTION_ACL_DISCONNECTED`             | Bluetooth disconnected event                                                                                                          |
+| `STATE_CONNECTED`                     | Bluetooth is connected to another device                                                                                              |
+| `ACTION_REQUEST_ENABLE`               | Prompt user to turn on Bluetooth                                                                                                      |
 
 
 ### Functionalities Implementation
@@ -142,10 +142,10 @@ IntentFilter used for LocalBroadcastManager
 
 | Intent Action      | Type of message                                                                                 | Send by               | Received by                        |
 |--------------------|-------------------------------------------------------------------------------------------------|-----------------------|------------------------------------|
-| getConnectedDevice | Bluetooth Connection status broadcast to update the toolbar                                     | BluetoothActivity     | MainActivity                       |
-| getTextFromDevice  | All messages received via Bluetooth                                                             | BluetoothActivity     | MapFragment, CommunicationFragment |
-| getTextToSend      | Message strings to send                                                                         | CommunicationFragment | BluetoothActivity                  |
-| getCtrlToSend      | Robot controls start exploration and fastest path, send waypoint and robot coordinates commands | MapFragment           | BluetoothActivity                  |
+|`getConnectedDevice`| Bluetooth Connection status broadcast to update the toolbar                                     | BluetoothActivity     | MainActivity                       |
+| `getTextFromDevice`| All messages received via Bluetooth                                                             | BluetoothActivity     | MapFragment, CommunicationFragment |
+| `getTextToSend`    | Message strings to send                                                                         | CommunicationFragment | BluetoothActivity                  |
+| `getCtrlToSend`    | Robot controls start exploration and fastest path, send waypoint and robot coordinates commands | MapFragment           | BluetoothActivity                  |
 
 #### MapFragment
 Main Objectives of Map Tab:
@@ -161,10 +161,10 @@ Whenever there are controls such as “Start Exploration”, “Start Fastest Pa
 
 MapFragment will listen for messages received from the IntentFilter `“getTextFromDevice”` and update the interface accordingly. Below are the four types of information received that MapFragment needs to consider:
 1. During Exploration of robot
-- P1 (Exploration status of the map)
-- P2 (Obstacle detected based on explored areas of the map)
-- Robot current position and facing direction
-- Images detected (if any)
+    - P1 (Exploration status of the map)
+    - P2 (Obstacle detected based on explored areas of the map)
+    - Robot current position and facing direction
+    - Images detected (if any)
 2. Receiving Exploration complete
 3. Change the robot position or direction (prepare for fastest path)
 4. Receiving movements during the fastest path
