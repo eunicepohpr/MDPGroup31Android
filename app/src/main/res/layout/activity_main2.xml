@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".Version2.MainActivity2">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/btTB"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -28,9 +28,9 @@
             android:textSize="@dimen/text_size"
             android:visibility="visible" />
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.design.widget.TabLayout
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,23 +40,23 @@
         app:tabMaxWidth="0dp"
         app:tabTextAppearance="@style/TabLayoutTextStyle">
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tabMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_map"
             android:text="@string/TabMap" />
 
-        <android.support.design.widget.TabItem
+        <com.google.android.material.tabs.TabItem
             android:id="@+id/tabCom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/tab_com"
             android:text="@string/TabCom" />
 
-    </android.support.design.widget.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
-    <android.support.v4.view.ViewPager
+    <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
