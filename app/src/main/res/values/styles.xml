@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+
+    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/themeBlue</item>
+        <item name="actionBarSize">20dp</item>
+        <item name="colorButtonNormal">@color/btnBg2</item>
+        <item name="android:buttonStyle">@style/ButtonTextSize</item>
+    </style>
+
+    <style name="ButtonTextSize" parent="@style/Widget.AppCompat.Button">
+        <item name="android:textSize">@dimen/text_size_button</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/text_size_tab</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#212121</item>
+    </style>
+
+    <style name="TextHeading">
+        <item name="android:textSize">@dimen/text_size_heading</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextSubHeading">
+        <item name="android:textSize">@dimen/text_size_subheading</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="TextSubSubHeading">
+        <item name="android:textSize">@dimen/text_size_subsubheading</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MapStatus">
+        <item name="android:textSize">@dimen/text_size_mapstatus</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

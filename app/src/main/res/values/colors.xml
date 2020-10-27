@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0673CA</color>
+    <color name="colorPrimaryDark">#1485da</color>
+    <color name="colorAccent">#0673CA</color>
+
+    <color name="buttonColor">#1794F9</color>
+    <color name="disableButtonColor">#BDBEBF</color>
+
+    <color name="BTNotConnected">#6C6D6D</color>
+    <color name="BTConnectedG">#048027</color>
+    <color name="BTConnectedB">#0367a1</color>
+
+    <color name="Mapbtmbg">#ebfaff</color>
+    <color name="Mapbtmbg2">#fffde8</color>
+    <color name="btnBg">#f5f5f5</color>
+    <color name="themeBlue">#6a96d7</color>
+    <color name="themeLBlue">#7acefa</color>
+    <color name="btnBg2">#fcfbf0</color>
+    <color name="black">#000000</color>
+
+    <!--    Image recognition colors -->
+    <!--    <color name="up_arrow_1">#ffffff</color>-->
+    <!--    <color name="down_arrow_2">#01b0f1</color>-->
+    <!--    <color name="right_arrow_3">#ffff01</color>-->
+    <!--    <color name="left_arrow_4">#fe0002</color>-->
+    <!--    <color name="go_5">#01b051</color>-->
+    <!--    <color name="six_6">#01b0f1</color>-->
+    <!--    <color name="seven_7">#01b051</color>-->
+    <!--    <color name="eight_8">#fe0002</color>-->
+    <!--    <color name="nine_9">#ffffff</color>-->
+    <!--    <color name="zero_10">#ffff01</color>-->
+    <!--    <color name="alphabet_v_11">#fe0002</color>-->
+    <!--    <color name="alphabet_w_12">#01b051</color>-->
+    <!--    <color name="alphabet_x_13">#ffffff</color>-->
+    <!--    <color name="alphabet_y_14">#01b0f1</color>-->
+    <!--    <color name="alphabet_z_15">#ffff01</color>-->
+</resources>

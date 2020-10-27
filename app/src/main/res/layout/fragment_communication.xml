@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CommunicationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/Mapbtmbg"
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/tvComTransTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/send_small"
+                android:text="@string/ComTransTxt"
+                android:textAppearance="@style/TextSubHeading" />
+
+            <EditText
+                android:id="@+id/etComTrans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvComTransTitle"
+                android:background="@android:color/white"
+                android:hint="@string/ComTransTxtHelp"
+                android:padding="10dp"
+                android:textSize="@dimen/text_size_large" />
+
+            <Button
+                android:id="@+id/btnTransClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etComTrans"
+                android:layout_toStartOf="@id/btnTransSend"
+                android:text="@string/ComClear" />
+
+            <Button
+                android:id="@+id/btnTransSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etComTrans"
+                android:layout_alignParentEnd="true"
+                android:text="@string/ComSend" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/tvComPSTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/persistent_small"
+                android:text="@string/ComPersTxt"
+                android:textAppearance="@style/TextSubHeading" />
+
+            <EditText
+                android:id="@+id/etComPS"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvComPSTitle"
+                android:background="@android:color/white"
+                android:hint="@string/ComPersHelp"
+                android:padding="10dp"
+                android:textSize="@dimen/text_size_large" />
+
+            <Button
+                android:id="@+id/btnPSSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etComPS"
+                android:layout_toLeftOf="@id/btnPSSave"
+                android:text="@string/ComSend" />
+
+            <Button
+                android:id="@+id/btnPSSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/etComPS"
+                android:layout_alignParentRight="true"
+                android:text="@string/ComSave" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="30dp">
+
+            <TextView
+                android:id="@+id/tvComRecTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/receive_small"
+                android:text="@string/ComRecTxt"
+                android:textAppearance="@style/TextSubHeading" />
+
+            <RelativeLayout
+                android:id="@+id/ComRL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvComRecTitle">
+
+                <ScrollView
+                    android:id="@+id/sv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvComRecTxt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:padding="10dp"
+                        android:scrollbars="vertical"
+                        android:text="@string/ComRecTxtHelp"
+                        android:textIsSelectable="true"
+                        android:textSize="@dimen/text_size_large" />
+
+                </ScrollView>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnComRecReset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ComRL"
+                android:layout_alignParentEnd="true"
+                android:text="@string/reset" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

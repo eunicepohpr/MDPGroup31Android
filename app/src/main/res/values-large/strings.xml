@@ -1,0 +1,6 @@
+<resources>
+    <!-- Map Buttons -->
+    <string name="BtnEx">Explore</string>
+    <string name="BtnFP">Fast Path</string>
+    <string name="BtnCali">Calibrate</string>
+</resources>
