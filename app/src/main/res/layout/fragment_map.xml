@@ -12,6 +12,7 @@
         android:orientation="vertical"
         android:weightSum="100">
 
+        <!--Top Panel Layout-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -45,6 +46,7 @@
                     android:visibility="visible" />
 
             </RelativeLayout>
+            <!--End Top-Left Layout (Map)-->
 
             <!--Top-Right Layout-->
             <RelativeLayout
@@ -82,6 +84,7 @@
                         android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
+                <!--End Robot Status-->
 
                 <!--Exploration Time Status-->
                 <RelativeLayout
@@ -112,6 +115,7 @@
                         android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
+                <!--End Exploration Time Status-->
 
                 <!--Fastest Path Time Status-->
                 <RelativeLayout
@@ -142,8 +146,9 @@
                         android:textSize="@dimen/text_size_large" />
 
                 </RelativeLayout>
+                <!--End Fastest Path Time Status-->
 
-                <!--Auto Update Map-->
+                <!--Auto Update Map + Show Image-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -181,11 +186,13 @@
                         android:textSize="@dimen/text_size" />
 
                 </RelativeLayout>
+                <!--End Auto Update Map + Show Image-->
 
             </RelativeLayout>
+            <!--End Top-Right Layout-->
 
         </LinearLayout>
-
+        <!--End Top Panel Layout-->
 
         <!--Bottom Panel Layout-->
         <LinearLayout
@@ -242,6 +249,7 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+                <!--End FP Waypoint Layout-->
 
                 <View
                     android:id="@+id/line1"
@@ -299,6 +307,7 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+                <!--End Robot Position Layout-->
 
                 <View
                     android:id="@+id/btmLeftRL1"
@@ -350,8 +359,10 @@
                         android:text="@string/BtnReset" />
 
                 </LinearLayout>
+                <!--End Bottom Buttons-->
 
             </RelativeLayout>
+            <!--End Bottom-Left Layout-->
 
             <!--Bottom-Right Layout-->
             <RelativeLayout
@@ -360,7 +371,7 @@
                 android:layout_weight="13"
                 android:padding="5dp">
 
-                <!--Top-->
+                <!--Bottom-Right Top-->
                 <RelativeLayout
                     android:id="@+id/btmRightRL0"
                     android:layout_width="match_parent"
@@ -383,6 +394,7 @@
                         android:textSize="@dimen/text_size" />
 
                 </RelativeLayout>
+                <!--End Bottom-Right Top-->
 
                 <!--dpad-->
                 <RelativeLayout
@@ -434,8 +446,10 @@
                         android:src="@drawable/dpad" />
 
                 </RelativeLayout>
+                <!--End dpad-->
 
             </RelativeLayout>
+            <!--End Bottom-Right Layout-->
 
         </LinearLayout>
 

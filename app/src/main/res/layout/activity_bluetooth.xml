@@ -6,6 +6,7 @@
     android:orientation="vertical"
     tools:context=".BluetoothActivity">
 
+    <!--  Bluetooth Status  -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/btTB"
         android:layout_width="match_parent"
@@ -36,6 +37,7 @@
         android:orientation="vertical"
         android:padding="15dp">
 
+        <!--  Bluetooth title & Discovery  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,6 +70,7 @@
 
         </RelativeLayout>
 
+        <!--  Paired Devices  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -135,7 +138,7 @@
 
         </RelativeLayout>
 
-
+        <!--  Available Devices  -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

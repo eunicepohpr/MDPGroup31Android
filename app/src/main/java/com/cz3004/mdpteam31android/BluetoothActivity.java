@@ -63,11 +63,6 @@ public class BluetoothActivity extends AppCompatActivity {
         btTextView = findViewById(R.id.btTV);
         btToolBar = findViewById(R.id.btTB);
 
-        // update connected device status
-//        Bundle bundle = getIntent().getExtras();
-//        device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
-//        updateBluetoothTBStatus(device);
-
         lvPairedDevices = findViewById(R.id.lvPairedDevices);
         lvAvailDevices = findViewById(R.id.lvAvailableDevices);
         tvNoPairDevices = findViewById(R.id.tvPaired);
@@ -403,7 +398,7 @@ public class BluetoothActivity extends AppCompatActivity {
         }
     };
 
-    // get sent text from MapFragment
+    // get sent text from CommunicationFragment
     private BroadcastReceiver mTextReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -452,12 +447,6 @@ public class BluetoothActivity extends AppCompatActivity {
         Toast.makeText(BluetoothActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        Bundle bundle = intent.getExtras();
-//        device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
-//        updateBluetoothTBStatus(device);
-//    }
 
     @Override
     protected void onDestroy() {
@@ -493,7 +482,6 @@ public class BluetoothActivity extends AppCompatActivity {
     public void onBackPressed() {
         // disable destroying activity resume the main ui instead, singleInstance calls onCreate
         Intent i = new Intent(BluetoothActivity.this, MainActivity.class);
-//        i.putExtra("device", device);
         startActivity(i);
     }
 }

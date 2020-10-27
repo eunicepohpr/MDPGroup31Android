@@ -138,7 +138,7 @@ public class CommunicationFragment extends Fragment {
                 // check if any of the edit texts are empty
                 if (etPersistentText.getText().toString().trim().equalsIgnoreCase(""))
                     showToast("Custom messages cannot be empty");
-                else { // use .comit() to save onto app's SharedPreferences
+                else { // use .commit() to save onto app's SharedPreferences
                     SharedPreferences sharedPref = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("value1", etPersistentText.getText().toString());
@@ -188,7 +188,7 @@ public class CommunicationFragment extends Fragment {
         }
     };
 
-    // to send text to bluetoothactivity for bluetooth
+    // to send text to BluetoothActivity for bluetooth
     private void sendToBtAct(String msg) {
         Intent intent = new Intent("getTextToSend");
         intent.putExtra("tts", msg);

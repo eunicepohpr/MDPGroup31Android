@@ -61,13 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        Bundle bundle = intent.getExtras();
-//        device = bundle != null && bundle.containsKey("device") ? bundle.getString("device") : "";
-//        updateBluetoothTBStatus(device);
-//    }
-
     @Override
     public void onBackPressed() { // disable destroying activity
     }
@@ -107,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mNameReceiver,
-//                new IntentFilter("getConnectedDevice"));
     }
 
     @Override

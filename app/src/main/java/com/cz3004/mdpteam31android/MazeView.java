@@ -40,7 +40,7 @@ public class MazeView extends View {
 
     private Paint blackPaint, whitePaint;
     private Paint goalPaint, startPaint, mapPaint, robotPaint, waypointPaint, exploredPaint, fastestPaint;
-    private final String DEFAULTAR = "AR,AN,"; // Sending to Arudino
+    private final String DEFAULTAR = "AR,AN,"; // Sending to Arduino
 
     MapFragment mapFragment = MapFragment.getInstance();
 
@@ -226,7 +226,7 @@ public class MazeView extends View {
                             (robotX.get(i) + 1) * cellWidth, (NUM_ROWS - robotY.get(i)) * cellHeight, fastestPaint);
     }
 
-    // Numberid drawings on obstacle
+    // Number id drawings on obstacle
     private void displayNumberIdentified(Canvas canvas) {
         if (numberID != null && numberIDY != null && numberIDX != null) {
             for (int i = 0; i < numberIDX.size(); i++) {

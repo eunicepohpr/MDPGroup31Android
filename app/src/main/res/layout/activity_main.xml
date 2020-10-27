@@ -5,8 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Version2.MainActivity2">
+    tools:context="MainActivity">
 
+    <!--  Bluetooth Status  -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/btTB"
         android:layout_width="match_parent"
@@ -29,7 +30,9 @@
             android:visibility="visible" />
 
     </androidx.appcompat.widget.Toolbar>
+    <!--  End Bluetooth Status  -->
 
+    <!--  Tabs  -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -56,6 +59,7 @@
 
     </com.google.android.material.tabs.TabLayout>
 
+    <!--  Tab Pages  -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

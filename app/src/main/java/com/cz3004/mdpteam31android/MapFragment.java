@@ -562,6 +562,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         // Check if valid number id received
                         boolean correctId = Pattern.matches("^[1-9][0-5]?$", stringItems[7]);
                         if (correctId) {
+                            // check if image detected on obstacle
 //                            ArrayList<String> tempObsArray = mazeView.getObsArray();
 //                            String tempPos = (numberX) + "," + (numberY);
 //                            boolean checkObs = false;
