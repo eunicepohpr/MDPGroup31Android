@@ -21,6 +21,15 @@ Credits to the authors for designing the icons used in this application :heart_e
 
 ---
 
+## UI Design
+### Lo-fi prototype
+![Lo-fi prototype](/Images/MDPAndroidLowFi.jpg?raw=true "Lo-fi prototype")
+
+### Final UI
+![Final UI](/Images/MDPAndroidFinalUI.png?raw=true "Final UI")
+
+---
+
 ## Android Data Dictionary
 `Format: <To>,<From>,data1:data2:data3`
 ### Inputs
@@ -107,6 +116,7 @@ Below are the Bluetooth Status used to receive the different events in the appli
 
 ### Functionalities Implementation
 #### BluetoothActivity
+![BluetoothActivity](/Images/BluetoothActivity.jpg?raw=true "BluetoothActivity")
 Main objectives of Bluetooth Activity:
 1. The Android application is able to transmit and receive text strings over the Bluetooth serial communication link.
 2. The Android application can initiate scanning, selection, and connection with Bluetooth device
@@ -124,6 +134,8 @@ IntentFilter used for LocalBroadcastManager
 | `getCtrlToSend`    | Robot controls start exploration and fastest path, send waypoint and robot coordinates commands | MapFragment           | BluetoothActivity                  |
 
 #### MapFragment
+![MapFragment](/Images/MapFragment1.jpg?raw=true "MapFragment")
+![MapFragment2](/Images/MapFragment2.jpg?raw=true "MapFragment2")
 Main Objectives of Map Tab:
 1. Provides interactive control of robot movement (via Bluetooth link)
 2. Provides an indication of the current status of the robot
@@ -146,6 +158,7 @@ MapFragment will listen for messages received from the IntentFilter `“getTextF
 4. Receiving movements during the fastest path
 
 #### Communication Fragment
+![CommunicationFragment](/Images/CommunicationFragment.jpg?raw=true "CommunicationFragment")
 Main objectives of Communication Tab:
 1. The Android application is able to support persistent user reconfigurable string
 2. Send and receive messages via Bluetooth link
