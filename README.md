@@ -158,7 +158,7 @@ MapFragment will listen for messages received from the IntentFilter `“getTextF
 4. Receiving movements during the fastest path
 
 #### Communication Fragment
-![CommunicationFragment](/Images/CommunicationFragment.jpg?raw=true "CommunicationFragment")
+![CommunicationFragment](/Images/CommunicationFragment.JPG?raw=true "CommunicationFragment")
 Main objectives of Communication Tab:
 1. The Android application is able to support persistent user reconfigurable string
 2. Send and receive messages via Bluetooth link
