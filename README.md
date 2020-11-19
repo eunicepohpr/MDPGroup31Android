@@ -1,6 +1,6 @@
 # CZ3004 MDP Team 31 Android
 
-This application requires **Bluetooth**! minSDK is 23 and *NOT* using androidx
+This application requires **Bluetooth**! minSDK is 23
 
 ## Documentation References
 - [Bluetooth Connection](https://developer.android.com/guide/topics/connectivity/bluetooth.html)
